@@ -612,9 +612,6 @@ export const useReportsStore = defineStore('reports', () => {
             loadingKPI.value = false;
         }
     }
-
-    // ===== ACTIONS: HISTORICAL TRENDS =====
-
     async function fetchHistoricalTrends() {
         loadingHistoricalTrends.value = true;
         errorHistoricalTrends.value = null;

@@ -354,9 +354,6 @@ const closeSidebar = () => {
   font-size: 10px;
   color: var(--text-secondary);
 }
-
-/* ───────────────── MAIN ───────────────── */
-
 .rg-main {
   flex: 1;
   margin-left: 230px;
