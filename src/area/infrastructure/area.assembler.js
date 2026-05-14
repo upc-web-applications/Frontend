@@ -1,4 +1,7 @@
-import { Area } from '@/area/domain/model/area-entity.js'
+import { Area } from '@/area/domain/model/area.entity.js'
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 export class AreaAssembler {
     static toEntityFromResource(r) { return new Area({ ...r }) }
     static toEntitiesFromResponse(response) {

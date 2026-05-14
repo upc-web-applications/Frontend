@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { AreaApi } from '@/area/infrastructure/area-api.js'
 import { AreaAssembler } from '@/area/infrastructure/area.assembler.js'
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 const api = new AreaApi()
 export const useAreaStore = defineStore('area', () => {
     const areas = ref([]); const errors = ref([]); const loaded = ref(false)

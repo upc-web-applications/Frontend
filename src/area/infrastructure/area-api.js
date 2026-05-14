@@ -1,5 +1,8 @@
 import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 export class AreaApi extends BaseApi {
     #ep
     constructor() { super(); this.#ep = new BaseEndpoint(this, '/areas') }

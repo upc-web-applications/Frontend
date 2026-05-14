@@ -1,3 +1,6 @@
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 export class BaseEndpoint {
     constructor(baseApi, endpointPath) {
         this.http = baseApi.http

@@ -1,3 +1,6 @@
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'

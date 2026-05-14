@@ -1,3 +1,6 @@
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import { createI18n } from 'vue-i18n'
 import en from './locales/en.json'
 import es from './locales/es.json'

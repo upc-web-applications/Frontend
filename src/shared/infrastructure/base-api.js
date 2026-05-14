@@ -1,3 +1,6 @@
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import axios from 'axios'
 
 export class BaseApi {

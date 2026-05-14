@@ -1,24 +1,26 @@
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import { createRouter, createWebHistory } from 'vue-router'
-import sedeRoutes     from '@/sede/presentation/sede-routes.js'
+import siteRoutes     from '@/site/presentation/site-routes.js'
 import areaRoutes     from '@/area/presentation/area-routes.js'
-import activoRoutes   from '@/activo/presentation/activo-routes.js'
-import inspeccionRoutes from '@/inspeccion/presentation/inspeccion-routes.js'
+import assetRoutes   from '@/asset/presentation/asset-routes.js'
+import inspectionRoutes from '@/inspection/presentation/inspection-routes.js'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
-        { path: '/', redirect: '/sede/list' },
-        { path: '/sede',       children: sedeRoutes },
+        { path: '/', redirect: '/site/list' },
+        { path: '/site',       children: siteRoutes },
         { path: '/area',       children: areaRoutes },
-        { path: '/activo',     children: activoRoutes },
-        { path: '/inspeccion', children: inspeccionRoutes },
-        { path: '/:pathMatch(.*)*', redirect: '/sede/list' }
+        { path: '/asset',     children: assetRoutes },
+        { path: '/inspection', children: inspectionRoutes },
+        { path: '/:pathMatch(.*)*', redirect: '/site/list' }
     ]
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to) => {
     document.title = `RiskGuard — ${to.meta.title ?? 'Seguridad Industrial'}`
-    next()
 })
 
 export default router

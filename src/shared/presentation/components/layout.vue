@@ -1,4 +1,7 @@
 <script setup>
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
@@ -8,17 +11,17 @@ const route = useRoute()
 const router = useRouter()
 
 const navItems = [
-  { to: '/sede/list',       label: 'nav.sedes',        icon: 'pi pi-building' },
+  { to: '/site/list',       label: 'nav.sedes',        icon: 'pi pi-building' },
   { to: '/area/list',       label: 'nav.areas',         icon: 'pi pi-map' },
-  { to: '/activo/list',     label: 'nav.activos',       icon: 'pi pi-cog' },
-  { to: '/inspeccion/list', label: 'nav.inspecciones',  icon: 'pi pi-clipboard' }
+  { to: '/asset/list',     label: 'nav.activos',       icon: 'pi pi-cog' },
+  { to: '/inspection/list', label: 'nav.inspecciones',  icon: 'pi pi-clipboard' }
 ]
 
 const titleMap = {
-  '/sede':       'nav.sedes',
+  '/site':       'nav.sedes',
   '/area':       'nav.areas',
-  '/activo':     'nav.activos',
-  '/inspeccion': 'nav.inspecciones'
+  '/asset':     'nav.activos',
+  '/inspection': 'nav.inspecciones'
 }
 
 const currentTitle = computed(() => {

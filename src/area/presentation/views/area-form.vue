@@ -1,21 +1,24 @@
 <script setup>
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useAreaStore } from '@/area/application/area.store.js'
-import { useSedeStore } from '@/sede/application/sede.store.js'
+import { useSiteStore } from '@/site/application/site.store.js'
 
 const { t } = useI18n()
 const route = useRoute(); const router = useRouter(); const toast = useToast()
-const store = useAreaStore(); const sedeStore = useSedeStore()
+const store = useAreaStore(); const siteStore = useSiteStore()
 const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
 const form = ref({ nombre:'', codigo:'', descripcion:'', sedeId:null, estado:'Activo', nivelRiesgo:'Medio', fechaCreacion: new Date().toISOString().split('T')[0] })
-const sedeOptions = computed(() => sedeStore.sedes.filter(s => s.estado==='Activo').map(s => ({ label: s.nombre, value: s.id })))
+const siteOptions = computed(() => siteStore.sites.filter(s => s.estado==='Activo').map(s => ({ label: s.nombre, value: s.id })))
 
 onMounted(() => {
-    if (!sedeStore.loaded) sedeStore.fetchAll()
+    if (!siteStore.loaded) siteStore.fetchAll()
     if (isEdit.value) { if (!store.loaded) store.fetchAll(); const e = store.getById(route.params.id); if (e) Object.assign(form.value, e) }
 })
 
@@ -51,7 +54,7 @@ const submit = async () => {
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('area.sede') }} *</label>
-          <pv-select v-model="form.sedeId" :options="sedeOptions" option-label="label" option-value="value" size="small" style="width:100%" />
+          <pv-select v-model="form.sedeId" :options="siteOptions" option-label="label" option-value="value" size="small" style="width:100%" />
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('area.riskLevel') }}</label>

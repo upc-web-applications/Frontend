@@ -1,22 +1,25 @@
 <script setup>
+/**
+ * @author u20241a322  Blancas Chávez, Carlos Franco
+ */
 import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useConfirm } from 'primevue/useconfirm'
 import { useToast } from 'primevue/usetoast'
 import { useAreaStore } from '@/area/application/area.store.js'
-import { useSedeStore } from '@/sede/application/sede.store.js'
+import { useSiteStore } from '@/site/application/site.store.js'
 
 const { t } = useI18n()
 const router = useRouter()
 const confirm = useConfirm()
 const toast = useToast()
 const store = useAreaStore()
-const sedeStore = useSedeStore()
+const siteStore = useSiteStore()
 
-onMounted(() => { if (!store.loaded) store.fetchAll(); if (!sedeStore.loaded) sedeStore.fetchAll() })
+onMounted(() => { if (!store.loaded) store.fetchAll(); if (!siteStore.loaded) siteStore.fetchAll() })
 
-const sedeName = (id) => sedeStore.sedes.find(s => s.id === id)?.nombre ?? '-'
+const siteName = (id) => siteStore.sites.find(s => s.id === id)?.nombre ?? '-'
 const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge rg-badge-amber','Alto':'rg-badge rg-badge-red','Crítico':'rg-badge rg-badge-red' }[n] ?? 'rg-badge rg-badge-gray')
 
 const confirmDelete = (area) => {
@@ -38,7 +41,7 @@ const confirmDelete = (area) => {
         <pv-column field="codigo" :header="t('area.code')" style="width:110px" sortable />
         <pv-column field="nombre" :header="t('area.name')" sortable />
         <pv-column :header="t('area.sede')" style="width:180px">
-          <template #body="{ data }">{{ sedeName(data.sedeId) }}</template>
+          <template #body="{ data }">{{ siteName(data.sedeId) }}</template>
         </pv-column>
         <pv-column field="nivelRiesgo" :header="t('area.riskLevel')" style="width:120px">
           <template #body="{ data }"><span :class="riskClass(data.nivelRiesgo)">{{ data.nivelRiesgo }}</span></template>
