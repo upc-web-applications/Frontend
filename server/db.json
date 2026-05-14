@@ -149,6 +149,7 @@
     {
       "id": 1,
       "riskAssessmentId": 1,
+      "ticketId": 1,
       "codigo": "MIT-2026-001",
       "descripcion": "Instalación de barreras térmicas alrededor del horno de forjado y adquisición de trajes térmicos para operarios",
       "responsable": "Juan Pérez - Mto. Industrial",
@@ -161,6 +162,7 @@
     {
       "id": 2,
       "riskAssessmentId": 2,
+      "ticketId": 2,
       "codigo": "MIT-2026-002",
       "descripcion": "Implementación de sistema de extracción de vapores en almacén de químicos",
       "responsable": "María García - Seg. Industrial",
@@ -173,6 +175,7 @@
     {
       "id": 3,
       "riskAssessmentId": 3,
+      "ticketId": null,
       "codigo": "MIT-2026-003",
       "descripcion": "Programa de pausas activas y adquisición de sillas ergonómicas para línea de ensamblaje",
       "responsable": "Carlos Mendoza - RRHH",
@@ -185,6 +188,7 @@
     {
       "id": 4,
       "riskAssessmentId": 5,
+      "ticketId": 3,
       "codigo": "MIT-2026-004",
       "descripcion": "Aislamiento de cableado expuesto y adquisición de EPP dieléctrico para sala eléctrica",
       "responsable": "Roberto Silva - Electricista",
@@ -193,6 +197,465 @@
       "estado": "Cerrado",
       "resultado": "Aprobado",
       "observaciones": "Cableado aislado. EPP entregado y certificado. Riesgo mitigado exitosamente."
+    }
+  ],
+  "patrones-riesgo": [
+    {
+      "id": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "tipoIncidente": "Temperatura Extrema",
+      "tipoPeligro": "Físico",
+      "descripcion": "Exposición recurrente a temperaturas extremas en forjado",
+      "frecuencia": 4,
+      "fechaPrimeraOcurrencia": "2026-04-15",
+      "periodoAnalisisDias": 30,
+      "revisada": false,
+      "fechaRevision": "",
+      "revisadoPor": null
+    },
+    {
+      "id": 2,
+      "sectorId": 3,
+      "sector": "Línea de Ensamblaje",
+      "tipoIncidente": "Movimiento Repetitivo",
+      "tipoPeligro": "Ergonómico",
+      "descripcion": "Quejas recurrentes por fatiga muscular en ensamblaje",
+      "frecuencia": 3,
+      "fechaPrimeraOcurrencia": "2026-04-20",
+      "periodoAnalisisDias": 30,
+      "revisada": true,
+      "fechaRevision": "2026-05-10",
+      "revisadoPor": 1
+    }
+  ],
+  "niveles-criticidad-area": [
+    {
+      "id": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "nivelCriticidad": "Crítico",
+      "intensidadMapa": "muy_alta",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 2,
+      "sectorId": 2,
+      "sector": "Almacén de Químicos",
+      "nivelCriticidad": "Importante",
+      "intensidadMapa": "alta",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 3,
+      "sectorId": 3,
+      "sector": "Línea de Ensamblaje",
+      "nivelCriticidad": "Moderado",
+      "intensidadMapa": "media",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 4,
+      "sectorId": 4,
+      "sector": "Prensa Hidráulica 500T",
+      "nivelCriticidad": "Crítico",
+      "intensidadMapa": "muy_alta",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 5,
+      "sectorId": 5,
+      "sector": "Sala Eléctrica",
+      "nivelCriticidad": "Importante",
+      "intensidadMapa": "alta",
+      "ultimaActualizacion": "2026-05-14"
+    }
+  ],
+  "alertas-patron": [
+    {
+      "id": 1,
+      "patronId": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "tipoRiesgo": "Temperatura Extrema",
+      "numeroOcurrencias": 4,
+      "fechaPrimerReporte": "2026-04-15",
+      "estado": "Activa",
+      "fechaGeneracion": "2026-05-14"
+    }
+  ],
+  "resumenes-diarios": [
+    {
+      "id": 1,
+      "fecha": "2026-05-14",
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "totalNuevos": 2,
+      "totalEnProgreso": 1,
+      "totalResueltos": 0
+    },
+    {
+      "id": 2,
+      "fecha": "2026-05-14",
+      "sectorId": 2,
+      "sector": "Almacén de Químicos",
+      "totalNuevos": 1,
+      "totalEnProgreso": 1,
+      "totalResueltos": 0
+    },
+    {
+      "id": 3,
+      "fecha": "2026-05-14",
+      "sectorId": 3,
+      "sector": "Línea de Ensamblaje",
+      "totalNuevos": 0,
+      "totalEnProgreso": 0,
+      "totalResueltos": 1
+    },
+    {
+      "id": 4,
+      "fecha": "2026-05-13",
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "totalNuevos": 1,
+      "totalEnProgreso": 2,
+      "totalResueltos": 0
+    }
+  ],
+  "tickets-accion-correctiva": [
+    {
+      "id": 1,
+      "reporteId": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "tipoRiesgo": "Temperatura Extrema",
+      "nivelCriticidad": "Crítico",
+      "estado": "En Progreso",
+      "instrucciones": "Instalar barreras térmicas y rotar personal cada 30 min",
+      "tecnicoAsignadoId": 1,
+      "tecnicoNombre": "Juan Pérez López",
+      "fechaCreacion": "2026-05-05",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false
+    },
+    {
+      "id": 2,
+      "reporteId": 2,
+      "sectorId": 2,
+      "sector": "Almacén de Químicos",
+      "tipoRiesgo": "Vapores Químicos",
+      "nivelCriticidad": "Importante",
+      "estado": "Pendiente",
+      "instrucciones": "Implementar sistema de extracción de vapores",
+      "tecnicoAsignadoId": 2,
+      "tecnicoNombre": "María García Ruiz",
+      "fechaCreacion": "2026-05-09",
+      "fechaCierre": "",
+      "slaLimiteHoras": 72,
+      "slaIncumplido": false
+    },
+    {
+      "id": 3,
+      "reporteId": 5,
+      "sectorId": 5,
+      "sector": "Sala Eléctrica",
+      "tipoRiesgo": "Descarga Eléctrica",
+      "nivelCriticidad": "Importante",
+      "estado": "Cerrado",
+      "instrucciones": "Aislar cableado expuesto y entregar EPP dieléctrico",
+      "tecnicoAsignadoId": 3,
+      "tecnicoNombre": "Roberto Silva Mendoza",
+      "fechaCreacion": "2026-04-29",
+      "fechaCierre": "2026-05-02",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "w",
+      "tipoRiesgo": "d",
+      "nivelCriticidad": "Importante",
+      "estado": "Pendiente",
+      "instrucciones": "2",
+      "tecnicoAsignadoId": 1,
+      "tecnicoNombre": "Juan Pérez López",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "2222-02-12",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 4
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "123",
+      "tipoRiesgo": "123",
+      "nivelCriticidad": "Tolerable",
+      "estado": "Pendiente",
+      "instrucciones": "",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 5
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "123",
+      "tipoRiesgo": "123",
+      "nivelCriticidad": "Tolerable",
+      "estado": "Medida Implementada",
+      "instrucciones": "123",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 6
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "werewrew",
+      "tipoRiesgo": "werwer",
+      "nivelCriticidad": "Moderado",
+      "estado": "SLA Incumplido",
+      "instrucciones": "r3434ewr",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 7
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "wqeqweqweqw",
+      "tipoRiesgo": "qweqweqw",
+      "nivelCriticidad": "Moderado",
+      "estado": "Pendiente",
+      "instrucciones": "eqweqweqw",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "11111-11-11",
+      "fechaCierre": "1111-11-11",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 8
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "21",
+      "tipoRiesgo": "21",
+      "nivelCriticidad": "Tolerable",
+      "estado": "Pendiente",
+      "instrucciones": "12112",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 9
+    }
+  ],
+  "verificaciones-medida": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "supervisorId": 1,
+      "supervisorNombre": "Victor Jhosef Laura Acosta",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "Las barreras térmicas cumplen con los estándares de seguridad requeridos",
+      "fechaVerificacion": "2026-05-12"
+    },
+    {
+      "id": 2,
+      "ticketId": 3,
+      "supervisorId": 1,
+      "supervisorNombre": "Victor Jhosef Laura Acosta",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "Cableado aislado correctamente, EPP entregado y certificado",
+      "fechaVerificacion": "2026-05-02"
+    },
+    {
+      "ticketId": 21,
+      "supervisorId": null,
+      "supervisorNombre": "eeqwwqe",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "212112",
+      "fechaVerificacion": "2026-05-14",
+      "id": 3
+    },
+    {
+      "ticketId": 9,
+      "supervisorId": null,
+      "supervisorNombre": "eqweqw",
+      "veredicto": "Rechazado",
+      "comentarioJustificacion": "eqweqwe",
+      "fechaVerificacion": "2026-05-14",
+      "id": 4
+    },
+    {
+      "ticketId": 9,
+      "supervisorId": null,
+      "supervisorNombre": "qdqwdqw",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "weqweqweq",
+      "fechaVerificacion": "2026-05-14",
+      "id": 5
+    }
+  ],
+  "historiales-ticket": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para riesgo crítico en Zona de Forjado",
+      "fecha": "2026-05-05"
+    },
+    {
+      "id": 2,
+      "ticketId": 1,
+      "evento": "Técnico asignado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Juan Pérez López asignado como técnico responsable",
+      "fecha": "2026-05-05"
+    },
+    {
+      "id": 3,
+      "ticketId": 1,
+      "evento": "Medida implementada",
+      "usuarioId": 1,
+      "usuarioNombre": "Juan Pérez López",
+      "detalles": "Barreras térmicas instaladas y personal capacitado",
+      "fecha": "2026-05-12"
+    },
+    {
+      "id": 4,
+      "ticketId": 1,
+      "evento": "Verificación aprobada",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Verificación de eficacia aprobada por el supervisor",
+      "fecha": "2026-05-12"
+    },
+    {
+      "id": 5,
+      "ticketId": 3,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para riesgo en Sala Eléctrica",
+      "fecha": "2026-04-29"
+    },
+    {
+      "id": 6,
+      "ticketId": 3,
+      "evento": "Ticket cerrado",
+      "usuarioId": 1,
+      "usuarioNombre": "Roberto Silva Mendoza",
+      "detalles": "Riesgo mitigado exitosamente",
+      "fecha": "2026-05-02"
+    },
+    {
+      "id": 7,
+      "ticketId": 2,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para riesgo químico en Almacén de Químicos",
+      "fecha": "2026-05-09"
+    },
+    {
+      "id": 8,
+      "ticketId": 2,
+      "evento": "SLA Alerta generada",
+      "usuarioId": 1,
+      "usuarioNombre": "Sistema",
+      "detalles": "SLA de 72h excedido para ticket #2",
+      "fecha": "2026-05-14"
+    },
+    {
+      "ticketId": 9,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para 21",
+      "fecha": "2026-05-14",
+      "id": 9
+    }
+  ],
+  "alertas-sla": [
+    {
+      "id": 1,
+      "ticketId": 2,
+      "horasTranscurridas": 120,
+      "slaLimiteHoras": 72,
+      "fechaAlerta": "2026-05-14",
+      "notificadoA": 1,
+      "notificadoNombre": "Victor Jhosef Laura Acosta"
+    }
+  ],
+  "notificaciones-criticas": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "supervisorId": 1,
+      "supervisorNombre": "Victor Jhosef Laura Acosta",
+      "mensaje": "El ticket #1 (Zona de Forjado) ha superado el nivel de riesgo crítico. Se requiere supervisión inmediata.",
+      "enviada": true,
+      "fechaEnvio": "2026-05-10"
+    }
+  ],
+  "tecnicos": [
+    {
+      "id": 1,
+      "numeroDocumento": "DNI-12345678",
+      "nombreCompleto": "Juan Pérez López",
+      "especialidad": "Mantenimiento Industrial",
+      "telefono": "+51 999 111 222",
+      "email": "juan.perez@riskguard.com",
+      "estado": "Activo"
+    },
+    {
+      "id": 2,
+      "numeroDocumento": "DNI-23456789",
+      "nombreCompleto": "María García Ruiz",
+      "especialidad": "Seguridad Industrial",
+      "telefono": "+51 999 333 444",
+      "email": "maria.garcia@riskguard.com",
+      "estado": "Activo"
+    },
+    {
+      "id": 3,
+      "numeroDocumento": "DNI-34567890",
+      "nombreCompleto": "Roberto Silva Mendoza",
+      "especialidad": "Electricista Industrial",
+      "telefono": "+51 999 555 666",
+      "email": "roberto.silva@riskguard.com",
+      "estado": "Activo"
+    },
+    {
+      "id": 4,
+      "numeroDocumento": "DNI-45678901",
+      "nombreCompleto": "Carlos Mendoza Ríos",
+      "especialidad": "Recursos Humanos",
+      "telefono": "+51 999 777 888",
+      "email": "carlos.mendoza@riskguard.com",
+      "estado": "Inactivo"
     }
   ]
 }

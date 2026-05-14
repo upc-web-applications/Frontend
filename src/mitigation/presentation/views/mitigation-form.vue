@@ -1,13 +1,12 @@
 <script setup>
-/**
- * @author u202418655  Victor Jhosef Laura Acosta
- */
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useMitigationStore } from '@/mitigation/application/mitigation.store.js'
 import { useRiskAssessmentStore } from '@/risk-assessment/application/risk-assessment.store.js'
+import { useTicketAccionCorrectivaStore } from '@/mitigation/application/ticket-accion-correctiva.store.js'
+import { useHistorialTicketStore } from '@/mitigation/application/historial-ticket.store.js'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -15,13 +14,16 @@ const router = useRouter()
 const toast = useToast()
 const store = useMitigationStore()
 const assessmentStore = useRiskAssessmentStore()
+const ticketStore = useTicketAccionCorrectivaStore()
+const historialStore = useHistorialTicketStore()
 
 const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
-const form = ref({ riskAssessmentId: route.query.assessmentId || null, codigo:'', descripcion:'', responsable:'', fechaAsignacion: new Date().toISOString().split('T')[0], fechaEjecucion:'', estado:'Pendiente', resultado:'', observaciones:'' })
+const form = ref({ riskAssessmentId: route.query.assessmentId || null, ticketId: null, codigo:'', descripcion:'', responsable:'', fechaAsignacion: new Date().toISOString().split('T')[0], fechaEjecucion:'', estado:'Pendiente', resultado:'', observaciones:'' })
 
 onMounted(() => {
     if (!assessmentStore.loaded) assessmentStore.fetchAll()
+    if (!ticketStore.loaded) ticketStore.fetchAll()
     if (isEdit.value) {
         if (!store.loaded) store.fetchAll()
         const e = store.getById(route.params.id)
@@ -32,8 +34,29 @@ onMounted(() => {
 const submit = async () => {
     saving.value = true
     try {
-        if (isEdit.value) await store.update({ ...form.value, id: parseInt(route.params.id) })
-        else await store.add(form.value)
+        const payload = { ...form.value }
+        if (isEdit.value) {
+            const updated = await store.update({ ...payload, id: parseInt(route.params.id) })
+            if (updated && updated.ticketId) {
+                const tk = ticketStore.getById(updated.ticketId)
+                if (tk) {
+                    const newStatus = updated.estado === 'Implementado' ? 'Medida Implementada' : updated.estado === 'Verificado' ? 'En Progreso' : updated.estado === 'Cerrado' ? 'Cerrado' : null
+                    if (newStatus && tk.estado !== newStatus) {
+                        await ticketStore.update({ ...tk, estado: newStatus })
+                        await historialStore.add({ ticketId: tk.id, evento: 'Mitigación actualizada', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Mitigación ${updated.codigo}: ${updated.estado}`, fecha: new Date().toISOString().split('T')[0] })
+                    }
+                }
+            }
+        } else {
+            const created = await store.add(payload)
+            if (created && created.ticketId) {
+                const tk = ticketStore.getById(created.ticketId)
+                if (tk && created.estado === 'Implementado') {
+                    await ticketStore.update({ ...tk, estado: 'Medida Implementada' })
+                    await historialStore.add({ ticketId: tk.id, evento: 'Mitigación creada', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Mitigación ${created.codigo}: medida implementada`, fecha: created.fechaEjecucion || new Date().toISOString().split('T')[0] })
+                }
+            }
+        }
         toast.add({ severity: 'success', summary: t('mitigacion.saveSuccess'), life: 3000 })
         router.push('/mitigation/list')
     } finally { saving.value = false }
@@ -61,7 +84,15 @@ const submit = async () => {
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('mitigacion.assessment') }}</label>
-          <pv-select v-model="form.riskAssessmentId" :options="assessmentStore.assessments" option-label="codigo" option-value="id" size="small" style="width:100%" />
+          <pv-select v-model="form.riskAssessmentId" :options="assessmentStore.assessments" option-label="codigo" option-value="id" size="small" style="width:100%" show-clear />
+        </div>
+        <div class="rg-form-field">
+          <label class="rg-label">{{ t('mitigacion.ticket') }}</label>
+          <pv-select v-model="form.ticketId" :options="ticketStore.tickets" option-label="id" option-value="id" size="small" style="width:100%" show-clear>
+            <template #option="slotProps">
+              <span>#{{ slotProps.option.id }} — {{ slotProps.option.sector }} ({{ slotProps.option.estado }})</span>
+            </template>
+          </pv-select>
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('mitigacion.responsable') }} *</label>

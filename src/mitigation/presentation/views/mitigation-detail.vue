@@ -1,21 +1,21 @@
 <script setup>
-/**
- * @author u202418655  Victor Jhosef Laura Acosta
- */
 import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useMitigationStore } from '@/mitigation/application/mitigation.store.js'
 import { useRiskAssessmentStore } from '@/risk-assessment/application/risk-assessment.store.js'
+import { useTicketAccionCorrectivaStore } from '@/mitigation/application/ticket-accion-correctiva.store.js'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const store = useMitigationStore()
 const assessmentStore = useRiskAssessmentStore()
+const ticketStore = useTicketAccionCorrectivaStore()
 
 const mitigation = computed(() => store.getById(route.params.id))
 const assessment = computed(() => assessmentStore.assessments.find(a => a.id === mitigation.value?.riskAssessmentId))
+const ticket = computed(() => mitigation.value?.ticketId ? ticketStore.getById(mitigation.value.ticketId) : null)
 
 const statusClass = (s) => ({ 'Pendiente':'rg-badge rg-badge-gray','En Progreso':'rg-badge rg-badge-amber','Implementado':'rg-badge rg-badge-purple','Verificado':'rg-badge rg-badge-green','Cerrado':'rg-badge rg-badge-green' }[s] ?? 'rg-badge rg-badge-gray')
 const resultClass = (r) => r === 'Aprobado' ? 'rg-badge rg-badge-green' : r === 'Rechazado' ? 'rg-badge rg-badge-red' : ''
@@ -23,6 +23,7 @@ const resultClass = (r) => r === 'Aprobado' ? 'rg-badge rg-badge-green' : r === 
 onMounted(() => {
     if (!store.loaded) store.fetchAll()
     if (!assessmentStore.loaded) assessmentStore.fetchAll()
+    if (!ticketStore.loaded) ticketStore.fetchAll()
 })
 </script>
 
@@ -35,7 +36,7 @@ onMounted(() => {
       </div>
       <pv-button :label="t('common.edit')" icon="pi pi-pencil" size="small" @click="router.push(`/mitigation/${mitigation.id}/edit`)" />
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+    <div style="display:grid;grid-template-columns:2fr 1fr;gap:12px">
       <div class="rg-card">
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('mitigacion.code') }}</span><span class="rg-detail-value">{{ mitigation.codigo }}</span></div>
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('mitigacion.description') }}</span><span class="rg-detail-value">{{ mitigation.descripcion }}</span></div>
@@ -52,15 +53,28 @@ onMounted(() => {
         </div>
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('mitigacion.observations') }}</span><span class="rg-detail-value">{{ mitigation.observaciones || '-' }}</span></div>
       </div>
-      <div class="rg-card">
-        <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ t('evaluacionRiesgo.title') }}</div>
-        <div v-if="assessment">
-          <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.code') }}</span><span class="rg-detail-value">{{ assessment.codigo }}</span></div>
-          <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.hazardType') }}</span><span class="rg-detail-value">{{ assessment.tipoPeligro }}</span></div>
-          <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.riskLevel') }}</span><span class="rg-detail-value">{{ assessment.nivelRiesgo }}</span></div>
-          <pv-button :label="t('common.viewDetail')" icon="pi pi-external-link" size="small" text @click="router.push(`/risk-assessment/${assessment.id}`)" style="margin-top:8px" />
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="rg-card">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ t('evaluacionRiesgo.title') }}</div>
+          <div v-if="assessment">
+            <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.code') }}</span><span class="rg-detail-value">{{ assessment.codigo }}</span></div>
+            <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.hazardType') }}</span><span class="rg-detail-value">{{ assessment.tipoPeligro }}</span></div>
+            <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.riskLevel') }}</span><span class="rg-detail-value">{{ assessment.nivelRiesgo }}</span></div>
+            <pv-button :label="t('common.viewDetail')" icon="pi pi-external-link" size="small" text @click="router.push(`/risk-assessment/${assessment.id}`)" style="margin-top:8px" />
+          </div>
+          <div v-else style="color:var(--rg-text-muted);font-size:0.82rem">{{ t('common.noData') }}</div>
         </div>
-        <div v-else style="color:var(--rg-text-muted);font-size:0.82rem">{{ t('common.noData') }}</div>
+        <div class="rg-card">
+          <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px">{{ t('ticketCorrectivo.title') }}</div>
+          <div v-if="ticket">
+            <div class="rg-detail-row"><span class="rg-detail-label">#ID</span><span class="rg-detail-value">{{ ticket.id }}</span></div>
+            <div class="rg-detail-row"><span class="rg-detail-label">{{ t('ticketCorrectivo.sector') }}</span><span class="rg-detail-value">{{ ticket.sector }}</span></div>
+            <div class="rg-detail-row"><span class="rg-detail-label">{{ t('ticketCorrectivo.riskType') }}</span><span class="rg-detail-value">{{ ticket.tipoRiesgo }}</span></div>
+            <div class="rg-detail-row"><span class="rg-detail-label">{{ t('common.status') }}</span><span class="rg-detail-value">{{ ticket.estado }}</span></div>
+            <pv-button :label="t('common.viewDetail')" icon="pi pi-external-link" size="small" text @click="router.push(`/mitigation/tickets/${ticket.id}`)" style="margin-top:8px" />
+          </div>
+          <div v-else style="color:var(--rg-text-muted);font-size:0.82rem">{{ t('common.noData') }}</div>
+        </div>
       </div>
     </div>
   </div>

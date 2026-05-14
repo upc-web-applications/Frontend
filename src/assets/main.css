@@ -41,6 +41,7 @@ h1,h2,h3,h4,h5 { font-family: 'Syne', sans-serif; font-weight: 700; }
 .rg-nav-item { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px; color: var(--rg-text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; border-left: 3px solid transparent; transition: all 0.15s; cursor: pointer; }
 .rg-nav-item:hover { color: var(--rg-text); background: rgba(255,255,255,0.03); }
 .rg-nav-item.active { color: var(--rg-primary); border-left-color: var(--rg-primary); background: var(--rg-primary-dim); }
+.rg-nav-item.active-sub { color: var(--rg-amber); border-left-color: var(--rg-amber); background: rgba(245,158,11,0.08); }
 .rg-nav-item i { font-size: 15px; }
 .rg-sidebar-bottom { padding: 12px 16px; border-top: 1px solid var(--rg-border); }
 .rg-lang-toggle { display: flex; gap: 4px; margin-bottom: 10px; }

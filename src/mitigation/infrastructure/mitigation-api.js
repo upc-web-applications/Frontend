@@ -9,6 +9,7 @@ export class MitigationApi extends BaseApi {
     getMitigations()                 { return this.#ep.getAll() }
     getMitigationById(id)            { return this.#ep.getById(id) }
     getByAssessmentId(aId)           { return this.#ep.getByParam('riskAssessmentId', aId) }
+    getByTicketId(tId)               { return this.#ep.getByParam('ticketId', tId) }
     createMitigation(r)              { return this.#ep.create(r) }
     updateMitigation(r)              { return this.#ep.update(r.id, r) }
     deleteMitigation(id)             { return this.#ep.delete(id) }

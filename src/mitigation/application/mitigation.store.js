@@ -11,8 +11,9 @@ export const useMitigationStore = defineStore('mitigation', () => {
     function fetchAll() { api.getMitigations().then(r => { mitigations.value = MitigationAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => errors.value.push(e)) }
     function getById(id) { return mitigations.value.find(m => m.id === parseInt(id)) }
     function getByAssessmentId(aId) { return mitigations.value.filter(m => m.riskAssessmentId === parseInt(aId)) }
-    function add(mitigation) { return api.createMitigation(mitigation).then(r => mitigations.value.push(MitigationAssembler.toEntityFromResource(r.data))).catch(e => errors.value.push(e)) }
-    function update(mitigation) { return api.updateMitigation(mitigation).then(r => { const u = MitigationAssembler.toEntityFromResource(r.data); const i = mitigations.value.findIndex(m => m.id === u.id); if (i !== -1) mitigations.value[i] = u }).catch(e => errors.value.push(e)) }
+    function getByTicketId(tId) { return mitigations.value.find(m => m.ticketId === parseInt(tId)) }
+    function add(mitigation) { return api.createMitigation(mitigation).then(r => { const e = MitigationAssembler.toEntityFromResource(r.data); mitigations.value.push(e); return e }).catch(e => errors.value.push(e)) }
+    function update(mitigation) { return api.updateMitigation(mitigation).then(r => { const u = MitigationAssembler.toEntityFromResource(r.data); const i = mitigations.value.findIndex(m => m.id === u.id); if (i !== -1) mitigations.value[i] = u; return u }).catch(e => errors.value.push(e)) }
     function remove(id) { return api.deleteMitigation(id).then(() => { const i = mitigations.value.findIndex(m => m.id === id); if (i !== -1) mitigations.value.splice(i, 1) }).catch(e => errors.value.push(e)) }
-    return { mitigations, errors, loaded, fetchAll, getById, getByAssessmentId, add, update, remove }
+    return { mitigations, errors, loaded, fetchAll, getById, getByAssessmentId, getByTicketId, add, update, remove }
 })
