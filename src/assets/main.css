@@ -1,0 +1,205 @@
+@import './base.css';
+
+/* ── TOKENS ── */
+:root {
+  --rg-primary:      #EF610F;
+  --rg-primary-dim:  rgba(239, 97, 15, 0.12);
+  --rg-secondary:    #F59E0B;
+  --rg-green:        #22C55E;
+  --rg-red:          #EF4444;
+  --rg-purple:       #818CF8;
+
+  --rg-bg:           #060D1A;
+  --rg-bg-2:         #0C1829;
+  --rg-bg-3:         #112036;
+
+  --rg-border:       rgba(255, 255, 255, 0.07);
+  --rg-text:         #EEF2FF;
+  --rg-text-muted:   #6B7F99;
+
+  --rg-topbar:       48px;
+  --rg-sidebar:      220px;
+
+  /* compat aliases used in existing views */
+  --primary-color:   var(--rg-primary);
+  --dark-bg:         var(--rg-bg);
+  --darker-bg:       var(--rg-bg-2);
+  --card-bg:         var(--rg-bg-3);
+  --border-color:    var(--rg-border);
+  --text-color:      var(--rg-text);
+  --text-secondary:  var(--rg-text-muted);
+  --success-color:   var(--rg-green);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+#app { width: 100%; height: 100%; }
+
+/* ── TYPOGRAPHY ── */
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: var(--rg-text);
+  background: var(--rg-bg);
+
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Syne only on orange page titles */
+.rg-page-title,
+.page-title,
+.dashboard-title {
+  font-family: 'Syne', sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 18px !important;
+  color: var(--rg-primary) !important;
+}
+
+h1 { font-size: 1.25rem; }
+h2 { font-size: 1rem;    }
+h3 { font-size: 0.85rem; }
+
+.section-header h2,
+.section-title {
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--rg-text-muted) !important;
+}
+
+/* ── CARD ── */
+.rg-card,
+.kpi-card,
+.stat-card,
+.predictive-card,
+.chart-section,
+.form-section,
+.section-card,
+.filters-section,
+.table-section,
+.table-wrapper,
+.alert-card {
+  background: var(--rg-bg-3) !important;
+  background-image: none !important;
+  border: 1px solid var(--rg-border) !important;
+  border-radius: 10px;
+}
+
+/* ── BADGES ── */
+.rg-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.rg-badge-green  { background: rgba(34,197,94,0.15);  color: #22C55E; }
+.rg-badge-red    { background: rgba(239,68,68,0.15);  color: #EF4444; }
+.rg-badge-amber  { background: rgba(245,158,11,0.15); color: #F59E0B; }
+.rg-badge-orange { background: rgba(239,97,15,0.15);  color: #EF610F; }
+.rg-badge-gray   { background: rgba(107,127,153,0.15);color: #6B7F99; }
+.rg-badge-purple { background: rgba(129,140,248,0.15);color: #818CF8; }
+
+/* ── TABLE WRAPPER ── */
+.rg-table-wrap {
+  border: 1px solid var(--rg-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* ── PRIMEVUE DARK OVERRIDES ── */
+.p-datatable .p-datatable-thead > tr > th {
+  background: var(--rg-bg-3) !important;
+  color: var(--rg-text-muted) !important;
+  font-size: 0.72rem !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-color: var(--rg-border) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  background: var(--rg-bg-2) !important;
+  color: var(--rg-text) !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  border-color: var(--rg-border) !important;
+  font-size: 13px;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background: var(--rg-bg-3) !important;
+}
+
+.p-paginator {
+  background: var(--rg-bg-2) !important;
+  border-color: var(--rg-border) !important;
+  color: var(--rg-text-muted) !important;
+}
+
+.p-paginator .p-paginator-page.p-highlight {
+  background: var(--rg-primary) !important;
+  color: white !important;
+}
+
+.p-select,
+.p-inputtext,
+.p-calendar .p-inputtext {
+  background: var(--rg-bg-2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: var(--rg-text) !important;
+}
+
+.p-select-label,
+.p-select .p-select-label {
+  color: var(--rg-text) !important;
+}
+
+.p-select-overlay,
+.p-select-list,
+.p-select-panel {
+  background: #07111F !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.7) !important;
+  border-radius: 8px !important;
+}
+
+.p-select-option {
+  background: transparent !important;
+  color: var(--rg-text) !important;
+}
+
+.p-select-option:hover,
+.p-select-option.p-focus {
+  background: rgba(239, 97, 15, 0.1) !important;
+  color: var(--rg-primary) !important;
+}
+
+.p-select-option.p-selected {
+  background: rgba(239, 97, 15, 0.18) !important;
+  color: var(--rg-primary) !important;
+}
+
+.p-toast .p-toast-message {
+  background: var(--rg-bg-3) !important;
+  border-color: var(--rg-border) !important;
+  color: var(--rg-text) !important;
+}
+
+/* ── SCROLLBAR ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+}
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+

@@ -1,0 +1,454 @@
+{
+  "users": [
+    {
+      "id": "manager_001",
+      "name": "Carlos López",
+      "email": "carlos@riskguard.com",
+      "role": "MANAGER",
+      "account_status": "ACTIVE",
+      "creation_date": "2024-01-01T08:00:00Z",
+      "site_area_id": "plant_a"
+    },
+    {
+      "id": "supervisor_001",
+      "name": "Ana Torres",
+      "email": "ana@riskguard.com",
+      "role": "SUPERVISOR",
+      "account_status": "ACTIVE",
+      "creation_date": "2024-01-15T08:00:00Z",
+      "site_area_id": "plant_a"
+    }
+  ],
+  "monthly_reports": [
+    {
+      "id": "RPT_2024_03",
+      "evaluated_month": 3,
+      "evaluated_year": 2024,
+      "site_area_id": "plant_a",
+      "general_status": "Archived",
+      "creation_date": "2024-03-15T10:00:00Z",
+      "update_date": "2024-04-05T14:30:00Z"
+    },
+    {
+      "id": "RPT_2024_04",
+      "evaluated_month": 4,
+      "evaluated_year": 2024,
+      "site_area_id": "plant_a",
+      "general_status": "Active",
+      "creation_date": "2024-04-15T10:00:00Z",
+      "update_date": "2024-05-02T14:30:00Z"
+    }
+  ],
+  "cumulative_st_indicators": [
+    {
+      "id": "IND_2024_03",
+      "monthly_report_id": "RPT_2024_03",
+      "accident_rate_index": 25.7,
+      "administrative_errors_count": 3,
+      "processed_by": true,
+      "calculation_date": "2024-04-05T14:30:00Z"
+    },
+    {
+      "id": "IND_2024_04",
+      "monthly_report_id": "RPT_2024_04",
+      "accident_rate_index": 30.1,
+      "administrative_errors_count": 4,
+      "processed_by": true,
+      "calculation_date": "2024-05-05T14:30:00Z"
+    }
+  ],
+  "historical_incident_records": [
+    {
+      "id": "INC_006",
+      "monthly_report_id": "RPT_2024_03",
+      "date": "2024-03-03",
+      "section": "GAS_PLANT",
+      "incident_type": "Pressure Anomaly",
+      "description": "High pressure alert in pipeline B",
+      "resolved": false,
+      "closing_date": null,
+      "resolution_time_hours": null
+    },
+    {
+      "id": "INC_007",
+      "monthly_report_id": "RPT_2024_03",
+      "date": "2024-03-18",
+      "section": "CONTROL_ROOM",
+      "incident_type": "Server Failure",
+      "description": "Monitoring system offline for 2 hours",
+      "resolved": true,
+      "closing_date": "2024-03-18",
+      "resolution_time_hours": 2
+    },
+    {
+      "id": "INC_008",
+      "monthly_report_id": "RPT_2024_04",
+      "date": "2024-04-07",
+      "section": "WAREHOUSE_B",
+      "incident_type": "Chemical Leak",
+      "description": "Acid leak from container IBC-12",
+      "resolved": false,
+      "closing_date": null,
+      "resolution_time_hours": null
+    },
+    {
+      "id": "INC_009",
+      "monthly_report_id": "RPT_2024_04",
+      "date": "2024-04-22",
+      "section": "GAS_PLANT",
+      "incident_type": "Pressure Anomaly",
+      "description": "Valve failure in compressor unit",
+      "resolved": true,
+      "closing_date": "2024-04-23",
+      "resolution_time_hours": 10
+    }
+  ],
+  "annual_ohs_plan": [
+    {
+      "id": "PLAN_2024",
+      "year": 2024,
+      "global_compliance": 72,
+      "goal": 80,
+      "completed_activities": 86,
+      "total_activities": 120,
+      "critical_months": 2,
+      "update_date": "2024-04-15T10:00:00Z",
+      "monthly_details": [
+        {
+          "month": 1,
+          "compliance": 70,
+          "completed_activities": 8,
+          "planned_activities": 12,
+          "status": "acceptable"
+        },
+        {
+          "month": 2,
+          "compliance": 45,
+          "completed_activities": 5,
+          "planned_activities": 12,
+          "status": "critical"
+        },
+        {
+          "month": 3,
+          "compliance": 42,
+          "completed_activities": 5,
+          "planned_activities": 11,
+          "status": "critical"
+        },
+        {
+          "month": 4,
+          "compliance": 83,
+          "completed_activities": 10,
+          "planned_activities": 12,
+          "status": "optimal"
+        },
+        {
+          "month": 5,
+          "compliance": 91,
+          "completed_activities": 11,
+          "planned_activities": 12,
+          "status": "optimal"
+        },
+        {
+          "month": 6,
+          "compliance": 75,
+          "completed_activities": 9,
+          "planned_activities": 12,
+          "status": "acceptable"
+        }
+      ],
+      "details_by_sector": [
+        {
+          "sector": "WAREHOUSE_B",
+          "compliance": 90,
+          "completed_activities": 18,
+          "planned_activities": 20
+        },
+        {
+          "sector": "GAS_PLANT",
+          "compliance": 75,
+          "completed_activities": 15,
+          "planned_activities": 20
+        },
+        {
+          "sector": "TURBINE_04",
+          "compliance": 60,
+          "completed_activities": 12,
+          "planned_activities": 20
+        }
+      ],
+      "next_review": "2024-07-15T00:00:00Z"
+    },
+    {
+      "id": "PLAN_2023",
+      "year": 2023,
+      "global_compliance": 68,
+      "goal": 80,
+      "completed_activities": 95,
+      "total_activities": 140,
+      "critical_months": 3,
+      "update_date": "2023-12-31T10:00:00Z",
+      "monthly_details": [
+        {
+          "month": 1,
+          "compliance": 55,
+          "completed_activities": 7,
+          "planned_activities": 12,
+          "status": "acceptable"
+        },
+        {
+          "month": 2,
+          "compliance": 40,
+          "completed_activities": 5,
+          "planned_activities": 12,
+          "status": "critical"
+        },
+        {
+          "month": 3,
+          "compliance": 38,
+          "completed_activities": 4,
+          "planned_activities": 12,
+          "status": "critical"
+        },
+        {
+          "month": 4,
+          "compliance": 72,
+          "completed_activities": 9,
+          "planned_activities": 12,
+          "status": "acceptable"
+        },
+        {
+          "month": 5,
+          "compliance": 80,
+          "completed_activities": 10,
+          "planned_activities": 12,
+          "status": "optimal"
+        },
+        {
+          "month": 6,
+          "compliance": 85,
+          "completed_activities": 10,
+          "planned_activities": 12,
+          "status": "optimal"
+        }
+      ],
+      "details_by_sector": [
+        {
+          "sector": "WAREHOUSE_B",
+          "compliance": 78,
+          "completed_activities": 14,
+          "planned_activities": 18
+        },
+        {
+          "sector": "GAS_PLANT",
+          "compliance": 62,
+          "completed_activities": 11,
+          "planned_activities": 18
+        }
+      ],
+      "next_review": "2024-01-15T00:00:00Z"
+    }
+  ],
+  "predictive_indicators": [
+    {
+      "id": "PRED_001",
+      "calculation_date": "2024-04-15T10:00:00Z",
+      "period_days": 30,
+      "total_incidents": 47,
+      "previous_month_variation": 12,
+      "average_resolution_time_hours": 6.4,
+      "resolution_goal_hours": 4,
+      "sectors_with_increasing_trend": [
+        {
+          "sector": "WAREHOUSE_B",
+          "events": 14,
+          "variation_percentage": 45,
+          "status": "critical"
+        },
+        {
+          "sector": "GAS_PLANT",
+          "events": 9,
+          "variation_percentage": 28,
+          "status": "alert"
+        }
+      ],
+      "recurring_incident_types": [
+        {
+          "type": "Chemical Leak",
+          "count": 16,
+          "percentage": 34,
+          "trend": "increasing"
+        },
+        {
+          "type": "Unsafe Condition",
+          "count": 12,
+          "percentage": 26,
+          "trend": "stable"
+        },
+        {
+          "type": "Pressure Anomaly",
+          "count": 8,
+          "percentage": 17,
+          "trend": "increasing"
+        }
+      ]
+    },
+    {
+      "id": "PRED_002",
+      "calculation_date": "2024-03-15T10:00:00Z",
+      "period_days": 30,
+      "total_incidents": 42,
+      "previous_month_variation": -5,
+      "average_resolution_time_hours": 5.1,
+      "resolution_goal_hours": 4,
+      "sectors_with_increasing_trend": [
+        {
+          "sector": "TURBINE_04",
+          "events": 11,
+          "variation_percentage": 38,
+          "status": "critical"
+        }
+      ],
+      "recurring_incident_types": [
+        {
+          "type": "Abnormal Vibration",
+          "count": 14,
+          "percentage": 33,
+          "trend": "increasing"
+        },
+        {
+          "type": "Chemical Leak",
+          "count": 10,
+          "percentage": 24,
+          "trend": "decreasing"
+        }
+      ]
+    }
+  ],
+  "critical_alerts": [
+    {
+      "id": "ALERT_001",
+      "creation_date": "2024-04-12T08:30:00Z",
+      "type": "CRITICAL",
+      "sector": "WAREHOUSE_B",
+      "risk_type": "Chemical Leak",
+      "elapsed_hours": 72,
+      "responsible_supervisor": "Ana Torres",
+      "status": "unresolved",
+      "message": "Acid leak from container IBC-12 exceeds safety threshold. Immediate evacuation required.",
+      "read": false
+    },
+    {
+      "id": "ALERT_002",
+      "creation_date": "2024-04-10T14:00:00Z",
+      "type": "ALERT",
+      "sector": "GAS_PLANT",
+      "risk_type": "Pressure Anomaly",
+      "elapsed_hours": 96,
+      "responsible_supervisor": "Ana Torres",
+      "status": "in_review",
+      "message": "Pressure in pipeline B at 140% of nominal value. Maintenance team notified.",
+      "read": true
+    }
+  ],
+  "generated_reports": [
+    {
+      "id": "REP_GEN_001",
+      "type": "monthly",
+      "month": 3,
+      "year": 2024,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "generation_date": "2024-04-02T08:45:00Z",
+      "file_name": "RiskGuard_monthly_1714647918.pdf",
+      "status": "generated",
+      "size_kb": 267
+    },
+    {
+      "id": "REP_GEN_002",
+      "type": "audit",
+      "month": null,
+      "year": 2024,
+      "start_date": "2024-01-01T00:00:00Z",
+      "end_date": "2024-03-31T00:00:00Z",
+      "sector_filter": null,
+      "generation_date": "2024-04-05T11:00:00Z",
+      "file_name": "RiskGuard_audit_1714647918.pdf",
+      "status": "downloaded",
+      "size_kb": 890
+    }
+  ],
+  "kpi_dashboard": [
+    {
+      "id": "KPI_001",
+      "name": "active_incidents",
+      "value": 3,
+      "goal": 0,
+      "status": "alert",
+      "update_date": "2024-04-15T15:00:00Z"
+    },
+    {
+      "id": "KPI_002",
+      "name": "resolved_incidents",
+      "value": 6,
+      "goal": 10,
+      "status": "optimal",
+      "update_date": "2024-04-15T15:00:00Z"
+    },
+    {
+      "id": "KPI_003",
+      "name": "critical_sectors",
+      "value": 2,
+      "goal": 0,
+      "status": "danger",
+      "update_date": "2024-04-15T15:00:00Z"
+    },
+    {
+      "id": "KPI_004",
+      "name": "ohs_plan_compliance",
+      "value": 72,
+      "goal": 80,
+      "status": "alert",
+      "update_date": "2024-04-15T15:00:00Z"
+    }
+  ],
+  "historical_trends": [
+    {
+      "id": "TREND_2024_03",
+      "month": 3,
+      "year": 2024,
+      "total_incidents": 12,
+      "incidents_by_type": {
+        "Unsafe Condition": 3,
+        "Chemical Leak": 4,
+        "Pressure Anomaly": 3,
+        "Server Failure": 2
+      },
+      "incidents_by_sector": {
+        "WAREHOUSE_B": 3,
+        "GAS_PLANT": 4,
+        "TURBINE_04": 3,
+        "CONTROL_ROOM": 2
+      }
+    },
+    {
+      "id": "TREND_2024_04",
+      "month": 4,
+      "year": 2024,
+      "total_incidents": 22,
+      "incidents_by_type": {
+        "Chemical Leak": 9,
+        "Pressure Anomaly": 7,
+        "Unsafe Condition": 4,
+        "Abnormal Vibration": 2
+      },
+      "incidents_by_sector": {
+        "WAREHOUSE_B": 9,
+        "GAS_PLANT": 7,
+        "SOUTH_ACCESS": 4,
+        "TURBINE_04": 2
+      }
+    }
+  ]
+}
