@@ -11,7 +11,6 @@ import { CriticalAlertsAssembler } from "@/reports/infrastructure/critical-alert
 import { KPIDashboardAssembler } from "@/reports/infrastructure/kpi_dashboard.assembler.js";
 import { HistoricalTrendsAssembler } from "@/reports/infrastructure/historical-trends-assembler.js";
 
-// Import endpoint paths from .env
 const monthlyReportsEndpointPath = import.meta.env.VITE_MONTHLY_REPORTS_ENDPOINT_PATH;
 const generatedReportsEndpointPath = import.meta.env.VITE_GENERATED_REPORTS_ENDPOINT_PATH;
 const indicatorsEndpointPath = import.meta.env.VITE_INDICATORS_ENDPOINT_PATH;
