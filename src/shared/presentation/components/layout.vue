@@ -2,7 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import { computed, ref } from 'vue';
-import { useReportsStore } from '@/reportes/application/reportes.store.js';
+import { useReportsStore } from '@/reports/application/reportes.store.js';
 
 const { t, locale } = useI18n();
 const route = useRoute();
