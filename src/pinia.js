@@ -1,5 +1,5 @@
 /**
- * @author u20241a322  Blancas Chávez, Carlos Franco
+ * @author u202418655  Victor Jhosef Laura Acosta
  */
 import { createPinia } from 'pinia'
 const pinia = createPinia()

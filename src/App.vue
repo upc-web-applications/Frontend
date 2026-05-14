@@ -1,6 +1,6 @@
 <script setup>
 /**
- * @author u20241a322  Blancas Chávez, Carlos Franco
+ * @author u202418655  Victor Jhosef Laura Acosta
  */
 import Layout from '@/shared/presentation/components/layout.vue'
 </script>

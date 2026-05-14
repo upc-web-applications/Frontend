@@ -1,0 +1,18 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { MitigationApi } from '@/mitigation/infrastructure/mitigation-api.js'
+import { MitigationAssembler } from '@/mitigation/infrastructure/mitigation.assembler.js'
+/**
+ * @author u202418655  Victor Jhosef Laura Acosta
+ */
+const api = new MitigationApi()
+export const useMitigationStore = defineStore('mitigation', () => {
+    const mitigations = ref([]); const errors = ref([]); const loaded = ref(false)
+    function fetchAll() { api.getMitigations().then(r => { mitigations.value = MitigationAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => errors.value.push(e)) }
+    function getById(id) { return mitigations.value.find(m => m.id === parseInt(id)) }
+    function getByAssessmentId(aId) { return mitigations.value.filter(m => m.riskAssessmentId === parseInt(aId)) }
+    function add(mitigation) { return api.createMitigation(mitigation).then(r => mitigations.value.push(MitigationAssembler.toEntityFromResource(r.data))).catch(e => errors.value.push(e)) }
+    function update(mitigation) { return api.updateMitigation(mitigation).then(r => { const u = MitigationAssembler.toEntityFromResource(r.data); const i = mitigations.value.findIndex(m => m.id === u.id); if (i !== -1) mitigations.value[i] = u }).catch(e => errors.value.push(e)) }
+    function remove(id) { return api.deleteMitigation(id).then(() => { const i = mitigations.value.findIndex(m => m.id === id); if (i !== -1) mitigations.value.splice(i, 1) }).catch(e => errors.value.push(e)) }
+    return { mitigations, errors, loaded, fetchAll, getById, getByAssessmentId, add, update, remove }
+})
