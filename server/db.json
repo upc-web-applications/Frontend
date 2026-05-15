@@ -1,0 +1,98 @@
+{
+  "roles": [
+    {
+      "id": "4afbd60b-8da6-46a6-9b48-2d04b8fa2161",
+      "code": "supervisor",
+      "name": "Supervisor",
+      "description": "Valida alertas, tickets y estado operativo de planta"
+    },
+    {
+      "id": "af74b6d7-8217-44d6-b8d1-9bd5cd7555d2",
+      "code": "administrator",
+      "name": "Administrador",
+      "description": "Gestiona accesos, roles y configuracion de usuarios"
+    },
+    {
+      "id": "c1a42619-e994-48f0-92c6-cdf0a104e7a1",
+      "code": "plant-operator",
+      "name": "Operario de planta",
+      "description": "Reporta condiciones inseguras desde el sector asignado"
+    }
+  ],
+  "users": [
+    {
+      "id": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "roleId": "4afbd60b-8da6-46a6-9b48-2d04b8fa2161",
+      "sectorId": 2,
+      "fullName": "Supervisor Turno Alpha",
+      "email": "supervisor@riskguard.tech",
+      "password": "Risk123",
+      "status": "active",
+      "failedAttempts": 0,
+      "blockedUntil": null
+    },
+    {
+      "id": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "roleId": "af74b6d7-8217-44d6-b8d1-9bd5cd7555d2",
+      "sectorId": null,
+      "fullName": "Administrador RiskGuard",
+      "email": "administrador@riskguard.tech",
+      "password": "Risk123",
+      "status": "active",
+      "failedAttempts": 0,
+      "blockedUntil": null
+    },
+    {
+      "id": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "roleId": "c1a42619-e994-48f0-92c6-cdf0a104e7a1",
+      "sectorId": 4,
+      "fullName": "Operario Planta Sur",
+      "email": "operario@riskguard.tech",
+      "password": "Risk123",
+      "status": "active",
+      "failedAttempts": 0,
+      "blockedUntil": null
+    }
+  ],
+  "sessions": [
+    {
+      "id": "857bc86e-b22a-4cd2-b3e1-f589373e4d4b",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-SESSION-DEMO-001",
+      "createdAt": "2026-05-14T08:05:00.000Z",
+      "lastActivityAt": "2026-05-14T08:05:25.000Z",
+      "isValid": false,
+      "closedAt": "2026-05-14T08:05:30.000Z",
+      "closeReason": "session-expired-by-inactivity"
+    }
+  ],
+  "accessLogs": [
+    {
+      "id": "536fa6b1-cb77-498b-bb02-a5aa9e0eb77a",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-14T08:05:00.000Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "a71ddbd5-bf5c-4f9c-9523-c23b7fdc0f09",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-14T08:05:30.000Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "session-expired-by-inactivity"
+    },
+    {
+      "id": "3dc8c70f-08e8-40f0-88e0-52ed6cb50f18",
+      "userId": null,
+      "email": "usuario@riskguard.tech",
+      "attemptAt": "2026-05-14T08:10:00.000Z",
+      "wasSuccessful": false,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "email-not-registered"
+    }
+  ]
+}

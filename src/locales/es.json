@@ -1,0 +1,39 @@
+{
+  "option": {
+    "panel": "Panel de acceso"
+  },
+  "login": {
+    "title": "Bienvenido de vuelta",
+    "subtitle": "Ingrese sus credenciales para acceder al panel de control.",
+    "email": "Correo corporativo",
+    "password": "Contrasena",
+    "remember": "Recordar correo",
+    "forgot": "Olvido su clave?",
+    "submit": "Ingresar",
+    "invalidEmail": "Ingrese un correo valido antes de continuar.",
+    "invalidCredentials": "Correo o contrasena incorrectos, intentelo nuevamente.",
+    "blocked": "Demasiados intentos fallidos. Por favor, intente nuevamente en 15 minutos.",
+    "expired": "Sesion expirada por inactividad. Ingrese nuevamente.",
+    "attempts": "Intentos fallidos: {count}/5",
+    "help": "Problemas de acceso? Contacte a soporte IT."
+  },
+  "account": {
+    "title": "Panel de acceso",
+    "supervisorPanel": "Panel Supervisor",
+    "operatorPanel": "Panel Operario de planta",
+    "adminPanel": "Panel Administracion",
+    "summary": "Rol y permisos validados correctamente",
+    "fullName": "Nombre completo",
+    "role": "Rol validado",
+    "sector": "Sector asignado",
+    "logout": "Cerrar sesion"
+  },
+  "pageNotFound": {
+    "title": "Pagina no encontrada",
+    "content": "La ruta {route} no esta disponible.",
+    "goHome": "Ir al inicio"
+  },
+  "footer": {
+    "content": "Todos los derechos reservados. Desarrollado por el Grupo 4 - Seccion 12190."
+  }
+}

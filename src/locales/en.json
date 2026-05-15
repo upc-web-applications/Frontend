@@ -1,0 +1,39 @@
+{
+  "option": {
+    "panel": "Access panel"
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Enter your credentials to access the control panel.",
+    "email": "Corporate email",
+    "password": "Password",
+    "remember": "Remember email",
+    "forgot": "Forgot password?",
+    "submit": "Sign in",
+    "invalidEmail": "Enter a valid email before continuing.",
+    "invalidCredentials": "Email or password is incorrect. Try again.",
+    "blocked": "Too many failed attempts. Please try again in 15 minutes.",
+    "expired": "Session expired due to inactivity. Sign in again.",
+    "attempts": "Failed attempts: {count}/5",
+    "help": "Access problems? Contact IT support."
+  },
+  "account": {
+    "title": "Access panel",
+    "supervisorPanel": "Supervisor panel",
+    "operatorPanel": "Plant operator panel",
+    "adminPanel": "Administration panel",
+    "summary": "Role and permissions validated correctly",
+    "fullName": "Full name",
+    "role": "Validated role",
+    "sector": "Assigned sector",
+    "logout": "Sign out"
+  },
+  "pageNotFound": {
+    "title": "Page not found",
+    "content": "Route {route} is not available.",
+    "goHome": "Go home"
+  },
+  "footer": {
+    "content": "All rights reserved. Developed by Group 4 - Section 12190."
+  }
+}
