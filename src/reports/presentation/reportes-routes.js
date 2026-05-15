@@ -20,20 +20,26 @@ const reportsRoutes = [
     {
         path: 'alerts',
         name: 'critical-alerts',
-        component: () => import('@/reportes/presentation/views/critical_alerts.vue'),
+        component: () => import('@/reports/presentation/views/critical_alerts.vue'),
         meta: { title: 'Critical Alerts' }
     },
     {
         path: 'sst-plan',
         name: 'sst-plan-tracking',
-        component: () => import('@/reportes/presentation/views/sst_plan_tracking.vue'),
+        component: () => import('@/reports/presentation/views/sst_plan_tracking.vue'),
         meta: { title: 'SST Plan Tracking' }
     },
     {
         path: 'predictive-indicators',
         name: 'predictive-indicators',
-        component: () => import('@/reportes/presentation/views/predective_indicators.vue'),
+        component: () => import('@/reports/presentation/views/predective_indicators.vue'),
         meta: { title: 'Predictive Indicators' }
+    },
+    {
+        path: 'history',
+        name: 'incident-history',
+        component: () => import('@/reports/presentation/views/incident_history.vue'),
+        meta: { title: 'Incident History' }
     }
 ];
 

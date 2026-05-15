@@ -8,6 +8,7 @@ const reportsList = () => import("@/reports/presentation/views/report_list.vue")
 const criticalAlerts = () => import("@/reports/presentation/views/critical_alerts.vue");
 const sstPlanTracking = () => import("@/reports/presentation/views/sst_plan_tracking.vue");
 const predictiveIndicators = () => import("@/reports/presentation/views/predective_indicators.vue");
+const incidentHistory = () => import("@/reports/presentation/views/incident_history.vue");
 
 const routes = [
     {
@@ -55,6 +56,12 @@ const routes = [
                 name: 'predictive-indicators',
                 component: predictiveIndicators,
                 meta: { title: 'Predictive Indicators' }
+            },
+            {
+                path: 'reportes/history',
+                name: 'incident-history',
+                component: incidentHistory,
+                meta: { title: 'Incident History' }
             }
         ]
     },
