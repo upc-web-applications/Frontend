@@ -193,6 +193,105 @@ h3 { font-size: 0.85rem; }
   color: var(--rg-text) !important;
 }
 
+/* ── BUTTON OVERRIDES ── */
+.p-button-warning, .p-button.p-button-warning,
+.p-button[data-pc-severity="warning"] {
+  background: #EF610F !important;
+  border-color: #EF610F !important;
+  color: #fff !important;
+}
+.p-button-warning:hover, .p-button.p-button-warning:hover { background: #d9540c !important; border-color: #d9540c !important; }
+
+.p-button-success, .p-button.p-button-success,
+.p-button[data-pc-severity="success"] {
+  background: #22C55E !important;
+  border-color: #22C55E !important;
+  color: #fff !important;
+}
+.p-button-success:hover, .p-button.p-button-success:hover { background: #16a34a !important; border-color: #16a34a !important; }
+
+/* ── PRIMEVUE 4 TOKEN OVERRIDES ── */
+:root {
+  /* Tags */
+  --p-tag-success-background:  rgba(34,197,94,0.15);
+  --p-tag-success-color:       #22C55E;
+  --p-tag-warn-background:     rgba(239,97,15,0.15);
+  --p-tag-warn-color:          #EF610F;
+  --p-tag-danger-background:   rgba(239,68,68,0.15);
+  --p-tag-danger-color:        #EF4444;
+  --p-tag-info-background:     rgba(99,179,237,0.12);
+  --p-tag-info-color:          #63B3ED;
+  --p-tag-secondary-background:rgba(107,127,153,0.15);
+  --p-tag-secondary-color:     #6B7F99;
+  --p-tag-border-radius:       6px;
+
+  /* Buttons */
+  --p-button-warning-background:      #EF610F;
+  --p-button-warning-hover-background:#d9540c;
+  --p-button-warning-border-color:    #EF610F;
+  --p-button-warning-hover-border-color:#d9540c;
+  --p-button-warning-color:           #fff;
+  --p-button-success-background:      #22C55E;
+  --p-button-success-hover-background:#16a34a;
+  --p-button-success-border-color:    #22C55E;
+  --p-button-success-color:           #fff;
+
+  /* Paginator */
+  --p-paginator-nav-button-selected-background: #EF610F;
+  --p-paginator-nav-button-selected-color:      #fff;
+
+  /* ConfirmDialog / Dialog */
+  --p-dialog-background:        #131c2e;
+  --p-dialog-border-color:      rgba(255,255,255,0.08);
+  --p-dialog-color:             #EEF2FF;
+  --p-dialog-header-background: #0c1829;
+  --p-dialog-header-color:      #EF610F;
+  --p-dialog-footer-background: #0c1829;
+}
+
+/* Tag base */
+.p-tag {
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  padding: 3px 10px !important;
+}
+
+/* Fallback class selectors for any PrimeVue version */
+.p-tag-success  { background: rgba(34,197,94,0.15)  !important; color: #22C55E  !important; }
+.p-tag-warn,
+.p-tag-warning  { background: rgba(239,97,15,0.15)  !important; color: #EF610F  !important; }
+.p-tag-danger   { background: rgba(239,68,68,0.15)  !important; color: #EF4444  !important; }
+.p-tag-info     { background: rgba(99,179,237,0.12) !important; color: #63B3ED  !important; }
+.p-tag-secondary{ background: rgba(107,127,153,0.15)!important; color: #6B7F99  !important; }
+
+/* Dialog dark */
+.p-dialog {
+  background: #131c2e !important;
+  border: 1px solid rgba(255,255,255,0.08) !important;
+  color: #EEF2FF !important;
+}
+.p-dialog .p-dialog-header {
+  background: #0c1829 !important;
+  color: #EF610F !important;
+  border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+}
+.p-dialog .p-dialog-title { color: #EF610F !important; font-weight: 700 !important; }
+.p-dialog .p-dialog-header-icon { color: #6B7F99 !important; }
+.p-dialog .p-dialog-header-icon:hover { background: rgba(255,255,255,0.06) !important; color: #EEF2FF !important; }
+.p-dialog .p-dialog-content {
+  background: #131c2e !important;
+  color: #EEF2FF !important;
+}
+.p-dialog .p-dialog-footer {
+  background: #0c1829 !important;
+  border-top: 1px solid rgba(255,255,255,0.07) !important;
+}
+
+/* ConfirmDialog icon + message */
+.p-confirmdialog .p-confirmdialog-icon { color: #FBBF24 !important; }
+.p-confirmdialog .p-confirmdialog-message { color: #EEF2FF !important; }
+
 /* ── SCROLLBAR ── */
 * {
   scrollbar-width: thin;

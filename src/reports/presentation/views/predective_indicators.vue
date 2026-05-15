@@ -2,13 +2,34 @@
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
 import { onMounted, computed } from 'vue';
+import { useToast } from 'primevue/usetoast';
+import { generateExecutiveSummaryPDF, downloadPDF } from '@/reports/infrastructure/pdf-report.service.js';
 
 const { t } = useI18n();
 const store = useReportsStore();
+const toast = useToast();
 
 onMounted(async () => {
-  await store.fetchPredictiveIndicators();
+  await Promise.all([
+    store.fetchPredictiveIndicators(),
+    store.fetchKPIDashboard()
+  ]);
 });
+
+const exportExecutiveSummary = () => {
+  if (!store.predictiveIndicators.length) {
+    toast.add({ severity: 'warn', summary: t('common.warning'), detail: t('errors.no_data'), life: 3000 });
+    return;
+  }
+  const doc = generateExecutiveSummaryPDF({
+    predictiveIndicators: store.predictiveIndicators,
+    kpiDashboard:         store.kpiDashboard,
+    date:                 new Date().toISOString()
+  });
+  const fileName = `RiskGuard_Resumen_Ejecutivo_${new Date().toISOString().slice(0, 10)}.pdf`;
+  downloadPDF(doc, fileName);
+  toast.add({ severity: 'success', summary: t('common.success'), detail: t('success.report_generated'), life: 3000 });
+};
 
 const latest = computed(() => store.predictiveIndicators[0] || null);
 
@@ -20,7 +41,7 @@ const getTrendIcon = (variation) => {
 
 const getTrendColor = (variation) => {
   if (variation > 0) return '#EF4444';
-  if (variation < 0) return '#10B981';
+  if (variation < 0) return '#22C55E';
   return '#FBBF24';
 };
 
@@ -31,8 +52,8 @@ const getTrendLabel = (trend) => {
 };
 
 const getTrendSeverity = (trend) => {
-  if (trend === 'increasing') return 'warning';
-  if (trend === 'decreasing') return 'success';
+  if (trend === 'increasing') return 'success';
+  if (trend === 'decreasing') return 'danger';
   return 'info';
 };
 </script>
@@ -46,10 +67,16 @@ const getTrendSeverity = (trend) => {
         <h1 class="page-title">{{ t('predictive_indicators.title') }}</h1>
         <p class="page-subtitle">{{ t('predictive_indicators.subtitle') }}</p>
       </div>
+      <pv-button
+          icon="pi pi-file-pdf"
+          :label="t('predictive_indicators.export_summary')"
+          severity="warning"
+          @click="exportExecutiveSummary"
+      />
     </div>
 
     <!-- LOADING -->
-    <div v-if="store.isLoading" class="loading-state">
+    <div v-if="store.loadingPredictiveIndicators" class="loading-state">
       <pv-spinner />
     </div>
 
@@ -107,57 +134,48 @@ const getTrendSeverity = (trend) => {
       <!-- TRENDING SECTORS -->
       <div class="section-card" v-if="latest.sectors_with_increasing_trend?.length > 0">
         <h2 class="section-title">{{ t('predictive_indicators.sectors_trending') }}</h2>
-
-        <div class="sectors-grid">
-          <div
-              v-for="sector in latest.sectors_with_increasing_trend"
-              :key="sector.sector"
-              class="sector-card"
-          >
-            <div class="sector-top">
-              <span class="sector-name">{{ sector.sector }}</span>
+        <pv-data-table :value="latest.sectors_with_increasing_trend" size="small">
+          <pv-column field="sector" :header="t('predictive_indicators.sector')" />
+          <pv-column field="events" :header="t('predictive_indicators.events')" style="width:12%" />
+          <pv-column :header="t('predictive_indicators.trend_percentage')" style="width:14%">
+            <template #body="{ data }">
+              <span style="color:#EF4444; font-weight:700;">+{{ data.variation_percentage }}%</span>
+            </template>
+          </pv-column>
+          <pv-column :header="t('common.status')" style="width:14%">
+            <template #body="{ data }">
               <pv-tag
-                  :value="sector.status === 'critical' ? t('predictive_indicators.critical') : t('predictive_indicators.alert')"
-                  :severity="sector.status === 'critical' ? 'danger' : 'warning'"
+                  :value="data.status === 'critical' ? t('predictive_indicators.critical') : t('predictive_indicators.alert')"
+                  :severity="data.status === 'critical' ? 'danger' : 'warning'"
               />
-            </div>
-            <div class="sector-stats">
-              <div class="stat-box">
-                <span class="stat-label">{{ t('predictive_indicators.events') }}</span>
-                <span class="stat-value">{{ sector.events }}</span>
-              </div>
-              <div class="stat-box">
-                <span class="stat-label">{{ t('predictive_indicators.trend_percentage') }}</span>
-                <span class="stat-value" style="color: #EF4444;">+{{ sector.variation_percentage }}%</span>
-              </div>
-            </div>
-          </div>
-        </div>
+            </template>
+          </pv-column>
+        </pv-data-table>
       </div>
 
       <!-- RECURRING INCIDENT TYPES -->
       <div class="section-card" v-if="latest.recurring_incident_types?.length > 0">
         <h2 class="section-title">{{ t('predictive_indicators.recurring_types') }}</h2>
-
-        <div class="types-grid">
-          <div
-              v-for="item in latest.recurring_incident_types"
-              :key="item.type"
-              class="type-card"
-          >
-            <div class="type-top">
-              <span class="type-name">{{ item.type }}</span>
-              <span class="cases-badge">{{ item.count }} {{ t('predictive_indicators.cases') }}</span>
-            </div>
-            <div class="type-bottom">
+        <pv-data-table :value="latest.recurring_incident_types" size="small">
+          <pv-column field="type" :header="t('my_reports.type')" />
+          <pv-column field="count" :header="t('predictive_indicators.cases')" style="width:12%" />
+          <pv-column :header="'% total'" style="width:12%">
+            <template #body="{ data }">
+              <div class="pct-bar">
+                <div class="pct-bar__fill" :style="{ width: data.percentage + '%' }"></div>
+                <span>{{ data.percentage }}%</span>
+              </div>
+            </template>
+          </pv-column>
+          <pv-column :header="'Tendencia'" style="width:18%">
+            <template #body="{ data }">
               <pv-tag
-                  :value="getTrendLabel(item.trend)"
-                  :severity="getTrendSeverity(item.trend)"
+                  :value="getTrendLabel(data.trend)"
+                  :severity="getTrendSeverity(data.trend)"
               />
-              <span class="type-pct">{{ item.percentage }}%</span>
-            </div>
-          </div>
-        </div>
+            </template>
+          </pv-column>
+        </pv-data-table>
       </div>
 
       <!-- HISTORY: all periods comparison -->
@@ -331,104 +349,53 @@ const getTrendSeverity = (trend) => {
   margin: 0 0 20px;
 }
 
-/* SECTORS */
-.sectors-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 16px;
-}
-
-.sector-card {
-  background: rgba(255, 91, 0, 0.05);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 16px;
-}
-
-.sector-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-
-.sector-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.sector-stats {
-  display: flex;
-  gap: 12px;
-}
-
-.stat-box {
-  flex: 1;
-  text-align: center;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 6px;
-  padding: 8px;
-}
-
-.stat-label {
-  display: block;
-  font-size: 10px;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  margin-bottom: 4px;
-}
-
-.stat-value {
-  display: block;
-  font-size: 20px;
-  font-weight: 700;
-}
-
-/* TYPES */
-.types-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 14px;
-}
-
-.type-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  padding: 14px;
-}
-
-.type-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.type-name {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.cases-badge {
-  background: rgba(255, 91, 0, 0.2);
+/* TABLE DARK THEME */
+:deep(.p-datatable-thead > tr > th) {
+  background: #0f1115;
   color: var(--primary-color);
+  border-color: var(--border-color, #2a2f38);
   font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.type-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+:deep(.p-datatable-tbody > tr) {
+  background: #0e1c2f;
+  color: var(--text-color);
 }
 
-.type-pct {
+:deep(.p-datatable-tbody > tr:nth-child(even)) {
+  background: #091422;
+}
+
+:deep(.p-datatable-tbody > tr:hover > td) {
+  background: rgba(255, 91, 0, 0.05) !important;
+}
+
+:deep(.p-datatable-tbody > tr > td) {
+  border-color: rgba(59, 130, 246, 0.1);
   font-size: 13px;
+}
+
+/* PCT BAR */
+.pct-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pct-bar__fill {
+  height: 6px;
+  background: var(--primary-color);
+  border-radius: 3px;
+  max-width: 80px;
+  min-width: 4px;
+}
+
+.pct-bar span {
+  font-size: 12px;
   color: var(--text-secondary);
+  white-space: nowrap;
 }
 
 /* HISTORY TABLE */
@@ -504,9 +471,7 @@ const getTrendSeverity = (trend) => {
 @media (max-width: 768px) {
   .indicators-container { padding: 15px; }
   .page-title { font-size: 22px; }
-  .kpis-grid,
-  .sectors-grid,
-  .types-grid { grid-template-columns: 1fr; }
+  .kpis-grid { grid-template-columns: 1fr; }
   .history-header,
   .history-row { grid-template-columns: 1fr 1fr 1fr; }
   .history-header span:nth-child(4),

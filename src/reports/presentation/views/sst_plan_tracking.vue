@@ -2,16 +2,114 @@
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
 import { onMounted, computed } from 'vue';
+import { useToast } from 'primevue/usetoast';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const { t, locale } = useI18n();
 const store = useReportsStore();
+const toast = useToast();
 
 onMounted(async () => {
   await store.fetchAnnualOHSPlan();
 });
 
+const exportSSTpdf = () => {
+  const plan = store.annualOHSPlan;
+  if (!plan) return;
+
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const BRAND = '#FF5B00';
+
+  // Header
+  doc.setFillColor('#0F1115');
+  doc.rect(0, 0, 210, 28, 'F');
+  doc.setFontSize(18); doc.setTextColor(BRAND); doc.setFont('helvetica', 'bold');
+  doc.text('RiskGuard', 14, 12);
+  doc.setFontSize(10); doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'normal');
+  doc.text('Informe Anual — Plan de SST', 14, 20);
+  doc.setFontSize(8); doc.setTextColor('#6B7280');
+  doc.text(`Generado: ${new Date().toLocaleDateString('es-PE')}`, 196, 26, { align: 'right' });
+
+  let y = 38;
+
+  // Global KPIs
+  doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(BRAND);
+  doc.text('Resumen Global', 14, y);
+  doc.setDrawColor(BRAND); doc.setLineWidth(0.5); doc.line(14, y + 2, 196, y + 2);
+  y += 12;
+
+  const rows = [
+    ['Cumplimiento global', `${plan.global_compliance}%`],
+    ['Meta establecida', `${plan.goal}%`],
+    ['Actividades completadas', `${plan.completed_activities} / ${plan.total_activities}`],
+    ['Meses críticos', plan.critical_months],
+    ['Estado', plan.global_compliance >= 80 ? 'Óptimo' : plan.global_compliance >= 50 ? 'Aceptable' : 'Crítico']
+  ];
+  rows.forEach(([label, val]) => {
+    doc.setFontSize(10); doc.setFont('helvetica', 'normal'); doc.setTextColor(50, 50, 50);
+    doc.text(label, 20, y);
+    doc.setFont('helvetica', 'bold'); doc.setTextColor(0, 0, 0);
+    doc.text(String(val), 120, y);
+    y += 8;
+  });
+  y += 6;
+
+  // Monthly table
+  doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(BRAND);
+  doc.text('Detalle Mensual', 14, y);
+  doc.setDrawColor(BRAND); doc.line(14, y + 2, 196, y + 2);
+  y += 8;
+
+  autoTable(doc, {
+    startY: y,
+    head: [['Mes', 'Cumplimiento', 'Completadas', 'Planificadas', 'Estado']],
+    body: (plan.monthly_details || []).map(m => [
+      new Date(plan.year || 2024, m.month - 1).toLocaleString(locale.value, { month: 'long' }),
+      `${m.compliance}%`, m.completed_activities, m.planned_activities,
+      m.status === 'optimal' ? 'Óptimo' : m.status === 'acceptable' ? 'Aceptable' : 'Crítico'
+    ]),
+    headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+    bodyStyles: { fontSize: 8 },
+    alternateRowStyles: { fillColor: [245, 245, 245] },
+    margin: { left: 14, right: 14 }, theme: 'striped'
+  });
+  y = doc.lastAutoTable.finalY + 10;
+
+  // By sector
+  if (plan.details_by_sector?.length) {
+    doc.setFontSize(11); doc.setFont('helvetica', 'bold'); doc.setTextColor(BRAND);
+    doc.text('Cumplimiento por Sector', 14, y);
+    doc.setDrawColor(BRAND); doc.line(14, y + 2, 196, y + 2);
+    y += 8;
+
+    autoTable(doc, {
+      startY: y,
+      head: [['Sector', 'Cumplimiento', 'Completadas', 'Planificadas', 'Resultado']],
+      body: plan.details_by_sector.map(s => [
+        s.sector, `${s.compliance}%`, s.completed_activities, s.planned_activities,
+        s.compliance >= 80 ? 'Cumple' : 'No cumple'
+      ]),
+      headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
+      bodyStyles: { fontSize: 8 },
+      alternateRowStyles: { fillColor: [245, 245, 245] },
+      margin: { left: 14, right: 14 }, theme: 'striped'
+    });
+  }
+
+  const pages = doc.internal.getNumberOfPages();
+  for (let p = 1; p <= pages; p++) {
+    doc.setPage(p);
+    doc.setFontSize(7); doc.setTextColor('#6B7280');
+    doc.text(`Página ${p} de ${pages} — RiskGuard`, 105, 290, { align: 'center' });
+  }
+
+  doc.save(`RiskGuard_Plan_SST_${plan.year || new Date().getFullYear()}.pdf`);
+  toast.add({ severity: 'success', summary: t('common.success'), detail: t('success.report_generated'), life: 3000 });
+};
+
 const getStatusColor = (percentage) => {
-  if (percentage >= 80) return '#10B981';
+  if (percentage >= 80) return '#22C55E';
   if (percentage >= 50) return '#FBBF24';
   return '#EF4444';
 };
@@ -30,7 +128,7 @@ const getStatusSeverity = (percentage) => {
 
 const chartData = computed(() => ({
   labels: store.annualOHSPlan?.monthly_details?.map(d =>
-    new Date(2024, d.month - 1).toLocaleString(locale.value, { month: 'short' })
+      new Date(2024, d.month - 1).toLocaleString(locale.value, { month: 'short' })
   ) || [],
   datasets: [
     {
@@ -79,11 +177,12 @@ const chartOptions = {
           icon="pi pi-download"
           :label="t('plan_sst.report_pdf')"
           severity="warning"
+          @click="exportSSTpdf"
       />
     </div>
 
     <!-- LOADING -->
-    <div v-if="store.isLoading" class="loading-state">
+    <div v-if="store.loadingAnnualOHSPlan" class="loading-state">
       <pv-spinner />
     </div>
 
@@ -177,7 +276,7 @@ const chartOptions = {
 
             <div class="category-footer">
               <span class="activities">
-                {{ sector.completed_activities }}/{{ sector.total_activities }}
+                {{ sector.completed_activities }}/{{ sector.planned_activities }}
               </span>
               <pv-tag
                   :value="getStatusLabel(sector.compliance)"
@@ -192,7 +291,7 @@ const chartOptions = {
       <!-- Legend -->
       <div class="legend">
         <div class="legend-item">
-          <div class="legend-color" style="background-color: #10B981;"></div>
+          <div class="legend-color" style="background-color: #22C55E;"></div>
           <span>{{ t('plan_sst.green_optimal') }}</span>
         </div>
         <div class="legend-item">
@@ -267,16 +366,16 @@ const chartOptions = {
   background: rgba(255, 91, 0, 0.05);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 20px;
+  padding: 14px 16px;
   text-align: center;
 }
 
 .compliance-value {
-  font-size: 48px;
+  font-size: 28px;
   font-weight: 700;
   color: var(--primary-color);
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .compliance-label {

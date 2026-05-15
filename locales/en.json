@@ -3,6 +3,7 @@
     "inicio": "Home",
     "nuevo_reporte": "New Report",
     "mis_reportes": "My Reports",
+    "historial": "Incident History",
     "notificaciones": "Critical Alerts",
     "indicadores": "Predictive Indicators",
     "plan_sst": "SST Plan",
@@ -35,7 +36,13 @@
     "see_report": "See Report",
     "update": "Update",
     "next": "Next",
-    "goal": "Goal"
+    "goal": "Goal",
+    "export_png": "Export PNG",
+    "spike_month": "Month with >20% increase",
+    "normal_month": "Normal month",
+    "executive_summary_preview": "Preview — Executive Summary",
+    "by_type": "By Type",
+    "plant_safe": "The plant is operating within safe parameters"
   },
   "kpi": {
     "active_incidents": "Active Incidents",
@@ -71,7 +78,8 @@
     "compliance_section": "Regulatory Compliance",
     "sector": "Sector",
     "all_sectors": "All Sectors",
-    "generate": "Generate"
+    "generate": "Generate",
+    "partial_period_notice": "Partial period — the current month has not yet ended. Data may be incomplete."
   },
   "my_reports": {
     "title": "Report History",
@@ -88,6 +96,8 @@
     "compliance": "Compliance",
     "download": "Download",
     "view": "View",
+    "preview": "Preview",
+    "excel_no_preview": "Excel files are downloaded directly (no preview available).",
     "no_reports": "No reports found",
     "size": "Size",
     "subtitle": "History of generated reports"
@@ -156,7 +166,8 @@
     "low": "Low",
     "average_hours": "Average Hours",
     "hours_prom": "h avg",
-    "back": "Back"
+    "back": "Back",
+    "export_summary": "Export Executive Summary"
   },
   "common": {
     "save": "Save",
@@ -218,6 +229,17 @@
     "data_saved": "Data saved successfully",
     "data_deleted": "Data deleted successfully",
     "action_completed": "Action completed successfully"
+  },
+  "incident_history": {
+    "title": "Incident History",
+    "subtitle": "Immutable record for legal traceability — Law N° 29783",
+    "records": "records",
+    "export_pdf": "Export PDF",
+    "readonly_notice": "Historical records are read-only and cannot be modified or deleted.",
+    "description": "Description",
+    "resolution_hours": "Resolution Hrs.",
+    "criticality": "Criticality",
+    "operator": "Operator"
   },
   "validation": {
     "required": "This field is required",

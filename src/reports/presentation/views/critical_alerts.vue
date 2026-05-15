@@ -85,7 +85,7 @@ const deleteAlert = async (alert) => {
     <!-- TABLE -->
     <div class="table-wrapper">
 
-      <div v-if="store.isLoading" class="loading-state">
+      <div v-if="store.loadingCriticalAlerts" class="loading-state">
         <pv-spinner />
       </div>
 
@@ -159,7 +159,7 @@ const deleteAlert = async (alert) => {
                   v-if="data.status !== 'resolved'"
                   icon="pi pi-check"
                   rounded
-                  severity="success"
+                  text
                   size="small"
                   @click="markAsResolved(data)"
                   v-tooltip.top="t('notifications.resolved')"
@@ -167,6 +167,7 @@ const deleteAlert = async (alert) => {
               <pv-button
                   icon="pi pi-trash"
                   rounded
+                  text
                   severity="danger"
                   size="small"
                   @click="deleteAlert(data)"

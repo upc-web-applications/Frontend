@@ -64,10 +64,12 @@
       "date": "2024-03-03",
       "section": "GAS_PLANT",
       "incident_type": "Pressure Anomaly",
-      "description": "High pressure alert in pipeline B",
+      "description": "High pressure alert in pipeline B — valve showed 140% of nominal value",
       "resolved": false,
       "closing_date": null,
-      "resolution_time_hours": null
+      "resolution_time_hours": null,
+      "criticality": "CRITICAL",
+      "operator_id": "OP_003"
     },
     {
       "id": "INC_007",
@@ -75,10 +77,12 @@
       "date": "2024-03-18",
       "section": "CONTROL_ROOM",
       "incident_type": "Server Failure",
-      "description": "Monitoring system offline for 2 hours",
+      "description": "Monitoring system offline for 2 hours due to power fluctuation",
       "resolved": true,
       "closing_date": "2024-03-18",
-      "resolution_time_hours": 2
+      "resolution_time_hours": 2,
+      "criticality": "LOW",
+      "operator_id": "OP_005"
     },
     {
       "id": "INC_008",
@@ -86,10 +90,12 @@
       "date": "2024-04-07",
       "section": "WAREHOUSE_B",
       "incident_type": "Chemical Leak",
-      "description": "Acid leak from container IBC-12",
+      "description": "Acid leak from container IBC-12 — exceeds safety threshold, zone evacuated",
       "resolved": false,
       "closing_date": null,
-      "resolution_time_hours": null
+      "resolution_time_hours": null,
+      "criticality": "CRITICAL",
+      "operator_id": "OP_002"
     },
     {
       "id": "INC_009",
@@ -97,10 +103,25 @@
       "date": "2024-04-22",
       "section": "GAS_PLANT",
       "incident_type": "Pressure Anomaly",
-      "description": "Valve failure in compressor unit",
+      "description": "Valve failure in compressor unit — manual bypass activated",
       "resolved": true,
       "closing_date": "2024-04-23",
-      "resolution_time_hours": 10
+      "resolution_time_hours": 10,
+      "criticality": "HIGH",
+      "operator_id": "OP_003"
+    },
+    {
+      "id": "INC_010",
+      "monthly_report_id": "RPT_2024_04",
+      "date": "2024-04-14",
+      "section": "TURBINE_04",
+      "incident_type": "Abnormal Vibration",
+      "description": "Turbine bearing vibration exceeded 8mm/s threshold — unit shut down for inspection",
+      "resolved": false,
+      "closing_date": null,
+      "resolution_time_hours": null,
+      "criticality": "CRITICAL",
+      "operator_id": "OP_004"
     }
   ],
   "annual_ohs_plan": [
@@ -335,48 +356,104 @@
       "elapsed_hours": 72,
       "responsible_supervisor": "Ana Torres",
       "status": "unresolved",
-      "message": "Acid leak from container IBC-12 exceeds safety threshold. Immediate evacuation required.",
+      "message": "Fuga de ácido en contenedor IBC-12 supera el umbral de seguridad. Se requiere evacuación inmediata.",
       "read": false
     },
     {
       "id": "ALERT_002",
       "creation_date": "2024-04-10T14:00:00Z",
-      "type": "ALERT",
+      "type": "CRITICAL",
       "sector": "GAS_PLANT",
       "risk_type": "Pressure Anomaly",
       "elapsed_hours": 96,
+      "responsible_supervisor": "Carlos Mendoza",
+      "status": "unresolved",
+      "message": "Presión en tubería B al 140% del valor nominal. Equipo de mantenimiento notificado sin respuesta.",
+      "read": false
+    },
+    {
+      "id": "ALERT_003",
+      "creation_date": "2024-04-09T11:00:00Z",
+      "type": "ALERT",
+      "sector": "SOUTH_ACCESS",
+      "risk_type": "Unsafe Condition",
+      "elapsed_hours": 120,
       "responsible_supervisor": "Ana Torres",
-      "status": "in_review",
-      "message": "Pressure in pipeline B at 140% of nominal value. Maintenance team notified.",
+      "status": "resolved",
+      "message": "Condición insegura en acceso sur corregida. Señalización renovada.",
       "read": true
     }
   ],
   "generated_reports": [
     {
-      "id": "REP_GEN_001",
-      "type": "monthly",
-      "month": 3,
-      "year": 2024,
+      "type": "compliance",
+      "month": null,
+      "year": 2026,
       "start_date": null,
       "end_date": null,
       "sector_filter": null,
-      "generation_date": "2024-04-02T08:45:00Z",
-      "file_name": "RiskGuard_monthly_1714647918.pdf",
+      "format": "pdf",
+      "generation_date": "2026-05-15T02:05:23.988Z",
+      "file_name": "RiskGuard_Cumplimiento_todos_2026-05-15.pdf",
       "status": "generated",
-      "size_kb": 267
+      "size_kb": 15,
+      "id": "dgqrwUy"
     },
     {
-      "id": "REP_GEN_002",
-      "type": "audit",
-      "month": null,
-      "year": 2024,
-      "start_date": "2024-01-01T00:00:00Z",
-      "end_date": "2024-03-31T00:00:00Z",
+      "type": "monthly",
+      "month": 1,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
       "sector_filter": null,
-      "generation_date": "2024-04-05T11:00:00Z",
-      "file_name": "RiskGuard_audit_1714647918.pdf",
-      "status": "downloaded",
-      "size_kb": 890
+      "format": "pdf",
+      "generation_date": "2026-05-15T02:27:04.290Z",
+      "file_name": "RiskGuard_Reporte_Mensual_enero_2026.pdf",
+      "status": "generated",
+      "size_kb": 14,
+      "id": "DmNMTQ6"
+    },
+    {
+      "type": "audit",
+      "month": 1,
+      "year": 2026,
+      "start_date": "2026-05-27T05:00:00.000Z",
+      "end_date": "2026-05-31T05:00:00.000Z",
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T02:27:20.133Z",
+      "file_name": "RiskGuard_Auditoria_27-5-2026_31-5-2026.pdf",
+      "status": "generated",
+      "size_kb": 10,
+      "id": "Z4PRqZP"
+    },
+    {
+      "type": "compliance",
+      "month": null,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T03:28:16.045Z",
+      "file_name": "RiskGuard_Cumplimiento_todos_2026-05-15.pdf",
+      "status": "generated",
+      "size_kb": 16,
+      "id": "sY8Mb7k"
+    },
+    {
+      "type": "compliance",
+      "month": null,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T03:28:35.285Z",
+      "file_name": "RiskGuard_Cumplimiento_todos_2026-05-15.pdf",
+      "status": "generated",
+      "size_kb": 16,
+      "id": "7fkvraL"
     }
   ],
   "kpi_dashboard": [

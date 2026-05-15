@@ -34,6 +34,12 @@ const reportsRoutes = [
         name: 'predictive-indicators',
         component: () => import('@/reportes/presentation/views/predective_indicators.vue'),
         meta: { title: 'Predictive Indicators' }
+    },
+    {
+        path: 'history',
+        name: 'incident-history',
+        component: () => import('@/reports/presentation/views/incident_history.vue'),
+        meta: { title: 'Incident History' }
     }
 ];
 

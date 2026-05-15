@@ -1,10 +1,30 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, ref } from 'vue';
+import { generateExecutiveSummaryPDF, downloadPDF, pdfToBlob } from '@/reports/infrastructure/pdf-report.service.js';
+import { useToast } from 'primevue/usetoast';
 
 const { t } = useI18n();
 const store = useReportsStore();
+const toast = useToast();
+
+const showPreview        = ref(false);
+const previewUrl         = ref(null);
+const selectedSector     = ref(null);
+const chartRef           = ref(null);
+const showByType         = ref(false);
+const showSectorDetail   = ref(false);
+const sectorDetailData   = ref({ title: '', sectors: [], incidents: [] });
+
+const sectorOptions = computed(() => {
+  const all = { label: t('new_report.all_sectors'), value: null };
+  const sectors = new Set();
+  store.historicalTrends.forEach(tr => {
+    Object.keys(tr.incidents_by_sector || {}).forEach(s => sectors.add(s));
+  });
+  return [all, ...[...sectors].map(s => ({ label: s, value: s }))];
+});
 
 // KPI colors
 const kpiColors = computed(() => {
@@ -12,7 +32,7 @@ const kpiColors = computed(() => {
 
   store.kpiDashboard.forEach((kpi) => {
     if (kpi.status === 'optimal') {
-      colors[kpi.id] = '#10B981';
+      colors[kpi.id] = '#22C55E';
     } else if (kpi.status === 'alert') {
       colors[kpi.id] = '#FBBF24';
     } else {
@@ -23,25 +43,122 @@ const kpiColors = computed(() => {
   return colors;
 });
 
-// Trend chart data
-const trendChartData = computed(() => ({
-  labels: store.historicalTrends.map(
-      trend => `${trend.month}/${trend.year}`
-  ),
+const trendChartData = computed(() => {
+  const labels = store.historicalTrends.map(tr => `${tr.month}/${tr.year}`);
+  const data   = store.historicalTrends.map(tr =>
+      selectedSector.value
+          ? (tr.incidents_by_sector?.[selectedSector.value] ?? 0)
+          : tr.total_incidents
+  );
 
-  datasets: [
-    {
-      label: 'Incidents',
-      data: store.historicalTrends.map(
-          trend => trend.total_incidents
-      ),
+  // Highlight months with significant increase (>20% vs previous)
+  const pointColors = data.map((val, i) => {
+    if (i === 0) return '#FF5B00';
+    const prev = data[i - 1];
+    return prev > 0 && (val - prev) / prev > 0.2 ? '#EF4444' : '#FF5B00';
+  });
+
+  return {
+    labels,
+    datasets: [{
+      label: selectedSector.value ? selectedSector.value : t('dashboard.incidents'),
+      data,
       borderColor: '#FF5B00',
-      backgroundColor: 'rgba(255,91,0,0.2)',
+      backgroundColor: 'rgba(255,91,0,0.15)',
+      pointBackgroundColor: [...pointColors],
+      pointBorderColor: [...pointColors],
+      pointRadius: 6,
       fill: true,
       tension: 0.4
-    }
-  ]
-}));
+    }]
+  };
+});
+
+const TYPE_COLORS = ['#FF5B00', '#3B82F6', '#22C55E', '#FBBF24', '#EF4444', '#8B5CF6', '#EC4899'];
+
+const trendByTypeData = computed(() => {
+  const labels = store.historicalTrends.map(tr => `${tr.month}/${tr.year}`);
+
+  let typeMap = {};
+
+  if (selectedSector.value) {
+    // Con sector: calcula desde incidentes individuales filtrados por sector
+    store.incidents
+        .filter(i => (i.section || i.sector) === selectedSector.value)
+        .forEach(i => {
+          const d = new Date(i.date);
+          const key = `${d.getMonth() + 1}/${d.getFullYear()}`;
+          if (labels.includes(key)) {
+            const type = i.incident_type || 'Sin tipo';
+            if (!typeMap[type]) typeMap[type] = {};
+            typeMap[type][key] = (typeMap[type][key] || 0) + 1;
+          }
+        });
+  } else {
+    // Sin sector: usa incidents_by_type de historical_trends (datos reales agregados)
+    store.historicalTrends.forEach(tr => {
+      const key = `${tr.month}/${tr.year}`;
+      Object.entries(tr.incidents_by_type || {}).forEach(([type, count]) => {
+        if (!typeMap[type]) typeMap[type] = {};
+        typeMap[type][key] = count;
+      });
+    });
+  }
+
+  const datasets = Object.entries(typeMap).map(([type, byMonth], idx) => ({
+    label: type,
+    data: labels.map(l => byMonth[l] || 0),
+    borderColor: TYPE_COLORS[idx % TYPE_COLORS.length],
+    backgroundColor: TYPE_COLORS[idx % TYPE_COLORS.length] + '22',
+    pointRadius: 5,
+    fill: false,
+    tension: 0.4
+  }));
+
+  return { labels, datasets };
+});
+
+const obtenerDetalleSector = (kpi) => {
+  const label = t(`kpi.${kpi.name}`) || kpi.name;
+  const kpiVal = kpi.value != null ? ` — ${kpi.value}${kpi.name === 'ohs_plan_compliance' ? '%' : ''}` : '';
+
+  if (kpi.name === 'critical_sectors') {
+    // Sectores críticos = sectores con alertas activas (unresolved / in_review)
+    const alertsBySector = store.criticalAlerts
+        .filter(a => a.status === 'unresolved' || a.status === 'in_review')
+        .reduce((acc, a) => {
+          if (!acc[a.sector]) acc[a.sector] = { sector: a.sector, alerts: [] };
+          acc[a.sector].alerts.push(a);
+          return acc;
+        }, {});
+    const sectors = Object.values(alertsBySector).map(s => ({
+      sector: s.sector,
+      compliance: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.compliance ?? '—',
+      completed_activities: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.completed_activities ?? '—',
+      planned_activities: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.planned_activities ?? '—',
+      alertas_activas: s.alerts.length,
+      estado: s.alerts.some(a => a.type === 'CRITICAL') ? 'Crítico' : 'Alerta'
+    }));
+    sectorDetailData.value = { title: label + kpiVal, sectors, incidents: [], mode: 'critical' };
+
+  } else if (kpi.name === 'ohs_plan_compliance') {
+    const sectors = (store.annualOHSPlan?.details_by_sector || [])
+        .map(s => ({
+          ...s,
+          estado: s.compliance >= 80 ? 'Óptimo' : s.compliance >= 50 ? 'Aceptable' : 'Crítico'
+        }))
+        .sort((a, b) => a.compliance - b.compliance);
+    sectorDetailData.value = { title: label + kpiVal, sectors, incidents: [], mode: 'compliance' };
+
+  } else {
+    const filteredInc = store.incidents.filter(i =>
+        kpi.name === 'active_incidents'   ? !i.resolved :
+            kpi.name === 'resolved_incidents' ?  i.resolved : true
+    );
+    sectorDetailData.value = { title: label + kpiVal, sectors: [], incidents: filteredInc, mode: 'incidents' };
+  }
+  showSectorDetail.value = true;
+};
 
 const chartOptions = {
   responsive: true,
@@ -76,19 +193,53 @@ const chartOptions = {
   }
 };
 
-onMounted(async () => {
-  await Promise.all([
-    store.fetchKPIDashboard(),
-    store.fetchHistoricalTrends(),
-    store.fetchCriticalAlerts(),
-    store.fetchIncidents(),
-    store.fetchAnnualOHSPlan(),
-    store.fetchPredictiveIndicators()
-  ]);
+const plantaSegura = computed(() => {
+  const kpi = store.kpiDashboard.find(k => k.name === 'active_incidents');
+  return kpi != null && kpi.value === 0;
 });
 
-const exportDashboard = () => {
-  console.log('Exporting dashboard...');
+onMounted(async () => {
+  const tasks = [];
+  if (!store.kpiDashboard.length)         tasks.push(store.fetchKPIDashboard());
+  if (!store.historicalTrends.length)     tasks.push(store.fetchHistoricalTrends());
+  if (!store.criticalAlerts.length)       tasks.push(store.fetchCriticalAlerts());
+  if (!store.incidents.length)            tasks.push(store.fetchIncidents());
+  if (!store.annualOHSPlan)               tasks.push(store.fetchAnnualOHSPlan());
+  if (!store.predictiveIndicators.length) tasks.push(store.fetchPredictiveIndicators());
+  await Promise.all(tasks);
+});
+
+const exportChartPNG = () => {
+  const chart = chartRef.value?.getChart?.();
+  if (!chart) return;
+  const sectorPart = selectedSector.value || 'global';
+  const now = new Date().toISOString().slice(0, 10);
+  const url = chart.toBase64Image();
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `RiskGuard_Tendencias_${sectorPart}_${now}.png`;
+  a.click();
+};
+
+const exportDashboard = async () => {
+  try {
+    const doc = generateExecutiveSummaryPDF({
+      predictiveIndicators: store.predictiveIndicators,
+      kpiDashboard:         store.kpiDashboard,
+      date:                 new Date().toISOString()
+    });
+    const fileName = `RiskGuard_Resumen_Ejecutivo_${new Date().toISOString().slice(0, 10)}.pdf`;
+
+    const blob = pdfToBlob(doc);
+    if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
+    previewUrl.value = URL.createObjectURL(blob);
+    showPreview.value = true;
+
+    downloadPDF(doc, fileName);
+    toast.add({ severity: 'success', summary: t('common.success'), detail: t('success.report_generated'), life: 3000 });
+  } catch (err) {
+    toast.add({ severity: 'error', summary: t('common.error'), detail: err.message, life: 3000 });
+  }
 };
 </script>
 
@@ -126,8 +277,10 @@ const exportDashboard = () => {
         <div
             v-for="kpi in store.kpiDashboard"
             :key="kpi.id"
-            class="kpi-card"
+            class="kpi-card kpi-card--clickable"
             :style="{ borderLeft: `5px solid ${kpiColors[kpi.id]}` }"
+            @click="obtenerDetalleSector(kpi)"
+            :title="t('dashboard.see_details')"
         >
           <div class="kpi-header">
             <span class="kpi-name">
@@ -163,92 +316,56 @@ const exportDashboard = () => {
       </div>
     </div>
 
+    <!-- BANNER: planta sin incidentes activos (US44 Escenario 2) -->
+    <div v-if="plantaSegura" class="safe-banner">
+      <i class="pi pi-shield"></i>
+      <span>{{ t('dashboard.plant_safe') }}</span>
+    </div>
+
     <!-- CHART -->
     <div class="section chart-section">
-      <div class="section-header">
+      <div class="chart-header">
         <h2>{{ t('dashboard.trends') }}</h2>
+        <div class="chart-controls">
+          <pv-select
+              v-model="selectedSector"
+              :options="sectorOptions"
+              option-label="label"
+              option-value="value"
+              :placeholder="t('new_report.all_sectors')"
+              class="sector-select"
+          />
+          <pv-button
+              :icon="showByType ? 'pi pi-chart-line' : 'pi pi-list'"
+              :label="showByType ? t('dashboard.incidents') : t('dashboard.by_type')"
+              severity="secondary"
+              size="small"
+              @click="showByType = !showByType"
+          />
+          <pv-button
+              icon="pi pi-image"
+              :label="t('dashboard.export_png')"
+              severity="secondary"
+              size="small"
+              @click="exportChartPNG"
+          />
+        </div>
       </div>
 
       <div class="chart-wrapper">
         <pv-chart
+            ref="chartRef"
             type="line"
-            :data="trendChartData"
+            :data="showByType ? trendByTypeData : trendChartData"
             :options="chartOptions"
         />
       </div>
-    </div>
 
-    <!-- STATS -->
-    <div class="stats-grid">
-
-      <!-- ACTIVE INCIDENTS -->
-      <div class="stat-card">
-        <div class="stat-icon critical">
-          <i class="pi pi-exclamation-circle"></i>
-        </div>
-
-        <div class="stat-info">
-          <span class="stat-label">
-            {{ t('dashboard.active_incidents') }}
-          </span>
-
-          <span class="stat-value">
-            {{ store.activeIncidents.length }}
-          </span>
-        </div>
-      </div>
-
-      <!-- RESOLVED -->
-      <div class="stat-card">
-        <div class="stat-icon success">
-          <i class="pi pi-check-circle"></i>
-        </div>
-
-        <div class="stat-info">
-          <span class="stat-label">
-            {{ t('dashboard.resolved_month') }}
-          </span>
-
-          <span class="stat-value">
-            {{ store.resolvedIncidents.length }}
-          </span>
-        </div>
-      </div>
-
-      <!-- ALERTS -->
-      <div class="stat-card">
-        <div class="stat-icon warning">
-          <i class="pi pi-bell"></i>
-        </div>
-
-        <div class="stat-info">
-          <span class="stat-label">
-            {{ t('notifications.critical') }}
-          </span>
-
-          <span class="stat-value">
-            {{ store.unresolvedCriticalAlerts.length }}
-          </span>
-        </div>
-      </div>
-
-      <!-- OHS -->
-      <div class="stat-card">
-        <div class="stat-icon info">
-          <i class="pi pi-chart-bar"></i>
-        </div>
-
-        <div class="stat-info">
-          <span class="stat-label">
-            {{ t('dashboard.sst_compliance') }}
-          </span>
-
-          <span class="stat-value">
-            {{
-              store.annualOHSPlan?.global_compliance || 0
-            }}%
-          </span>
-        </div>
+      <div class="chart-legend-hint">
+        <span class="legend-dot" style="background:#EF4444"></span>
+        <span>{{ t('dashboard.spike_month') }}</span>
+        <span class="legend-dot" style="background:#FF5B00; margin-left:14px"></span>
+        <span>{{ t('dashboard.normal_month') }}</span>
       </div>
     </div>
 
@@ -314,9 +431,133 @@ const exportDashboard = () => {
     </div>
 
   </div>
+
+  <!-- EXECUTIVE SUMMARY PREVIEW -->
+  <pv-dialog
+      v-model:visible="showPreview"
+      :header="t('dashboard.executive_summary_preview')"
+      :modal="true"
+      :draggable="false"
+      style="width: 80vw; max-width: 1000px;"
+  >
+    <iframe
+        v-if="previewUrl"
+        :src="previewUrl"
+        style="width:100%; height:70vh; border:none; border-radius:6px;"
+        title="Resumen ejecutivo"
+    />
+    <template #footer>
+      <pv-button :label="t('common.close')" icon="pi pi-times" severity="secondary" @click="showPreview = false" />
+    </template>
+  </pv-dialog>
+
+  <!-- SECTOR DETAIL DIALOG -->
+  <pv-dialog
+      v-model:visible="showSectorDetail"
+      :header="sectorDetailData.title"
+      :modal="true"
+      :draggable="false"
+      style="width: 70vw; max-width: 900px;"
+  >
+    <!-- Sectores críticos: muestra alertas activas por sector -->
+    <div v-if="sectorDetailData.mode === 'critical' && sectorDetailData.sectors.length">
+      <p class="detail-hint">Sectores con alertas activas no resueltas en este momento.</p>
+      <pv-data-table :value="sectorDetailData.sectors" :rows="10">
+        <pv-column field="sector" :header="t('predictive_indicators.sector')" />
+        <pv-column field="alertas_activas" header="Alertas Activas" style="width:14%">
+          <template #body="{ data }">
+            <pv-tag :value="String(data.alertas_activas)" severity="danger" />
+          </template>
+        </pv-column>
+        <pv-column field="compliance" header="Cumplimiento SST" style="width:16%">
+          <template #body="{ data }">
+            <pv-tag
+                v-if="data.compliance !== '—'"
+                :value="`${data.compliance}%`"
+                :severity="data.compliance >= 80 ? 'success' : data.compliance >= 50 ? 'warning' : 'danger'"
+            />
+            <span v-else>—</span>
+          </template>
+        </pv-column>
+        <pv-column field="estado" :header="t('common.status')">
+          <template #body="{ data }">
+            <pv-tag
+                :value="data.estado"
+                :severity="data.estado === 'Crítico' ? 'danger' : 'warning'"
+            />
+          </template>
+        </pv-column>
+      </pv-data-table>
+    </div>
+
+    <!-- Cumplimiento SST: muestra tabla de plan por sector -->
+    <div v-else-if="sectorDetailData.mode === 'compliance' && sectorDetailData.sectors.length">
+      <p class="detail-hint">Porcentaje de actividades SST completadas por sector respecto al plan anual.</p>
+      <pv-data-table :value="sectorDetailData.sectors" :rows="10">
+        <pv-column field="sector" :header="t('predictive_indicators.sector')" />
+        <pv-column field="compliance" header="Cumplimiento (%)">
+          <template #body="{ data }">
+            <pv-tag
+                :value="`${data.compliance}%`"
+                :severity="data.compliance >= 80 ? 'success' : data.compliance >= 50 ? 'warning' : 'danger'"
+            />
+          </template>
+        </pv-column>
+        <pv-column field="completed_activities" header="Completadas" />
+        <pv-column field="planned_activities" header="Planificadas" />
+        <pv-column field="estado" :header="t('common.status')">
+          <template #body="{ data }">
+            <pv-tag
+                :value="data.estado"
+                :severity="data.estado === 'Óptimo' ? 'success' : data.estado === 'Aceptable' ? 'warning' : 'danger'"
+            />
+          </template>
+        </pv-column>
+      </pv-data-table>
+    </div>
+    <div v-else-if="sectorDetailData.incidents.length">
+      <pv-data-table :value="sectorDetailData.incidents" :rows="10" :paginator="sectorDetailData.incidents.length > 10">
+        <pv-column field="id" header="ID" style="width:10%" />
+        <pv-column :header="t('my_reports.date')" style="width:14%">
+          <template #body="{ data }">{{ new Date(data.date).toLocaleDateString('es-PE') }}</template>
+        </pv-column>
+        <pv-column :header="t('predictive_indicators.sector')" style="width:16%">
+          <template #body="{ data }">{{ data.section || data.sector || '—' }}</template>
+        </pv-column>
+        <pv-column field="incident_type" :header="t('my_reports.type')" />
+        <pv-column :header="t('common.status')">
+          <template #body="{ data }">
+            <pv-tag
+                :value="data.resolved ? t('notifications.resolved') : t('notifications.unresolved')"
+                :severity="data.resolved ? 'success' : 'danger'"
+            />
+          </template>
+        </pv-column>
+      </pv-data-table>
+    </div>
+    <p v-else class="no-detail">{{ t('errors.no_data') }}</p>
+    <template #footer>
+      <pv-button :label="t('common.close')" icon="pi pi-times" severity="secondary" @click="showSectorDetail = false" />
+    </template>
+  </pv-dialog>
 </template>
 
 <style scoped>
+.safe-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 10px;
+  padding: 14px 20px;
+  margin-bottom: 32px;
+  color: #22C55E;
+  font-weight: 600;
+  font-size: 14px;
+}
+.safe-banner i { font-size: 20px; }
+
 .dashboard-container {
   background: var(--dark-bg);
   min-height: 100%;
@@ -388,8 +629,28 @@ const exportDashboard = () => {
   transition: 0.3s;
 }
 
+.kpi-card--clickable {
+  cursor: pointer;
+}
+
 .kpi-card:hover {
   transform: translateY(-5px);
+}
+
+.no-detail {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 30px;
+}
+
+.detail-hint {
+  font-size: 12px;
+  color: var(--text-secondary, #9CA3AF);
+  margin: 0 0 14px;
+  padding: 8px 12px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+  border-left: 3px solid var(--primary-color, #FF5B00);
 }
 
 .kpi-header {
@@ -426,93 +687,63 @@ const exportDashboard = () => {
 /* CHART */
 
 .chart-section {
-  background: linear-gradient(
-      135deg,
-      #1A1E24 0%,
-      #0F1115 100%
-  );
-
+  background: linear-gradient(135deg, #1A1E24 0%, #0F1115 100%);
   padding: 25px;
   border-radius: 10px;
 }
 
-.chart-wrapper {
-  height: 400px;
-}
-
-/* STATS */
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(
-      auto-fit,
-      minmax(220px, 1fr)
-  );
-
-  gap: 20px;
-  margin-bottom: 40px;
-}
-
-.stat-card {
-  background: linear-gradient(
-      135deg,
-      #1A1E24 0%,
-      #0F1115 100%
-  );
-  border-radius: 10px;
-  padding: 16px;
+.chart-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
-.stat-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
+.chart-header h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.chart-controls {
   display: flex;
-  justify-content: center;
   align-items: center;
-  font-size: 18px;
-  flex-shrink: 0;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.stat-icon.critical {
-  background: rgba(239,68,68,0.2);
-  color: #EF4444;
+.sector-select {
+  min-width: 180px;
 }
 
-.stat-icon.success {
-  background: rgba(16,185,129,0.2);
-  color: #10B981;
-}
-
-.stat-icon.warning {
-  background: rgba(251,191,36,0.2);
-  color: #FBBF24;
-}
-
-.stat-icon.info {
-  background: rgba(59,130,246,0.2);
-  color: #3B82F6;
-}
-
-.stat-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-label {
-  color: var(--text-secondary);
+:deep(.sector-select .p-select) {
+  background: #111418;
+  border-color: var(--border-color);
   font-size: 13px;
 }
 
-.stat-value {
-  font-size: 22px;
-  font-weight: 700;
-  margin-top: 4px;
-  font-family: 'DM Sans', sans-serif;
-  color: var(--rg-text);
+.chart-wrapper {
+  height: 380px;
+}
+
+.chart-legend-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
 }
 
 /* PREDICTIVE */
@@ -589,6 +820,85 @@ const exportDashboard = () => {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* DARK DIALOGS */
+
+:deep(.p-dialog) {
+  background: #1a1e24;
+  border: 1px solid var(--border-color, #2a2f38);
+  color: var(--text-color);
+}
+
+:deep(.p-dialog .p-dialog-header) {
+  background: #0f1115;
+  color: var(--primary-color, #FF5B00);
+  border-bottom: 1px solid var(--border-color, #2a2f38);
+  padding: 16px 20px;
+}
+
+:deep(.p-dialog .p-dialog-title) {
+  color: var(--primary-color, #FF5B00);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+:deep(.p-dialog .p-dialog-header-icon) {
+  color: var(--text-secondary, #9CA3AF);
+}
+
+:deep(.p-dialog .p-dialog-header-icon:hover) {
+  background: rgba(255,255,255,0.08) !important;
+  color: #fff !important;
+}
+
+:deep(.p-dialog .p-dialog-content) {
+  background: #1a1e24;
+  color: var(--text-color);
+  padding: 20px;
+}
+
+:deep(.p-dialog .p-dialog-footer) {
+  background: #0f1115;
+  border-top: 1px solid var(--border-color, #2a2f38);
+  padding: 12px 20px;
+}
+
+:deep(.p-dialog .p-datatable) {
+  background: transparent;
+}
+
+:deep(.p-dialog .p-datatable-thead > tr > th) {
+  background: #0f1115;
+  color: var(--primary-color, #FF5B00);
+  border-color: var(--border-color, #2a2f38);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+:deep(.p-dialog .p-datatable-tbody > tr) {
+  background: #1a1e24;
+  color: var(--text-color);
+}
+
+:deep(.p-dialog .p-datatable-tbody > tr:nth-child(even)) {
+  background: #111418;
+}
+
+:deep(.p-dialog .p-datatable-tbody > tr:hover > td) {
+  background: rgba(255,91,0,0.06) !important;
+}
+
+:deep(.p-dialog .p-datatable-tbody > tr > td) {
+  border-color: var(--border-color, #2a2f38);
+  font-size: 13px;
+}
+
+:deep(.p-dialog .p-paginator) {
+  background: #0f1115;
+  border-top: 1px solid var(--border-color, #2a2f38);
+  color: var(--text-secondary);
 }
 
 /* RESPONSIVE */

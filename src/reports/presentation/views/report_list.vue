@@ -5,6 +5,18 @@ import { onMounted, computed, ref } from 'vue';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
+import {
+  generateMonthlyPDF,
+  generateAuditPDF,
+  generateCompliancePDF,
+  downloadPDF,
+  pdfToBlob
+} from '@/reports/infrastructure/pdf-report.service.js';
+import {
+  generateMonthlyExcel,
+  generateAuditExcel,
+  generateComplianceExcel
+} from '@/reports/infrastructure/excel-report.service.js';
 
 const { t } = useI18n();
 const store = useReportsStore();
@@ -13,8 +25,13 @@ const toast = useToast();
 const router = useRouter();
 
 const selectedMonth = ref(null);
-const selectedYear = ref(null);
-const selectedType = ref(null);
+const selectedYear  = ref(null);
+const selectedType  = ref(null);
+
+// Preview state
+const showPreview  = ref(false);
+const previewUrl   = ref(null);
+const previewName  = ref('');
 
 const months = [
   { label: t('common.all'), value: null },
@@ -65,13 +82,70 @@ const formatSize = (sizeKb) => {
   return `${sizeKb} KB`;
 };
 
-const downloadReport = (report) => {
-  toast.add({
-    severity: 'success',
-    summary: t('common.success'),
-    detail: t('success.report_downloaded'),
-    life: 3000
-  });
+const loadData = () => Promise.all([
+  store.fetchIncidents(),
+  store.fetchKPIDashboard(),
+  store.fetchAnnualOHSPlan()
+]);
+
+const buildPdfDoc = (report) => {
+  if (report.type === 'monthly') {
+    return generateMonthlyPDF({ month: report.month, year: report.year,
+      incidents: store.incidents, kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan });
+  }
+  if (report.type === 'audit') {
+    return generateAuditPDF({ dateFrom: report.start_date, dateTo: report.end_date,
+      incidents: store.incidents, annualOHSPlan: store.annualOHSPlan });
+  }
+  return generateCompliancePDF({ sectorFilter: report.sector_filter,
+    annualOHSPlan: store.annualOHSPlan, kpiDashboard: store.kpiDashboard, incidents: store.incidents });
+};
+
+const buildExcel = (report) => {
+  if (report.type === 'monthly') {
+    return generateMonthlyExcel({ month: report.month, year: report.year,
+      incidents: store.incidents, kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan });
+  }
+  if (report.type === 'audit') {
+    return generateAuditExcel({ dateFrom: report.start_date, dateTo: report.end_date,
+      incidents: store.incidents, annualOHSPlan: store.annualOHSPlan });
+  }
+  return generateComplianceExcel({ sectorFilter: report.sector_filter,
+    annualOHSPlan: store.annualOHSPlan, kpiDashboard: store.kpiDashboard, incidents: store.incidents });
+};
+
+const downloadReport = async (report) => {
+  try {
+    await loadData();
+    if (report.format === 'xlsx') {
+      buildExcel(report);
+    } else {
+      downloadPDF(buildPdfDoc(report), report.file_name);
+    }
+    toast.add({ severity: 'success', summary: t('common.success'), detail: t('success.report_downloaded'), life: 3000 });
+  } catch (err) {
+    toast.add({ severity: 'error', summary: t('common.error'), detail: err.message, life: 3000 });
+  }
+};
+
+const previewReport = async (report) => {
+  try {
+    if (report.format === 'xlsx') {
+      toast.add({ severity: 'info', summary: 'Excel', detail: t('my_reports.excel_no_preview'), life: 3000 });
+      await loadData();
+      buildExcel(report);
+      return;
+    }
+    await loadData();
+    const doc  = buildPdfDoc(report);
+    const blob = pdfToBlob(doc);
+    if (previewUrl.value) URL.revokeObjectURL(previewUrl.value);
+    previewUrl.value  = URL.createObjectURL(blob);
+    previewName.value = report.file_name;
+    showPreview.value = true;
+  } catch (err) {
+    toast.add({ severity: 'error', summary: t('common.error'), detail: err.message, life: 3000 });
+  }
 };
 
 const deleteReport = (report) => {
@@ -182,7 +256,7 @@ const resetFilters = () => {
     <!-- TABLE -->
     <div class="table-section">
 
-      <div v-if="store.isLoading" class="loading-state">
+      <div v-if="store.loadingGeneratedReports" class="loading-state">
         <pv-spinner />
       </div>
 
@@ -222,26 +296,46 @@ const resetFilters = () => {
           </template>
         </pv-column>
 
-        <pv-column :header="t('my_reports.size')" style="width:12%">
+        <pv-column :header="t('new_report.format')" style="width:8%">
+          <template #body="{ data }">
+            <pv-tag
+                :value="(data.format || 'pdf').toUpperCase()"
+                :severity="data.format === 'xlsx' ? 'success' : 'info'"
+            />
+          </template>
+        </pv-column>
+
+        <pv-column :header="t('my_reports.size')" style="width:10%">
           <template #body="{ data }">
             {{ formatSize(data.size_kb) }}
           </template>
         </pv-column>
 
-        <pv-column :header="t('my_reports.actions')" style="width:15%">
+        <pv-column :header="t('my_reports.actions')" style="width:20%">
           <template #body="{ data }">
             <div class="actions">
               <pv-button
+                  icon="pi pi-eye"
+                  rounded
+                  text
+                  size="small"
+                  @click="previewReport(data)"
+                  v-tooltip.top="t('my_reports.preview')"
+              />
+              <pv-button
                   icon="pi pi-download"
                   rounded
-                  severity="success"
+                  text
+                  size="small"
                   @click="downloadReport(data)"
                   v-tooltip.top="t('my_reports.download')"
               />
               <pv-button
                   icon="pi pi-trash"
                   rounded
+                  text
                   severity="danger"
+                  size="small"
                   @click="deleteReport(data)"
                   v-tooltip.top="t('common.delete')"
               />
@@ -253,6 +347,37 @@ const resetFilters = () => {
     </div>
 
   </div>
+
+  <!-- PDF PREVIEW DIALOG -->
+  <pv-dialog
+      v-model:visible="showPreview"
+      :header="previewName"
+      :modal="true"
+      :draggable="false"
+      style="width: 80vw; max-width: 1000px;"
+      @hide="() => { showPreview = false; }"
+  >
+    <iframe
+        v-if="previewUrl"
+        :src="previewUrl"
+        style="width:100%; height:70vh; border:none; border-radius:6px;"
+        title="Vista previa del reporte"
+    />
+    <template #footer>
+      <pv-button
+          :label="t('common.close')"
+          icon="pi pi-times"
+          severity="secondary"
+          @click="showPreview = false"
+      />
+      <pv-button
+          :label="t('my_reports.download')"
+          icon="pi pi-download"
+          severity="warning"
+          @click="() => { const a = document.createElement('a'); a.href = previewUrl; a.download = previewName; a.click(); }"
+      />
+    </template>
+  </pv-dialog>
 </template>
 
 <style scoped>
