@@ -1,7 +1,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
 
 const { t, locale } = useI18n();
@@ -14,6 +14,7 @@ const navItems = [
   { to: '/',                               label: 'sidebar.inicio',         icon: 'pi pi-home' },
   { to: '/reportes/new',                   label: 'sidebar.nuevo_reporte',  icon: 'pi pi-plus' },
   { to: '/reportes/list',                  label: 'sidebar.mis_reportes',   icon: 'pi pi-list' },
+  { to: '/reportes/history',               label: 'sidebar.historial',      icon: 'pi pi-history' },
   { to: '/reportes/alerts',                label: 'sidebar.notificaciones', icon: 'pi pi-bell' },
   { to: '/reportes/predictive-indicators', label: 'sidebar.indicadores',    icon: 'pi pi-chart-line' },
   { to: '/reportes/sst-plan',              label: 'sidebar.plan_sst',       icon: 'pi pi-shield' }
@@ -38,9 +39,18 @@ const setLocale = (lang) => {
   locale.value = lang;
 };
 
-const unresolvedCount = computed(() =>
-    store.unresolvedCriticalAlerts?.length ?? 0
+// Alertas críticas sin resolver hace más de 48h (US49)
+const criticalOver48h = computed(() =>
+    (store.criticalAlerts ?? []).filter(a =>
+        a.type === 'CRITICAL' && a.status === 'unresolved' && (a.elapsed_hours ?? 0) >= 48
+    )
 );
+
+const unresolvedCount = computed(() => criticalOver48h.value.length);
+
+onMounted(() => {
+  store.fetchCriticalAlerts();
+});
 
 const toggleSidebar = () => {
   sidebarOpen.value = !sidebarOpen.value;
@@ -91,7 +101,13 @@ const closeSidebar = () => {
             :class="{ active: isActive(item.to) }"
             @click="closeSidebar"
         >
-          <i :class="item.icon" />
+          <span class="rg-nav-icon-wrap">
+            <i :class="item.icon" />
+            <span
+                v-if="item.to === '/reportes/alerts' && unresolvedCount > 0"
+                class="rg-nav-badge"
+            >{{ unresolvedCount }}</span>
+          </span>
           {{ t(item.label) }}
         </router-link>
       </nav>
@@ -291,6 +307,29 @@ const closeSidebar = () => {
   font-size: 15px;
   width: 18px;
   flex-shrink: 0;
+}
+
+.rg-nav-icon-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.rg-nav-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #EF4444;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* BOTTOM */

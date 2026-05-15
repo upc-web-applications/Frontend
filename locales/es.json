@@ -3,6 +3,7 @@
     "inicio": "Inicio",
     "nuevo_reporte": "Nuevo Reporte",
     "mis_reportes": "Mis Reportes",
+    "historial": "Historial de Incidentes",
     "notificaciones": "Alertas Críticas",
     "indicadores": "Indicadores Predictivos",
     "plan_sst": "Plan SST",
@@ -35,7 +36,13 @@
     "see_report": "Ver Informe",
     "update": "Actualizar",
     "next": "Siguiente",
-    "goal": "Meta"
+    "goal": "Meta",
+    "export_png": "Exportar PNG",
+    "spike_month": "Mes con incremento >20%",
+    "normal_month": "Mes normal",
+    "executive_summary_preview": "Vista Previa — Resumen Ejecutivo",
+    "by_type": "Por Tipo",
+    "plant_safe": "La planta opera dentro de los parámetros seguros"
   },
   "kpi": {
     "active_incidents": "Incidentes Activos",
@@ -71,7 +78,8 @@
     "compliance_section": "Cumplimiento Normativo",
     "sector": "Sector",
     "all_sectors": "Todos los Sectores",
-    "generate": "Generar"
+    "generate": "Generar",
+    "partial_period_notice": "Período parcial — el mes en curso aún no ha finalizado. Los datos pueden estar incompletos."
   },
   "my_reports": {
     "title": "Historial de Reportes",
@@ -88,6 +96,8 @@
     "compliance": "Cumplimiento",
     "download": "Descargar",
     "view": "Ver",
+    "preview": "Vista Previa",
+    "excel_no_preview": "El archivo Excel se descarga directamente (no hay vista previa).",
     "no_reports": "No se encontraron reportes",
     "size": "Tamaño",
     "subtitle": "Historial de reportes generados"
@@ -156,7 +166,8 @@
     "low": "Bajo",
     "average_hours": "Promedio Horas",
     "hours_prom": "h prom",
-    "back": "Regresar"
+    "back": "Regresar",
+    "export_summary": "Exportar Resumen Ejecutivo"
   },
   "common": {
     "save": "Guardar",
@@ -218,6 +229,17 @@
     "data_saved": "Datos guardados exitosamente",
     "data_deleted": "Datos eliminados exitosamente",
     "action_completed": "Acción completada exitosamente"
+  },
+  "incident_history": {
+    "title": "Historial de Incidentes",
+    "subtitle": "Registro inmutable para trazabilidad legal — Ley N° 29783",
+    "records": "registros",
+    "export_pdf": "Exportar PDF",
+    "readonly_notice": "Los registros históricos son de solo lectura y no pueden ser modificados ni eliminados.",
+    "description": "Descripción",
+    "resolution_hours": "Hrs. Resolución",
+    "criticality": "Criticidad",
+    "operator": "Operario"
   },
   "validation": {
     "required": "Este campo es obligatorio",

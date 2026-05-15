@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { ReportsApi } from '@/reports/infrastructure/reports-api.js';
 
 export const useReportsStore = defineStore('reports', () => {
@@ -12,36 +12,27 @@ export const useReportsStore = defineStore('reports', () => {
     const currentGeneratedReport = ref(null);
     const loadingGeneratedReports = ref(false);
     const errorGeneratedReports = ref(null);
-    const indicators = ref([]);
-    const currentIndicator = ref(null);
-    const loadingIndicators = ref(false);
-    const errorIndicators = ref(null);
     const incidents = ref([]);
-    const currentIncident = ref(null);
     const loadingIncidents = ref(false);
     const errorIncidents = ref(null);
     const annualOHSPlan = ref(null);
     const loadingAnnualOHSPlan = ref(false);
     const errorAnnualOHSPlan = ref(null);
     const predictiveIndicators = ref([]);
-    const currentPredictiveIndicator = ref(null);
     const loadingPredictiveIndicators = ref(false);
     const errorPredictiveIndicators = ref(null);
     const criticalAlerts = ref([]);
-    const currentCriticalAlert = ref(null);
     const loadingCriticalAlerts = ref(false);
     const errorCriticalAlerts = ref(null);
     const kpiDashboard = ref([]);
     const loadingKPI = ref(false);
     const errorKPI = ref(null);
     const historicalTrends = ref([]);
-    const currentHistoricalTrend = ref(null);
     const loadingHistoricalTrends = ref(false);
     const errorHistoricalTrends = ref(null);
     const isLoading = computed(() =>
         loadingMonthlyReports.value ||
         loadingGeneratedReports.value ||
-        loadingIndicators.value ||
         loadingIncidents.value ||
         loadingAnnualOHSPlan.value ||
         loadingPredictiveIndicators.value ||
@@ -61,6 +52,41 @@ export const useReportsStore = defineStore('reports', () => {
     const resolvedIncidents = computed(() =>
         incidents.value.filter(i => i.resolved)
     );
+
+    function syncKPIs() {
+        if (!kpiDashboard.value.length) return;
+
+        const activeCount = incidents.value.filter(i => !i.resolved).length;
+        const resolvedCount = incidents.value.filter(i => i.resolved).length;
+        const criticalSectorCount = new Set(
+            criticalAlerts.value
+                .filter(a => a.status === 'unresolved' || a.status === 'in_review')
+                .map(a => a.sector)
+        ).size;
+
+        kpiDashboard.value = kpiDashboard.value.map(kpi => {
+            if (kpi.name === 'active_incidents') {
+                return { ...kpi, value: activeCount,
+                    status: activeCount === 0 ? 'optimal' : 'alert' };
+            }
+            if (kpi.name === 'resolved_incidents') {
+                return { ...kpi, value: resolvedCount,
+                    status: resolvedCount >= kpi.goal ? 'optimal' : 'alert' };
+            }
+            if (kpi.name === 'critical_sectors') {
+                return { ...kpi, value: criticalSectorCount,
+                    status: criticalSectorCount === 0 ? 'optimal' : criticalSectorCount <= 2 ? 'alert' : 'danger' };
+            }
+            return kpi;
+        });
+    }
+
+    // Auto-sync KPIs cuando los datos en vivo cambian (ej: al completar el fetch inicial)
+    watch([incidents, criticalAlerts], () => {
+        if (kpiDashboard.value.length) {
+            syncKPIs();
+        }
+    }, { deep: false });
     async function fetchMonthlyReports() {
         loadingMonthlyReports.value = true;
         errorMonthlyReports.value = null;
@@ -110,53 +136,6 @@ export const useReportsStore = defineStore('reports', () => {
         }
     }
 
-    async function updateMonthlyReport(report) {
-        loadingMonthlyReports.value = true;
-        errorMonthlyReports.value = null;
-
-        try {
-            const updatedReport = await api.updateMonthlyReport(report);
-
-            const index = monthlyReports.value.findIndex(
-                r => r.id === report.id
-            );
-
-            if (index !== -1) {
-                monthlyReports.value[index] = updatedReport;
-            }
-
-            console.log('Monthly report updated:', updatedReport);
-
-            return updatedReport;
-        } catch (error) {
-            errorMonthlyReports.value = error.message;
-            console.error('Error updating monthly report:', error);
-            throw error;
-        } finally {
-            loadingMonthlyReports.value = false;
-        }
-    }
-
-    async function deleteMonthlyReport(id) {
-        loadingMonthlyReports.value = true;
-        errorMonthlyReports.value = null;
-
-        try {
-            await api.deleteMonthlyReport(id);
-
-            monthlyReports.value = monthlyReports.value.filter(
-                r => r.id !== id
-            );
-
-            console.log('Monthly report deleted:', id);
-        } catch (error) {
-            errorMonthlyReports.value = error.message;
-            console.error('Error deleting monthly report:', error);
-            throw error;
-        } finally {
-            loadingMonthlyReports.value = false;
-        }
-    }
 
     // ===== ACTIONS: GENERATED REPORTS =====
 
@@ -236,36 +215,6 @@ export const useReportsStore = defineStore('reports', () => {
             loadingGeneratedReports.value = false;
         }
     }
-    async function fetchIndicators() {
-        loadingIndicators.value = true;
-        errorIndicators.value = null;
-
-        try {
-            indicators.value = await api.getIndicators();
-            console.log('Indicators fetched:', indicators.value);
-        } catch (error) {
-            errorIndicators.value = error.message;
-            console.error('Error fetching indicators:', error);
-        } finally {
-            loadingIndicators.value = false;
-        }
-    }
-
-    async function fetchIndicatorById(id) {
-        loadingIndicators.value = true;
-        errorIndicators.value = null;
-
-        try {
-            currentIndicator.value = await api.getIndicatorById(id);
-            console.log('Indicator fetched:', currentIndicator.value);
-        } catch (error) {
-            errorIndicators.value = error.message;
-            console.error('Error fetching indicator:', error);
-        } finally {
-            loadingIndicators.value = false;
-        }
-    }
-
     // ===== ACTIONS: INCIDENTS =====
 
     async function fetchIncidents() {
@@ -278,42 +227,6 @@ export const useReportsStore = defineStore('reports', () => {
         } catch (error) {
             errorIncidents.value = error.message;
             console.error('Error fetching incidents:', error);
-        } finally {
-            loadingIncidents.value = false;
-        }
-    }
-
-    async function fetchIncidentById(id) {
-        loadingIncidents.value = true;
-        errorIncidents.value = null;
-
-        try {
-            currentIncident.value = await api.getIncidentById(id);
-            console.log('Incident fetched:', currentIncident.value);
-        } catch (error) {
-            errorIncidents.value = error.message;
-            console.error('Error fetching incident:', error);
-        } finally {
-            loadingIncidents.value = false;
-        }
-    }
-
-    async function createIncident(incident) {
-        loadingIncidents.value = true;
-        errorIncidents.value = null;
-
-        try {
-            const newIncident = await api.createIncident(incident);
-
-            incidents.value.push(newIncident);
-
-            console.log('Incident created:', newIncident);
-
-            return newIncident;
-        } catch (error) {
-            errorIncidents.value = error.message;
-            console.error('Error creating incident:', error);
-            throw error;
         } finally {
             loadingIncidents.value = false;
         }
@@ -333,6 +246,8 @@ export const useReportsStore = defineStore('reports', () => {
             if (index !== -1) {
                 incidents.value[index] = updatedIncident;
             }
+
+            syncKPIs();
 
             console.log('Incident updated:', updatedIncident);
 
@@ -355,26 +270,6 @@ export const useReportsStore = defineStore('reports', () => {
             annualOHSPlan.value = plans.length > 0
                 ? plans[0]
                 : null;
-
-            console.log(
-                'Annual OHS plan fetched:',
-                annualOHSPlan.value
-            );
-        } catch (error) {
-            errorAnnualOHSPlan.value = error.message;
-            console.error('Error fetching annual OHS plan:', error);
-        } finally {
-            loadingAnnualOHSPlan.value = false;
-        }
-    }
-
-    async function fetchAnnualOHSPlanById(id) {
-        loadingAnnualOHSPlan.value = true;
-        errorAnnualOHSPlan.value = null;
-
-        try {
-            annualOHSPlan.value =
-                await api.getAnnualOHSPlanById(id);
 
             console.log(
                 'Annual OHS plan fetched:',
@@ -436,29 +331,6 @@ export const useReportsStore = defineStore('reports', () => {
         }
     }
 
-    async function fetchPredictiveIndicatorById(id) {
-        loadingPredictiveIndicators.value = true;
-        errorPredictiveIndicators.value = null;
-
-        try {
-            currentPredictiveIndicator.value =
-                await api.getPredictiveIndicatorById(id);
-
-            console.log(
-                'Predictive indicator fetched:',
-                currentPredictiveIndicator.value
-            );
-        } catch (error) {
-            errorPredictiveIndicators.value = error.message;
-            console.error(
-                'Error fetching predictive indicator:',
-                error
-            );
-        } finally {
-            loadingPredictiveIndicators.value = false;
-        }
-    }
-
     // ===== ACTIONS: CRITICAL ALERTS =====
 
     async function fetchCriticalAlerts() {
@@ -484,29 +356,6 @@ export const useReportsStore = defineStore('reports', () => {
         }
     }
 
-    async function fetchCriticalAlertById(id) {
-        loadingCriticalAlerts.value = true;
-        errorCriticalAlerts.value = null;
-
-        try {
-            currentCriticalAlert.value =
-                await api.getCriticalAlertById(id);
-
-            console.log(
-                'Critical alert fetched:',
-                currentCriticalAlert.value
-            );
-        } catch (error) {
-            errorCriticalAlerts.value = error.message;
-            console.error(
-                'Error fetching critical alert:',
-                error
-            );
-        } finally {
-            loadingCriticalAlerts.value = false;
-        }
-    }
-
     async function updateCriticalAlert(alert) {
         loadingCriticalAlerts.value = true;
         errorCriticalAlerts.value = null;
@@ -522,6 +371,8 @@ export const useReportsStore = defineStore('reports', () => {
             if (index !== -1) {
                 criticalAlerts.value[index] = updatedAlert;
             }
+
+            syncKPIs();
 
             console.log(
                 'Critical alert updated:',
@@ -587,31 +438,6 @@ export const useReportsStore = defineStore('reports', () => {
         }
     }
 
-    async function fetchKPIById(id) {
-        loadingKPI.value = true;
-        errorKPI.value = null;
-
-        try {
-            const kpi = await api.getKPIById(id);
-
-            const index = kpiDashboard.value.findIndex(
-                k => k.id === id
-            );
-
-            if (index !== -1) {
-                kpiDashboard.value[index] = kpi;
-            }
-
-            console.log('KPI fetched:', kpi);
-
-            return kpi;
-        } catch (error) {
-            errorKPI.value = error.message;
-            console.error('Error fetching KPI:', error);
-        } finally {
-            loadingKPI.value = false;
-        }
-    }
     async function fetchHistoricalTrends() {
         loadingHistoricalTrends.value = true;
         errorHistoricalTrends.value = null;
@@ -635,55 +461,22 @@ export const useReportsStore = defineStore('reports', () => {
         }
     }
 
-    async function fetchHistoricalTrendById(id) {
-        loadingHistoricalTrends.value = true;
-        errorHistoricalTrends.value = null;
-
-        try {
-            currentHistoricalTrend.value =
-                await api.getHistoricalTrendById(id);
-
-            console.log(
-                'Historical trend fetched:',
-                currentHistoricalTrend.value
-            );
-        } catch (error) {
-            errorHistoricalTrends.value = error.message;
-            console.error(
-                'Error fetching historical trend:',
-                error
-            );
-        } finally {
-            loadingHistoricalTrends.value = false;
-        }
-    }
-
-    function resetState() {
-        monthlyReports.value = [];currentMonthlyReport.value = null;
-        generatedReports.value = [];currentGeneratedReport.value = null;
-        indicators.value = [];currentIndicator.value = null;
-        incidents.value = [];currentIncident.value = null;annualOHSPlan.value = null;
-        predictiveIndicators.value = [];currentPredictiveIndicator.value = null;
-        criticalAlerts.value = [];currentCriticalAlert.value = null;kpiDashboard.value = [];
-        historicalTrends.value = [];currentHistoricalTrend.value = null;
-    }
-
     return {
-        monthlyReports, currentMonthlyReport, loadingMonthlyReports,
-        errorMonthlyReports, generatedReports, currentGeneratedReport, loadingGeneratedReports, errorGeneratedReports,
-        indicators, currentIndicator, loadingIndicators, errorIndicators,
-        incidents, currentIncident, loadingIncidents, errorIncidents,
-        annualOHSPlan, loadingAnnualOHSPlan, errorAnnualOHSPlan, predictiveIndicators, currentPredictiveIndicator,
-        loadingPredictiveIndicators, errorPredictiveIndicators,
-        criticalAlerts, currentCriticalAlert, loadingCriticalAlerts, errorCriticalAlerts,
-        kpiDashboard, loadingKPI, errorKPI, historicalTrends, currentHistoricalTrend,
-        loadingHistoricalTrends, errorHistoricalTrends, isLoading,
-        unresolvedCriticalAlerts, activeIncidents, resolvedIncidents,
-        fetchMonthlyReports, fetchMonthlyReportById, createMonthlyReport, updateMonthlyReport, deleteMonthlyReport,
+        monthlyReports, currentMonthlyReport, loadingMonthlyReports, errorMonthlyReports,
+        generatedReports, currentGeneratedReport, loadingGeneratedReports, errorGeneratedReports,
+        incidents, loadingIncidents, errorIncidents,
+        annualOHSPlan, loadingAnnualOHSPlan, errorAnnualOHSPlan,
+        predictiveIndicators, loadingPredictiveIndicators, errorPredictiveIndicators,
+        criticalAlerts, loadingCriticalAlerts, errorCriticalAlerts,
+        kpiDashboard, loadingKPI, errorKPI,
+        historicalTrends, loadingHistoricalTrends, errorHistoricalTrends,
+        isLoading, unresolvedCriticalAlerts, activeIncidents, resolvedIncidents,
+        fetchMonthlyReports, fetchMonthlyReportById, createMonthlyReport,
         fetchGeneratedReports, fetchGeneratedReportById, createGeneratedReport, deleteGeneratedReport,
-        fetchIndicators, fetchIndicatorById, fetchIncidents, fetchIncidentById,
-        createIncident, updateIncident, fetchAnnualOHSPlan, fetchAnnualOHSPlanById, updateAnnualOHSPlan,
-        fetchPredictiveIndicators, fetchPredictiveIndicatorById, fetchCriticalAlerts, fetchCriticalAlertById, updateCriticalAlert,
-        deleteCriticalAlert, fetchKPIDashboard, fetchKPIById, fetchHistoricalTrends, fetchHistoricalTrendById, resetState
+        fetchIncidents, updateIncident,
+        fetchAnnualOHSPlan, updateAnnualOHSPlan,
+        fetchPredictiveIndicators,
+        fetchCriticalAlerts, updateCriticalAlert, deleteCriticalAlert,
+        fetchKPIDashboard, fetchHistoricalTrends, syncKPIs
     };
 });
