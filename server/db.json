@@ -1,0 +1,325 @@
+{
+  "heatMapZones": [
+    {
+      "id": 1,
+      "type": "Sector",
+      "sectorId": 1,
+      "assetId": null,
+      "code": "SEC-001",
+      "name": "Calderas",
+      "description": "Sector de calderas y sistemas de presion.",
+      "heatIndex": 94,
+      "riskLevel": "Critico",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:10:00",
+      "position": "wide"
+    },
+    {
+      "id": 2,
+      "type": "Sector",
+      "sectorId": 2,
+      "assetId": null,
+      "code": "SEC-002",
+      "name": "Quimicos",
+      "description": "Sector de almacenamiento y manipulacion de quimicos.",
+      "heatIndex": 72,
+      "riskLevel": "Alto",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:08:00",
+      "position": "wide"
+    },
+    {
+      "id": 3,
+      "type": "Sector",
+      "sectorId": 3,
+      "assetId": null,
+      "code": "SEC-003",
+      "name": "Almacen",
+      "description": "Zona de almacenamiento general de materiales.",
+      "heatIndex": 26,
+      "riskLevel": "Bajo",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:00:00",
+      "position": "wide"
+    },
+    {
+      "id": 4,
+      "type": "Sector",
+      "sectorId": 4,
+      "assetId": null,
+      "code": "SEC-004",
+      "name": "Ensamblaje",
+      "description": "Linea de ensamblaje y control de piezas.",
+      "heatIndex": 32,
+      "riskLevel": "Bajo",
+      "status": "Inactivo",
+      "updatedAt": "2026-05-14T08:03:00",
+      "position": "center"
+    },
+    {
+      "id": 5,
+      "type": "Sector",
+      "sectorId": 5,
+      "assetId": null,
+      "code": "SEC-005",
+      "name": "Planta Sur",
+      "description": "Area de apoyo y valvulas auxiliares.",
+      "heatIndex": 65,
+      "riskLevel": "Medio",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:07:00",
+      "position": "center"
+    }
+  ],
+  "tickets": [
+    {
+      "id": 1,
+      "code": "T-001",
+      "heatMapId": 1,
+      "sector": "Calderas",
+      "assetName": "Caldera B-12",
+      "incidentType": "Fuga de presion",
+      "riskLevel": "Critico",
+      "assignedTechnician": "",
+      "requiredSpecialty": "Calderas",
+      "assignmentDetails": "",
+      "status": "Pendiente",
+      "elapsedTime": "1 hora restante",
+      "slaStatus": "En tiempo",
+      "description": "Presion irregular detectada cerca de la valvula principal.",
+      "generatedAt": "2026-05-14T07:10:00"
+    },
+    {
+      "id": 2,
+      "code": "T-002",
+      "heatMapId": 2,
+      "sector": "Quimicos",
+      "assetName": "Almacen quimico Q-02",
+      "incidentType": "Utensilios expuestos",
+      "riskLevel": "Bajo",
+      "assignedTechnician": "Ana Paredes",
+      "requiredSpecialty": "Mecanica industrial",
+      "assignmentDetails": "Verificar almacenamiento seguro y retirar utensilios expuestos.",
+      "status": "En Progreso",
+      "elapsedTime": "15 minutos restantes",
+      "slaStatus": "En tiempo",
+      "description": "Material no almacenado correctamente en mesa secundaria.",
+      "generatedAt": "2026-05-14T07:35:00"
+    },
+    {
+      "id": 3,
+      "code": "T-003",
+      "heatMapId": 5,
+      "sector": "Planta Sur",
+      "assetName": "Valvula Sur V-08",
+      "incidentType": "Valvula trabada",
+      "riskLevel": "Critico",
+      "assignedTechnician": "Ana Paredes",
+      "requiredSpecialty": "Mecanica industrial",
+      "assignmentDetails": "Revisar bloqueo de valvula y reportar causa probable.",
+      "status": "En Progreso",
+      "elapsedTime": "40 minutos restantes",
+      "slaStatus": "SLA Incumplido",
+      "description": "Valvula del sistema auxiliar no responde al cierre manual.",
+      "generatedAt": "2026-05-14T06:20:00"
+    },
+    {
+      "id": 4,
+      "code": "T-004",
+      "heatMapId": 4,
+      "sector": "Ensamblaje",
+      "assetName": "Compresor A",
+      "incidentType": "Piezas expuestas",
+      "riskLevel": "Bajo",
+      "assignedTechnician": "",
+      "requiredSpecialty": "Mecanica industrial",
+      "assignmentDetails": "",
+      "status": "Pendiente",
+      "elapsedTime": "1 hora restante",
+      "slaStatus": "En tiempo",
+      "description": "Piezas metalicas fuera de contenedor delimitado.",
+      "generatedAt": "2026-05-14T07:58:00"
+    }
+  ],
+  "technicians": [
+    {
+      "id": 1,
+      "code": "TEC-01",
+      "firstName": "Ana",
+      "lastName": "Paredes",
+      "fullName": "Ana Paredes",
+      "specialty": "Mecanica industrial",
+      "email": "ana.paredes@riskguard.tech",
+      "phone": "987654321",
+      "status": "Activo"
+    },
+    {
+      "id": 2,
+      "code": "TEC-02",
+      "firstName": "Marco",
+      "lastName": "Ruiz",
+      "fullName": "Marco Ruiz",
+      "specialty": "Electricidad",
+      "email": "marco.ruiz@riskguard.tech",
+      "phone": "987654322",
+      "status": "Activo"
+    },
+    {
+      "id": 3,
+      "code": "TEC-03",
+      "firstName": "Luis",
+      "lastName": "Carpio",
+      "fullName": "Luis Carpio",
+      "specialty": "Calderas",
+      "email": "luis.carpio@riskguard.tech",
+      "phone": "987654323",
+      "status": "Activo"
+    }
+  ],
+  "assets": [
+    {
+      "id": 1,
+      "name": "Caldera de Vapor",
+      "code": "ACT-001",
+      "brand": "Fulton",
+      "sector": "Calderas Norte",
+      "riskLevel": "Critico",
+      "lastReview": "2026-03-15",
+      "status": "Critico"
+    },
+    {
+      "id": 2,
+      "name": "Brazo Robotico",
+      "code": "ACT-002",
+      "brand": "Kuka",
+      "sector": "Planta Ensamblaje",
+      "riskLevel": "Medio",
+      "lastReview": "2026-04-02",
+      "status": "Operativo"
+    },
+    {
+      "id": 3,
+      "name": "Tanque de Acido Sulfurico",
+      "code": "ACT-003",
+      "brand": "ChemTank",
+      "sector": "Planta Quimica",
+      "riskLevel": "Alto",
+      "lastReview": "2026-04-20",
+      "status": "Mantenimiento"
+    },
+    {
+      "id": 4,
+      "name": "Montacarga Electrico",
+      "code": "ACT-004",
+      "brand": "Toyota",
+      "sector": "Almacen",
+      "riskLevel": "Bajo",
+      "lastReview": "2026-01-10",
+      "status": "Operativo"
+    }
+  ],
+  "preventiveMaintenances": [
+    {
+      "id": 1,
+      "assetId": 1,
+      "assetName": "Caldera de Vapor",
+      "technician": "Luis Carpio",
+      "scheduledDate": "2026-05-17",
+      "reactivationDate": "2026-05-20",
+      "description": "Revision preventiva de presion y sellos.",
+      "status": "Programado",
+      "createdAt": "2026-05-14T08:15:00"
+    },
+    {
+      "id": 2,
+      "assetId": 2,
+      "assetName": "Brazo Robotico",
+      "technician": "Ana Paredes",
+      "scheduledDate": "2026-05-14",
+      "reactivationDate": "2026-05-16",
+      "description": "Revision de articulaciones y calibracion de brazo.",
+      "status": "Finalizado",
+      "createdAt": "2026-05-14T07:06:20.190Z",
+      "finishedAt": "2026-05-14T14:30:28.462Z"
+    },
+    {
+      "id": 3,
+      "assetId": 3,
+      "assetName": "Tanque de Acido Sulfurico",
+      "technician": "Luis Carpio",
+      "scheduledDate": "2026-05-14",
+      "reactivationDate": "2026-05-18",
+      "description": "Inspeccion de sellos y contencion secundaria.",
+      "status": "En Mantenimiento",
+      "createdAt": "2026-05-14T07:06:33.075Z"
+    }
+  ],
+  "archivedReports": [
+    {
+      "id": 1,
+      "heatMapId": 2,
+      "code": "INC-110",
+      "ticketCode": "T-010",
+      "date": "2025-10-24",
+      "sector": "Sector A",
+      "status": "Cerrado",
+      "documentUrl": "/reports/T-010.pdf",
+      "integrityHash": "RG-92F1A",
+      "archivedAt": "2026-05-13T16:30:00"
+    },
+    {
+      "id": 2,
+      "heatMapId": 1,
+      "code": "INC-111",
+      "ticketCode": "T-011",
+      "date": "2025-10-19",
+      "sector": "Sector B",
+      "status": "Mantenimiento",
+      "documentUrl": "/reports/T-011.pdf",
+      "integrityHash": "RG-48C2B",
+      "archivedAt": "2026-05-12T13:10:00"
+    },
+    {
+      "id": 3,
+      "heatMapId": 4,
+      "code": "INC-112",
+      "ticketCode": "T-012",
+      "date": "2025-10-10",
+      "sector": "Sector C",
+      "status": "Operativo",
+      "documentUrl": "/reports/T-012.pdf",
+      "integrityHash": "RG-21D8E",
+      "archivedAt": "2026-05-10T09:40:00"
+    },
+    {
+      "id": 4,
+      "heatMapId": 5,
+      "code": "INC-113",
+      "ticketCode": "T-013",
+      "date": "2025-09-10",
+      "sector": "Sector D",
+      "status": "Cerrado",
+      "documentUrl": "/reports/T-013.pdf",
+      "integrityHash": "RG-73B5F",
+      "archivedAt": "2026-05-08T15:20:00"
+    }
+  ],
+  "patterns": [
+    {
+      "id": 1,
+      "sector": "Calderas",
+      "riskType": "Fuga de presion",
+      "occurrences": 4,
+      "firstOccurrence": "2026-04-28",
+      "urgency": "Critico"
+    },
+    {
+      "id": 2,
+      "sector": "Quimicos",
+      "riskType": "Exposicion de material",
+      "occurrences": 3,
+      "firstOccurrence": "2026-05-02",
+      "urgency": "Medio"
+    }
+  ]
+}
