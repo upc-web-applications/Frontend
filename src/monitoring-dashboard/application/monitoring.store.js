@@ -22,7 +22,6 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
   const assets = ref([])
   const maintenances = ref([])
   const archivedReports = ref([])
-  const patterns = ref([])
   const errors = ref([])
   const selectedSector = ref(null)
   const filterRisk = ref(null)
@@ -31,8 +30,6 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
 
   const pendingTicketsCount = computed(() => tickets.value.filter(ticket => ticket.status === 'Pendiente').length)
   const inProgressCount = computed(() => tickets.value.filter(ticket => ticket.status === 'En Progreso').length)
-  const criticalAlertsCount = computed(() => tickets.value.filter(ticket => ticket.riskLevel === 'Critico' && ticket.status !== 'Cerrado').length)
-  const compliancePercent = computed(() => 86)
   const totalAssetsCount = computed(() => assets.value.length)
   const totalSectorsCount = computed(() => sectors.value.length)
   const activeTechnicians = computed(() => technicians.value.filter(technician => technician.status === 'Activo'))
@@ -53,8 +50,7 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
       monitoringApi.getTechnicians(),
       monitoringApi.getAssets(),
       monitoringApi.getMaintenances(),
-      monitoringApi.getReports(),
-      monitoringApi.getPatterns()
+      monitoringApi.getReports()
     ]).then(responses => {
       heatMapZones.value = HeatMapAssembler.toEntitiesFromResponse(responses[0])
       sectors.value = SectorAssembler.toEntitiesFromResponse(responses[0])
@@ -63,7 +59,6 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
       assets.value = AssetAssembler.toEntitiesFromResponse(responses[3])
       maintenances.value = PreventiveMaintenanceAssembler.toEntitiesFromResponse(responses[4])
       archivedReports.value = responses[5].data
-      patterns.value = responses[6].data
       loaded.value = true
     }).catch(error => errors.value.push(error))
   }
@@ -219,8 +214,17 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
     }).catch(error => errors.value.push(error))
   }
 
+  function buildAssetCode() {
+    const nextId = assets.value.length + 1
+    return `ACT-${String(nextId).padStart(3, '0')}`
+  }
+
   function addAsset(asset) {
-    const newAsset = new Asset(asset)
+    const newAsset = new Asset({
+      ...asset,
+      code: buildAssetCode(),
+      status: asset.status || 'Operativo'
+    })
     return monitoringApi.createAsset(newAsset).then(response => {
       assets.value.push(AssetAssembler.toEntityFromResource(response.data))
     }).catch(error => errors.value.push(error))
@@ -236,7 +240,11 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
 
   function reactivateAsset(asset) {
     const maintenance = getMaintenanceByAssetId(asset.id)
-    const updatedAsset = { ...asset, status: 'Operativo' }
+    const updatedAsset = {
+      ...asset,
+      status: 'Operativo',
+      lastReview: maintenance && maintenance.reactivationDate ? maintenance.reactivationDate : asset.lastReview
+    }
     const updateMaintenance = maintenance
       ? monitoringApi.updateMaintenance({ ...maintenance, status: 'Finalizado', finishedAt: new Date().toISOString() }).then(response => {
           const maintenanceEntity = PreventiveMaintenanceAssembler.toEntityFromResource(response.data)
@@ -255,7 +263,6 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
     assets,
     maintenances,
     archivedReports,
-    patterns,
     errors,
     selectedSector,
     filterRisk,
@@ -263,8 +270,6 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
     loaded,
     pendingTicketsCount,
     inProgressCount,
-    criticalAlertsCount,
-    compliancePercent,
     totalAssetsCount,
     totalSectorsCount,
     activeTechnicians,

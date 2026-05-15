@@ -182,7 +182,7 @@
       "name": "Caldera de Vapor",
       "code": "ACT-001",
       "brand": "Fulton",
-      "sector": "Calderas Norte",
+      "sector": "Calderas",
       "riskLevel": "Critico",
       "lastReview": "2026-03-15",
       "status": "Critico"
@@ -192,7 +192,7 @@
       "name": "Brazo Robotico",
       "code": "ACT-002",
       "brand": "Kuka",
-      "sector": "Planta Ensamblaje",
+      "sector": "Ensamblaje",
       "riskLevel": "Medio",
       "lastReview": "2026-04-02",
       "status": "Operativo"
@@ -202,7 +202,7 @@
       "name": "Tanque de Acido Sulfurico",
       "code": "ACT-003",
       "brand": "ChemTank",
-      "sector": "Planta Quimica",
+      "sector": "Quimicos",
       "riskLevel": "Alto",
       "lastReview": "2026-04-20",
       "status": "Mantenimiento"
@@ -261,7 +261,7 @@
       "code": "INC-110",
       "ticketCode": "T-010",
       "date": "2025-10-24",
-      "sector": "Sector A",
+      "sector": "Quimicos",
       "status": "Cerrado",
       "documentUrl": "/reports/T-010.pdf",
       "integrityHash": "RG-92F1A",
@@ -273,8 +273,8 @@
       "code": "INC-111",
       "ticketCode": "T-011",
       "date": "2025-10-19",
-      "sector": "Sector B",
-      "status": "Mantenimiento",
+      "sector": "Calderas",
+      "status": "Cerrado",
       "documentUrl": "/reports/T-011.pdf",
       "integrityHash": "RG-48C2B",
       "archivedAt": "2026-05-12T13:10:00"
@@ -285,8 +285,8 @@
       "code": "INC-112",
       "ticketCode": "T-012",
       "date": "2025-10-10",
-      "sector": "Sector C",
-      "status": "Operativo",
+      "sector": "Ensamblaje",
+      "status": "Cerrado",
       "documentUrl": "/reports/T-012.pdf",
       "integrityHash": "RG-21D8E",
       "archivedAt": "2026-05-10T09:40:00"
@@ -297,29 +297,11 @@
       "code": "INC-113",
       "ticketCode": "T-013",
       "date": "2025-09-10",
-      "sector": "Sector D",
+      "sector": "Planta Sur",
       "status": "Cerrado",
       "documentUrl": "/reports/T-013.pdf",
       "integrityHash": "RG-73B5F",
       "archivedAt": "2026-05-08T15:20:00"
-    }
-  ],
-  "patterns": [
-    {
-      "id": 1,
-      "sector": "Calderas",
-      "riskType": "Fuga de presion",
-      "occurrences": 4,
-      "firstOccurrence": "2026-04-28",
-      "urgency": "Critico"
-    },
-    {
-      "id": 2,
-      "sector": "Quimicos",
-      "riskType": "Exposicion de material",
-      "occurrences": 3,
-      "firstOccurrence": "2026-05-02",
-      "urgency": "Medio"
     }
   ]
 }

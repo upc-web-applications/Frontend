@@ -17,7 +17,6 @@
     "inProgress": "En progreso",
     "criticalAlerts": "Alertas criticas",
     "sstCompliance": "Cumplimiento SST",
-    "patterns": "Patrones de riesgo recurrente",
     "selectSector": "Seleccione un sector para ver sus tickets activos."
   },
   "tickets": {
@@ -133,6 +132,9 @@
     "detail": "Detalle de tecnico",
     "detailTitle": "Tecnico \"{name}\"",
     "newTechnician": "Nuevo tecnico"
+  },
+  "footer": {
+    "content": "© RiskGuard - Todos los derechos reservados. Desarrollado por el Grupo 4 - Seccion 12190."
   },
   "pageNotFound": {
     "title": "Pagina no encontrada",

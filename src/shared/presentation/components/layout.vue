@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from '@/shared/presentation/components/language-switcher.vue'
+import FooterContent from '@/shared/presentation/components/footer-content.vue'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -53,4 +54,5 @@ const currentTitle = computed(() => {
       <router-view />
     </main>
   </div>
+  <footer-content />
 </template>

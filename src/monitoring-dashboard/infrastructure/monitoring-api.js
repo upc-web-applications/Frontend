@@ -8,17 +8,15 @@ export class MonitoringApi extends BaseApi {
   #assetsEndpoint
   #maintenanceEndpoint
   #reportsEndpoint
-  #patternsEndpoint
 
   constructor() {
     super()
-    this.#heatMapEndpoint = new BaseEndpoint(this, import.meta.env.VITE_HEAT_MAP_ZONES_ENDPOINT_PATH || '/heatMapZones')
-    this.#ticketsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_TICKETS_ENDPOINT_PATH || '/tickets')
-    this.#techniciansEndpoint = new BaseEndpoint(this, import.meta.env.VITE_TECHNICIANS_ENDPOINT_PATH || '/technicians')
-    this.#assetsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_ASSETS_ENDPOINT_PATH || '/assets')
-    this.#maintenanceEndpoint = new BaseEndpoint(this, import.meta.env.VITE_PREVENTIVE_MAINTENANCES_ENDPOINT_PATH || '/preventiveMaintenances')
-    this.#reportsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_ARCHIVED_REPORTS_ENDPOINT_PATH || '/archivedReports')
-    this.#patternsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_PATTERNS_ENDPOINT_PATH || '/patterns')
+    this.#heatMapEndpoint = new BaseEndpoint(this, import.meta.env.VITE_HEAT_MAP_ZONES_ENDPOINT_PATH)
+    this.#ticketsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_TICKETS_ENDPOINT_PATH)
+    this.#techniciansEndpoint = new BaseEndpoint(this, import.meta.env.VITE_TECHNICIANS_ENDPOINT_PATH)
+    this.#assetsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_ASSETS_ENDPOINT_PATH)
+    this.#maintenanceEndpoint = new BaseEndpoint(this, import.meta.env.VITE_PREVENTIVE_MAINTENANCES_ENDPOINT_PATH)
+    this.#reportsEndpoint = new BaseEndpoint(this, import.meta.env.VITE_ARCHIVED_REPORTS_ENDPOINT_PATH)
   }
 
   getHeatMapZones() {
@@ -43,10 +41,6 @@ export class MonitoringApi extends BaseApi {
 
   getReports() {
     return this.#reportsEndpoint.getAll()
-  }
-
-  getPatterns() {
-    return this.#patternsEndpoint.getAll()
   }
 
   updateTicket(ticket) {

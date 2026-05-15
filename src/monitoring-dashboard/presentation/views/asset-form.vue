@@ -52,8 +52,10 @@ function saveAsset() {
         <label>{{ t('assets.assetName') }}</label>
         <pv-input-text v-model="form.name" class="w-full" required />
 
-        <label>{{ t('assets.assetCode') }}</label>
-        <pv-input-text v-model="form.code" class="w-full" :disabled="isEdit" required />
+        <template v-if="isEdit">
+          <label>{{ t('assets.assetCode') }}</label>
+          <pv-input-text v-model="form.code" class="w-full" disabled />
+        </template>
 
         <label>{{ t('assets.brand') }}</label>
         <pv-input-text v-model="form.brand" class="w-full" required />
