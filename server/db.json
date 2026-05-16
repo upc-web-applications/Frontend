@@ -64,6 +64,46 @@
       "isValid": false,
       "closedAt": "2026-05-14T08:05:30.000Z",
       "closeReason": "session-expired-by-inactivity"
+    },
+    {
+      "id": "11cc99b8-30b9-4f97-9cca-2e7d9d0dc54a",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-0f1f137f-016f-4e92-b3ab-81c5f78cc04b",
+      "createdAt": "2026-05-16T01:08:28.306Z",
+      "lastActivityAt": "2026-05-16T01:08:29.668Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:29.668Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "1cacff05-c4ac-4eff-a93a-319f1abdd463",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-6b257640-79ba-40e1-ad85-941cccf04270",
+      "createdAt": "2026-05-16T01:08:30.580Z",
+      "lastActivityAt": "2026-05-16T01:08:31.684Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:31.684Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "7ae50c96-a23a-48f1-bec5-11ec3ef3aade",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-46704191-7504-4aec-b641-735103ab757f",
+      "createdAt": "2026-05-16T01:08:32.476Z",
+      "lastActivityAt": "2026-05-16T01:08:38.401Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:38.401Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "43810ef8-80a7-4ad8-9163-31fdb2297730",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-2f5203b8-64f7-4374-9ffb-3ae8271da26b",
+      "createdAt": "2026-05-16T01:08:39.648Z",
+      "lastActivityAt": "2026-05-16T01:08:40.991Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:40.991Z",
+      "closeReason": "manual-logout"
     }
   ],
   "accessLogs": [
@@ -93,6 +133,78 @@
       "wasSuccessful": false,
       "ipAddress": "192.168.1.15",
       "failureReason": "email-not-registered"
+    },
+    {
+      "id": "9efd03c7-d6ce-4d4c-9ce4-be8682d70a15",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:28.384Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "0ab6a5ad-b2aa-47af-8aed-31a8fd41a1fb",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:29.696Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "cc5fbf96-434f-4503-81dc-edf6bdb95663",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:30.642Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "5f1942f7-b781-486f-88a1-16e96ef0a1fa",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:31.721Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "c0bf2eb2-e367-4197-b144-1b6d0f2ca824",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:32.510Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "36204a7e-02a8-4bfb-af1b-bf32b749ba15",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:38.437Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "b45d19d1-638c-4252-9143-10a1ba78b3da",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:39.717Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "47011881-4461-4e6b-afa0-d60c94a46b9c",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:41.025Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
     }
   ]
 }

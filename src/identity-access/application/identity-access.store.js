@@ -134,11 +134,15 @@ const useIdentityAccessStore = defineStore('identity-access', () => {
       currentSession.value.lastActivityAt = new Date().toISOString()
       currentSession.value.closedAt = new Date().toISOString()
       currentSession.value.closeReason = closeReason
-      return identityAccessApi.updateSession(currentSession.value).then(() => {
-        const user = currentUser.value
-        currentUser.value = null
-        currentSession.value = null
+      const user = currentUser.value
+      const session = currentSession.value
+      currentUser.value = null
+      currentSession.value = null
+
+      return identityAccessApi.updateSession(session).then(() => {
         if (user) return addAccessLog(user.email, user.id, true, closeReason)
+      }).catch(error => {
+        errors.value.push(error)
       })
     }
     currentUser.value = null
