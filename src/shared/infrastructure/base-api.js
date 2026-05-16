@@ -8,7 +8,7 @@ export class BaseApi {
 
     constructor() {
         this.#http = axios.create({
-            baseURL: 'http://localhost:3000/api/v1',
+            baseURL: 'https://my-json-server.typicode.com/upc-web-applications/riskguard-inspection-headquarters-api',
             headers: { 'Content-Type': 'application/json' }
         })
     }
