@@ -19,13 +19,13 @@ const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
 const form = ref({ reporteId: null, sectorId: null, sector: '', tipoRiesgo: '', nivelCriticidad: '', estado: 'Pendiente', instrucciones: '', tecnicoAsignadoId: null, tecnicoNombre: '', fechaCreacion: new Date().toISOString().split('T')[0], fechaCierre: '', slaLimiteHoras: 48, slaIncumplido: false })
 
-onMounted(() => {
-    if (!tecnicoStore.loaded) tecnicoStore.fetchAll()
-    if (!historialStore.loaded) historialStore.fetchAll()
+onMounted(async () => {
+    if (!tecnicoStore.loaded) await tecnicoStore.fetchAll()
+    if (!historialStore.loaded) await historialStore.fetchAll()
     if (isEdit.value) {
-        if (!store.loaded) store.fetchAll()
+        if (!store.loaded) await store.fetchAll()
         const e = store.getById(route.params.id)
-        if (e) Object.assign(form.value, e)
+        if (e) Object.assign(form.value, { ...e })
     }
 })
 

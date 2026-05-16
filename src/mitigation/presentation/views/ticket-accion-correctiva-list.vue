@@ -25,7 +25,7 @@ const slaClass = (s) => s ? 'rg-badge rg-badge-red' : 'rg-badge rg-badge-green'
 const confirmDelete = (ticket) => {
     confirm.require({
         message: '¿Eliminar este ticket?', header: t('common.confirm'), icon: 'pi pi-exclamation-triangle', acceptClass: 'p-button-danger',
-        accept: () => store.remove(ticket.id).then(() => toast.add({ severity: 'success', summary: 'Ticket eliminado', life: 3000 }))
+        accept: () => store.remove(ticket.id).then(() => toast.add({ severity: 'success', summary: 'Ticket eliminado', life: 3000 })).catch(() => toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el ticket', life: 5000 }))
     })
 }
 </script>
@@ -38,7 +38,9 @@ const confirmDelete = (ticket) => {
     </div>
     <div class="rg-table-wrap">
       <pv-data-table :value="store.tickets" :loading="!store.loaded" striped-rows size="small" :rows="10" paginator>
-        <pv-column field="id" header="#" style="width:50px" />
+        <pv-column header="#" style="width:50px">
+          <template #body="{ data }">#{{ data.ticketNumber ?? data.id }}</template>
+        </pv-column>
         <pv-column field="sector" :header="t('evaluacionRiesgo.sector')" style="width:130px" sortable />
         <pv-column field="tipoRiesgo" :header="t('ticketCorrectivo.riskType')" style="width:110px" />
         <pv-column field="nivelCriticidad" :header="t('ticketCorrectivo.criticality')" style="width:100px" />

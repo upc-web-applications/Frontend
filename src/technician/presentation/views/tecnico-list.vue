@@ -19,7 +19,7 @@ const estadoClass = (e) => e === 'Activo' ? 'rg-badge rg-badge-green' : 'rg-badg
 const confirmDelete = (tecnico) => {
     confirm.require({
         message: '¿Eliminar este técnico?', header: t('common.confirm'), icon: 'pi pi-exclamation-triangle', acceptClass: 'p-button-danger',
-        accept: () => store.remove(tecnico.id).then(() => toast.add({ severity: 'success', summary: 'Técnico eliminado', life: 3000 }))
+        accept: () => store.remove(tecnico.id).then(() => toast.add({ severity: 'success', summary: 'Técnico eliminado', life: 3000 })).catch(() => toast.add({ severity: 'error', summary: t('common.error'), detail: 'No se pudo eliminar el técnico', life: 5000 }))
     })
 }
 </script>

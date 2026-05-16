@@ -23,7 +23,7 @@ const resultClass = (r) => r === 'Aprobado' ? 'rg-badge rg-badge-green' : r === 
 const confirmDelete = (mit) => {
     confirm.require({
         message: t('mitigacion.deleteConfirm'), header: t('common.confirm'), icon: 'pi pi-exclamation-triangle', acceptClass: 'p-button-danger',
-        accept: () => store.remove(mit.id).then(() => toast.add({ severity: 'success', summary: t('mitigacion.deleteSuccess'), life: 3000 }))
+        accept: () => store.remove(mit.id).then(() => toast.add({ severity: 'success', summary: t('mitigacion.deleteSuccess'), life: 3000 })).catch(() => toast.add({ severity: 'error', summary: t('common.error'), detail: t('mitigacion.deleteError'), life: 5000 }))
     })
 }
 </script>

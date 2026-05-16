@@ -22,7 +22,7 @@ const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge r
 const confirmDelete = (assessment) => {
     confirm.require({
         message: t('evaluacionRiesgo.deleteConfirm'), header: t('common.confirm'), icon: 'pi pi-exclamation-triangle', acceptClass: 'p-button-danger',
-        accept: () => store.remove(assessment.id).then(() => toast.add({ severity: 'success', summary: t('evaluacionRiesgo.deleteSuccess'), life: 3000 }))
+        accept: () => store.remove(assessment.id).then(() => toast.add({ severity: 'success', summary: t('evaluacionRiesgo.deleteSuccess'), life: 3000 })).catch(() => toast.add({ severity: 'error', summary: t('common.error'), detail: t('evaluacionRiesgo.deleteError'), life: 5000 }))
     })
 }
 </script>

@@ -37,11 +37,11 @@ function calcularNivelRiesgo() {
 watch(() => form.value.probabilidad, calcularNivelRiesgo)
 watch(() => form.value.severidad, calcularNivelRiesgo)
 
-onMounted(() => {
+onMounted(async () => {
     if (isEdit.value) {
-        if (!store.loaded) store.fetchAll()
+        if (!store.loaded) await store.fetchAll()
         const e = store.getById(route.params.id)
-        if (e) Object.assign(form.value, e)
+        if (e) Object.assign(form.value, { ...e })
     }
 })
 

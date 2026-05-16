@@ -2,11 +2,13 @@
 import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
 import { usePatronRiesgoStore } from '@/risk-assessment/application/patron-riesgo.store.js'
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
+const toast = useToast()
 const store = usePatronRiesgoStore()
 
 const patron = computed(() => store.getById(route.params.id))
@@ -15,9 +17,14 @@ onMounted(() => { if (!store.loaded) store.fetchAll() })
 
 const revisadaClass = (r) => r ? 'rg-badge rg-badge-green' : 'rg-badge rg-badge-amber'
 
-function marcarRevisada() {
+async function marcarRevisada() {
     if (!patron.value) return
-    store.update({ ...patron.value, revisada: true, fechaRevision: new Date().toISOString().split('T')[0] })
+    try {
+        await store.update({ ...patron.value, revisada: true, fechaRevision: new Date().toISOString().split('T')[0] })
+        toast.add({ severity: 'success', summary: t('patronRiesgo.reviewed'), detail: t('common.saved'), life: 3000 })
+    } catch {
+        toast.add({ severity: 'error', summary: t('common.error'), detail: t('patronRiesgo.saveError'), life: 5000 })
+    }
 }
 </script>
 

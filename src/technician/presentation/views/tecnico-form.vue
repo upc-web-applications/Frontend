@@ -15,11 +15,11 @@ const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
 const form = ref({ numeroDocumento: '', nombreCompleto: '', especialidad: '', telefono: '', email: '', estado: 'Activo' })
 
-onMounted(() => {
+onMounted(async () => {
     if (isEdit.value) {
-        if (!store.loaded) store.fetchAll()
+        if (!store.loaded) await store.fetchAll()
         const e = store.getById(route.params.id)
-        if (e) Object.assign(form.value, e)
+        if (e) Object.assign(form.value, { ...e })
     }
 })
 

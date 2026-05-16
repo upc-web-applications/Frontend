@@ -21,11 +21,11 @@ const form = ref({ codigo:'', nombre:'', tipo:'Físico', descripcion:'', nivelRi
 const tipoOptions = ['Físico', 'Químico', 'Ergonómico', 'Biológico', 'Mecánico', 'Eléctrico', 'Psicosocial', 'Otro']
 const nivelOptions = ['Bajo', 'Medio', 'Alto', 'Crítico']
 
-onMounted(() => {
+onMounted(async () => {
     if (isEdit.value) {
-        if (!store.loaded) store.fetchAll()
+        if (!store.loaded) await store.fetchAll()
         const e = store.getById(route.params.id)
-        if (e) Object.assign(form.value, e)
+        if (e) Object.assign(form.value, { ...e })
     }
 })
 

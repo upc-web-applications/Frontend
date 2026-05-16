@@ -21,13 +21,13 @@ const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
 const form = ref({ riskAssessmentId: route.query.assessmentId || null, ticketId: null, codigo:'', descripcion:'', responsable:'', fechaAsignacion: new Date().toISOString().split('T')[0], fechaEjecucion:'', estado:'Pendiente', resultado:'', observaciones:'' })
 
-onMounted(() => {
-    if (!assessmentStore.loaded) assessmentStore.fetchAll()
-    if (!ticketStore.loaded) ticketStore.fetchAll()
+onMounted(async () => {
+    if (!assessmentStore.loaded) await assessmentStore.fetchAll()
+    if (!ticketStore.loaded) await ticketStore.fetchAll()
     if (isEdit.value) {
-        if (!store.loaded) store.fetchAll()
+        if (!store.loaded) await store.fetchAll()
         const e = store.getById(route.params.id)
-        if (e) Object.assign(form.value, e)
+        if (e) Object.assign(form.value, { ...e })
     }
 })
 

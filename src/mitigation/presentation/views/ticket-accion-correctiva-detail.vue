@@ -35,7 +35,7 @@ onMounted(() => {
     <div class="rg-page-header">
       <div style="display:flex;align-items:center;gap:8px">
         <pv-button icon="pi pi-arrow-left" text rounded size="small" @click="router.back()" />
-        <span class="rg-page-title">{{ t('ticketCorrectivo.title') }} #{{ ticket.id }}</span>
+        <span class="rg-page-title">{{ t('ticketCorrectivo.title') }} #{{ ticket.ticketNumber || ticket.id }}</span>
       </div>
       <div style="display:flex;gap:8px">
         <pv-button :label="t('common.edit')" icon="pi pi-pencil" size="small" @click="router.push(`/mitigation/tickets/${ticket.id}/edit`)" />
