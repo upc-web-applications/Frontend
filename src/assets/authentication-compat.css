@@ -1,0 +1,219 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f5f7fb;
+  background: #0a0c0f;
+  --p-primary-color: #ff5b00;
+  --p-primary-hover-color: #ff6b1a;
+  --p-primary-active-color: #e65100;
+  --p-form-field-focus-border-color: #ff5b00;
+  --p-form-field-focus-ring-color: rgba(255, 91, 0, 0.32);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #0a0c0f;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.risk-page {
+  min-height: 100vh;
+  background: #0a0c0f;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  grid-template-rows: 1fr auto;
+  min-height: 100vh;
+  background: #0a0c0f;
+}
+
+.sidebar {
+  background: #080f1a;
+  border-right: 1px solid #1d2635;
+  grid-row: 1;
+  padding: 1.4rem 1rem;
+}
+
+.brand {
+  display: inline-block;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.brand span,
+.risk-logo span {
+  color: #ff5b00;
+}
+
+.sidebar-subtitle {
+  color: #687386;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  margin-bottom: 2.3rem;
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 0.8rem;
+  border-radius: 6px;
+  color: #8a8f9a;
+  margin-bottom: 0.35rem;
+}
+
+.side-link.router-link-active {
+  color: #ff5b00;
+  background: rgba(255, 91, 0, 0.12);
+  border-left: 3px solid #ff5b00;
+}
+
+.main-area {
+  grid-row: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 58px;
+  background: #0c1421;
+  border-bottom: 1px solid #1d2635;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+}
+
+.content {
+  flex: 1;
+  padding: 1.5rem;
+}
+
+.panel,
+.risk-panel {
+  background: #111821;
+  border: 1px solid #202a38;
+  border-radius: 8px;
+}
+
+.muted,
+.risk-muted {
+  color: #8a8f9a;
+}
+
+.orange-button,
+.risk-button {
+  background: #ff5b00 !important;
+  border-color: #ff5b00 !important;
+  color: #ffffff !important;
+}
+
+.risk-logo {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #8a8f9a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.form-error {
+  color: #ff3b30;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+.auth-input {
+  width: 100%;
+}
+
+.p-inputtext,
+.auth-input input,
+.auth-input .p-password-input {
+  background: #070d17 !important;
+  border-color: #263142 !important;
+  color: #e6ebf5 !important;
+}
+
+.auth-input input,
+.auth-input .p-password-input {
+  width: 100%;
+}
+
+.p-inputtext:enabled:focus,
+input:enabled:focus {
+  border-color: #ff5b00 !important;
+  box-shadow: 0 0 0 1px rgba(255, 91, 0, 0.32) !important;
+  outline: none !important;
+}
+
+.p-button.p-button-text,
+.p-button.p-button-rounded.p-button-text,
+.p-button.p-button-text:not(:disabled):hover,
+.p-button.p-button-rounded.p-button-text:not(:disabled):hover {
+  color: #ff5b00 !important;
+}
+
+.p-selectbutton .p-togglebutton,
+.p-selectbutton .p-togglebutton.p-togglebutton-checked,
+.p-selectbutton .p-togglebutton.p-highlight,
+.p-togglebutton.p-togglebutton-checked,
+.p-togglebutton.p-highlight {
+  border-color: #ff5b00 !important;
+}
+
+.p-selectbutton .p-togglebutton.p-togglebutton-checked,
+.p-selectbutton .p-togglebutton.p-highlight,
+.p-togglebutton.p-togglebutton-checked,
+.p-togglebutton.p-highlight {
+  background: #ff5b00 !important;
+  color: #ffffff !important;
+}
+
+.p-selectbutton .p-togglebutton:not(.p-togglebutton-checked),
+.p-togglebutton:not(.p-togglebutton-checked) {
+  color: #ff5b00 !important;
+}
+
+.role-pill {
+  color: #ff5b00;
+  background: rgba(255, 91, 0, 0.12);
+  border: 1px solid rgba(255, 91, 0, 0.35);
+  border-radius: 6px;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .side-link {
+    display: inline-flex;
+    margin-right: 0.35rem;
+  }
+}

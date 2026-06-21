@@ -1,0 +1,2376 @@
+{
+  "sedes": [
+    {
+      "id": 1,
+      "nombre": "Planta Lima Norte",
+      "direccion": "Av. Industrial 1234, Los Olivos",
+      "telefono": "01-5231456",
+      "email": "limanorte@riskguard.pe",
+      "estado": "Activo",
+      "fechaCreacion": "2024-01-15"
+    },
+    {
+      "id": 2,
+      "nombre": "Planta Callao",
+      "direccion": "Jr. Manufactura 567, Callao",
+      "telefono": "01-4298731",
+      "email": "callao@riskguard.pe",
+      "estado": "Activo",
+      "fechaCreacion": "2024-02-20"
+    },
+    {
+      "id": 3,
+      "nombre": "Planta Villa El Salvador",
+      "direccion": "Av. Separadora Industrial 890, VES",
+      "telefono": "01-2876543",
+      "email": "ves@riskguard.pe",
+      "estado": "Activo",
+      "fechaCreacion": "2024-03-10"
+    },
+    {
+      "id": 4,
+      "nombre": "Planta Lurín",
+      "direccion": "Zona Industrial Lurín, Km 40",
+      "telefono": "01-6541234",
+      "email": "lurin@riskguard.pe",
+      "estado": "Inactivo",
+      "fechaCreacion": "2023-11-05"
+    },
+    {
+      "id": 5,
+      "nombre": "Planta Ate",
+      "direccion": "Carretera Central 234, Ate",
+      "telefono": "01-3219876",
+      "email": "ate@riskguard.pe",
+      "estado": "Activo",
+      "fechaCreacion": "2024-04-18"
+    },
+    {
+      "nombre": "ola",
+      "direccion": "qweeqw",
+      "telefono": "3123123213",
+      "email": "ddwqd",
+      "estado": "Inactivo",
+      "fechaCreacion": "2026-05-14",
+      "id": 6
+    }
+  ],
+  "areas": [
+    {
+      "id": 1,
+      "nombre": "Zona de Producción A",
+      "codigo": "PROD-A",
+      "descripcion": "Área principal de ensamblaje y producción de piezas metálicas",
+      "sedeId": 1,
+      "estado": "Activo",
+      "nivelRiesgo": "Alto",
+      "fechaCreacion": "2024-01-20"
+    },
+    {
+      "id": 2,
+      "nombre": "Zona de Forjado Caliente",
+      "codigo": "FORG-01",
+      "descripcion": "Área de forjado y tratamiento térmico de metales a alta temperatura",
+      "sedeId": 1,
+      "estado": "Activo",
+      "nivelRiesgo": "Crítico",
+      "fechaCreacion": "2024-01-22"
+    },
+    {
+      "id": 3,
+      "nombre": "Almacén de Químicos",
+      "codigo": "ALM-QUI",
+      "descripcion": "Almacenamiento de insumos químicos y solventes industriales",
+      "sedeId": 1,
+      "estado": "Activo",
+      "nivelRiesgo": "Alto",
+      "fechaCreacion": "2024-01-25"
+    },
+    {
+      "id": 4,
+      "nombre": "Zona de Ensamblado",
+      "codigo": "ENS-B",
+      "descripcion": "Línea de ensamblado de componentes electrónicos y mecánicos",
+      "sedeId": 2,
+      "estado": "Activo",
+      "nivelRiesgo": "Medio",
+      "fechaCreacion": "2024-02-25"
+    },
+    {
+      "id": 5,
+      "nombre": "Almacén General",
+      "codigo": "ALM-GEN",
+      "descripcion": "Almacén general de materias primas y productos terminados",
+      "sedeId": 2,
+      "estado": "Activo",
+      "nivelRiesgo": "Bajo",
+      "fechaCreacion": "2024-02-28"
+    },
+    {
+      "id": 6,
+      "nombre": "Zona de Mantenimiento",
+      "codigo": "MANT-01",
+      "descripcion": "Taller de mantenimiento preventivo y correctivo de maquinaria",
+      "sedeId": 2,
+      "estado": "Activo",
+      "nivelRiesgo": "Medio",
+      "fechaCreacion": "2024-03-01"
+    },
+    {
+      "id": 7,
+      "nombre": "Línea de Pintura",
+      "codigo": "PINT-01",
+      "descripcion": "Área de pintado y acabado superficial con solventes",
+      "sedeId": 3,
+      "estado": "Activo",
+      "nivelRiesgo": "Alto",
+      "fechaCreacion": "2024-03-15"
+    },
+    {
+      "id": 8,
+      "nombre": "Zona de Compresores",
+      "codigo": "COMP-01",
+      "descripcion": "Sala de compresores y sistemas de aire a presión",
+      "sedeId": 3,
+      "estado": "Inactivo",
+      "nivelRiesgo": "Alto",
+      "fechaCreacion": "2024-03-18"
+    },
+    {
+      "id": 9,
+      "nombre": "Plataforma de Carga",
+      "codigo": "CARG-01",
+      "descripcion": "Zona de carga y descarga de materiales con montacargas",
+      "sedeId": 5,
+      "estado": "Activo",
+      "nivelRiesgo": "Alto",
+      "fechaCreacion": "2024-04-20"
+    },
+    {
+      "id": 10,
+      "nombre": "Zona Eléctrica",
+      "codigo": "ELEC-01",
+      "descripcion": "Sala de tableros eléctricos y subestación de potencia",
+      "sedeId": 5,
+      "estado": "Activo",
+      "nivelRiesgo": "Crítico",
+      "fechaCreacion": "2024-04-22"
+    }
+  ],
+  "activos": [
+    {
+      "id": 1,
+      "codigo": "MAQ-001",
+      "nombre": "Torno CNC Haas ST-20",
+      "descripcion": "Torno de control numérico para mecanizado de precisión",
+      "tipo": "Maquinaria",
+      "areaId": 1,
+      "sedeId": 1,
+      "estado": "Activo",
+      "fechaAdquisicion": "2022-06-15",
+      "ultimoMantenimiento": "2026-02-10"
+    },
+    {
+      "id": 2,
+      "codigo": "MAQ-002",
+      "nombre": "Fresadora Vertical Bridgeport",
+      "descripcion": "Fresadora para mecanizado de superficies planas",
+      "tipo": "Maquinaria",
+      "areaId": 1,
+      "sedeId": 1,
+      "estado": "Activo",
+      "fechaAdquisicion": "2021-09-20",
+      "ultimoMantenimiento": "2026-01-15"
+    },
+    {
+      "id": 3,
+      "codigo": "FOR-001",
+      "nombre": "Prensa Hidráulica 500T",
+      "descripcion": "Prensa hidráulica para forjado y conformado de metales",
+      "tipo": "Equipo",
+      "areaId": 2,
+      "sedeId": 1,
+      "estado": "Activo",
+      "fechaAdquisicion": "2020-03-10",
+      "ultimoMantenimiento": "2025-12-20"
+    },
+    {
+      "id": 4,
+      "codigo": "FOR-002",
+      "nombre": "Horno de Tratamiento Térmico",
+      "descripcion": "Horno industrial para temple y revenido de aceros",
+      "tipo": "Equipo",
+      "areaId": 2,
+      "sedeId": 1,
+      "estado": "Activo",
+      "fechaAdquisicion": "2019-11-05",
+      "ultimoMantenimiento": "2026-03-01"
+    },
+    {
+      "id": 5,
+      "codigo": "ALM-001",
+      "nombre": "Estantería Metálica Zona A",
+      "descripcion": "Sistema de estanterías para almacenamiento de bidones químicos",
+      "tipo": "Infraestructura",
+      "areaId": 3,
+      "sedeId": 1,
+      "estado": "Activo",
+      "fechaAdquisicion": "2023-01-15",
+      "ultimoMantenimiento": "2025-11-30"
+    },
+    {
+      "id": 6,
+      "codigo": "ENS-001",
+      "nombre": "Banda Transportadora Línea 1",
+      "descripcion": "Cinta transportadora para línea de ensamblado",
+      "tipo": "Maquinaria",
+      "areaId": 4,
+      "sedeId": 2,
+      "estado": "Activo",
+      "fechaAdquisicion": "2022-08-22",
+      "ultimoMantenimiento": "2026-02-28"
+    },
+    {
+      "id": 7,
+      "codigo": "ENS-002",
+      "nombre": "Robot Soldador KUKA KR 6",
+      "descripcion": "Brazo robótico para soldadura MIG automatizada",
+      "tipo": "Maquinaria",
+      "areaId": 4,
+      "sedeId": 2,
+      "estado": "Activo",
+      "fechaAdquisicion": "2023-05-10",
+      "ultimoMantenimiento": "2026-01-20"
+    },
+    {
+      "id": 8,
+      "codigo": "MANT-001",
+      "nombre": "Compresor de Aire Atlas Copco",
+      "descripcion": "Compresor de tornillo para herramientas neumáticas",
+      "tipo": "Equipo",
+      "areaId": 6,
+      "sedeId": 2,
+      "estado": "Activo",
+      "fechaAdquisicion": "2021-04-18",
+      "ultimoMantenimiento": "2026-03-10"
+    },
+    {
+      "id": 9,
+      "codigo": "PINT-001",
+      "nombre": "Cabina de Pintura Electrostática",
+      "descripcion": "Cabina para aplicación de pintura en polvo",
+      "tipo": "Equipo",
+      "areaId": 7,
+      "sedeId": 3,
+      "estado": "Activo",
+      "fechaAdquisicion": "2022-12-01",
+      "ultimoMantenimiento": "2025-10-15"
+    },
+    {
+      "id": 10,
+      "codigo": "CARG-001",
+      "nombre": "Montacargas Toyota 3T",
+      "descripcion": "Montacargas eléctrico de 3 toneladas",
+      "tipo": "Vehículo",
+      "areaId": 9,
+      "sedeId": 5,
+      "estado": "Activo",
+      "fechaAdquisicion": "2023-07-14",
+      "ultimoMantenimiento": "2026-04-01"
+    },
+    {
+      "id": 11,
+      "codigo": "CARG-002",
+      "nombre": "Transpaleta Eléctrica Crown",
+      "descripcion": "Transpaleta motorizada para movimiento de pallets",
+      "tipo": "Vehículo",
+      "areaId": 9,
+      "sedeId": 5,
+      "estado": "Activo",
+      "fechaAdquisicion": "2024-01-08",
+      "ultimoMantenimiento": "2026-03-25"
+    },
+    {
+      "id": 12,
+      "codigo": "ELEC-001",
+      "nombre": "Tablero Eléctrico Principal",
+      "descripcion": "Tablero de distribución eléctrica principal 380V",
+      "tipo": "Infraestructura",
+      "areaId": 10,
+      "sedeId": 5,
+      "estado": "Activo",
+      "fechaAdquisicion": "2020-08-30",
+      "ultimoMantenimiento": "2026-02-05"
+    },
+    {
+      "id": 13,
+      "codigo": "MAQ-003",
+      "nombre": "Rectificadora Plana Chevalier",
+      "descripcion": "Rectificadora de superficies planas para acabados de precisión",
+      "tipo": "Maquinaria",
+      "areaId": 1,
+      "sedeId": 1,
+      "estado": "Inactivo",
+      "fechaAdquisicion": "2018-03-22",
+      "ultimoMantenimiento": "2025-06-10"
+    }
+  ],
+  "inspecciones": [
+    {
+      "id": 1,
+      "ticket": "TICK-4821",
+      "tipoIncidente": "Condición insegura",
+      "areaId": 2,
+      "sedeId": 1,
+      "activoId": 3,
+      "nivelUrgencia": "Alto",
+      "descripcion": "Se detectó fuga de aceite hidráulico en la base de la prensa de 500T. El piso está resbaladizo y representa riesgo de caída.",
+      "estado": "Pendiente",
+      "fotoUrl": null,
+      "operarioId": 1,
+      "fechaReporte": "2026-05-08T08:23:00",
+      "fechaActualizacion": "2026-05-08T08:23:00",
+      "accionCorrectiva": null
+    },
+    {
+      "id": 2,
+      "ticket": "TICK-4820",
+      "tipoIncidente": "Casi-accidente",
+      "areaId": 9,
+      "sedeId": 5,
+      "activoId": 10,
+      "nivelUrgencia": "Alto",
+      "descripcion": "Carga mal asegurada casi cae del montacargas Toyota al momento de elevar el pallet.",
+      "estado": "En Progreso",
+      "fotoUrl": null,
+      "operarioId": 2,
+      "fechaReporte": "2026-05-07T14:45:00",
+      "fechaActualizacion": "2026-05-08T09:10:00",
+      "accionCorrectiva": "Se asignó técnico para revisión del sistema de sujeción."
+    },
+    {
+      "id": 3,
+      "ticket": "TICK-4819",
+      "tipoIncidente": "Falla de equipo",
+      "areaId": 2,
+      "sedeId": 1,
+      "activoId": 4,
+      "nivelUrgencia": "Medio",
+      "descripcion": "El horno de tratamiento térmico presentó fluctuaciones de temperatura fuera del rango operativo.",
+      "estado": "Resuelto",
+      "fotoUrl": null,
+      "operarioId": 1,
+      "fechaReporte": "2026-05-06T10:15:00",
+      "fechaActualizacion": "2026-05-07T16:30:00",
+      "accionCorrectiva": "Se reemplazó el termopar dañado y se recalibró el sistema de control de temperatura."
+    },
+    {
+      "id": 4,
+      "ticket": "TICK-4818",
+      "tipoIncidente": "Condición insegura",
+      "areaId": 3,
+      "sedeId": 1,
+      "activoId": 5,
+      "nivelUrgencia": "Alto",
+      "descripcion": "Rejilla suelta en el conducto de ventilación del almacén de químicos.",
+      "estado": "En Progreso",
+      "fotoUrl": null,
+      "operarioId": 3,
+      "fechaReporte": "2026-05-05T07:50:00",
+      "fechaActualizacion": "2026-05-06T11:20:00",
+      "accionCorrectiva": "Se solicitó al área de mantenimiento la reparación urgente del sistema de ventilación."
+    },
+    {
+      "id": 5,
+      "ticket": "TICK-4817",
+      "tipoIncidente": "Riesgo ergonómico",
+      "areaId": 4,
+      "sedeId": 2,
+      "activoId": 6,
+      "nivelUrgencia": "Bajo",
+      "descripcion": "Operarios realizan movimientos repetitivos de flexión sin soporte lumbar adecuado.",
+      "estado": "Resuelto",
+      "fotoUrl": null,
+      "operarioId": 4,
+      "fechaReporte": "2026-05-04T13:20:00",
+      "fechaActualizacion": "2026-05-05T15:45:00",
+      "accionCorrectiva": "Se implementaron pausas activas y se adquirieron soportes lumbares para el personal."
+    },
+    {
+      "id": 6,
+      "ticket": "TICK-4816",
+      "tipoIncidente": "Riesgo químico",
+      "areaId": 7,
+      "sedeId": 3,
+      "activoId": 9,
+      "nivelUrgencia": "Alto",
+      "descripcion": "Detección de olor fuerte a solventes en la cabina de pintura sin activación del sistema de extracción.",
+      "estado": "Resuelto",
+      "fotoUrl": null,
+      "operarioId": 5,
+      "fechaReporte": "2026-05-03T09:05:00",
+      "fechaActualizacion": "2026-05-04T12:00:00",
+      "accionCorrectiva": "Se reparó el motor del extractor principal."
+    },
+    {
+      "id": 7,
+      "ticket": "TICK-4815",
+      "tipoIncidente": "Falla de equipo",
+      "areaId": 10,
+      "sedeId": 5,
+      "activoId": 12,
+      "nivelUrgencia": "Medio",
+      "descripcion": "Tablero eléctrico principal presenta recalentamiento en el breaker del circuito 3.",
+      "estado": "Pendiente",
+      "fotoUrl": null,
+      "operarioId": 2,
+      "fechaReporte": "2026-05-08T06:30:00",
+      "fechaActualizacion": "2026-05-08T06:30:00",
+      "accionCorrectiva": null
+    },
+    {
+      "id": 8,
+      "ticket": "TICK-4814",
+      "tipoIncidente": "Condición insegura",
+      "areaId": 1,
+      "sedeId": 1,
+      "activoId": 1,
+      "nivelUrgencia": "Medio",
+      "descripcion": "Viruta metálica acumulada alrededor del torno CNC sin recolectar.",
+      "estado": "Resuelto",
+      "fotoUrl": null,
+      "operarioId": 3,
+      "fechaReporte": "2026-05-02T11:40:00",
+      "fechaActualizacion": "2026-05-03T08:15:00",
+      "accionCorrectiva": "Se limpió el área y se estableció protocolo de limpieza cada turno."
+    },
+    {
+      "id": 9,
+      "ticket": "TICK-4813",
+      "tipoIncidente": "Casi-accidente",
+      "areaId": 6,
+      "sedeId": 2,
+      "activoId": 8,
+      "nivelUrgencia": "Alto",
+      "descripcion": "Manguera de aire comprimido desprendida del compresor golpeó a operario en el brazo.",
+      "estado": "Resuelto",
+      "fotoUrl": null,
+      "operarioId": 1,
+      "fechaReporte": "2026-04-30T15:20:00",
+      "fechaActualizacion": "2026-05-01T10:00:00",
+      "accionCorrectiva": "Se reemplazaron todas las mangueras y se instalaron abrazaderas de seguridad."
+    },
+    {
+      "id": 10,
+      "ticket": "TICK-4812",
+      "tipoIncidente": "Riesgo ergonómico",
+      "areaId": 9,
+      "sedeId": 5,
+      "activoId": 11,
+      "nivelUrgencia": "Bajo",
+      "descripcion": "Operarios utilizan la transpaleta en posición incorrecta generando sobrecarga en la columna.",
+      "estado": "En Progreso",
+      "fotoUrl": null,
+      "operarioId": 4,
+      "fechaReporte": "2026-04-29T08:00:00",
+      "fechaActualizacion": "2026-04-30T09:30:00",
+      "accionCorrectiva": "Se programó capacitación en ergonomía y manejo seguro de cargas."
+    }
+  ],
+  "peligros": [
+    {
+      "id": 1,
+      "codigo": "PEL-FIS-001",
+      "nombre": "Ruido Industrial",
+      "tipo": "Físico",
+      "descripcion": "Exposición continua a ruido superior a 85 dB en zona de producción",
+      "nivelRiesgoBase": "Medio",
+      "estado": "Activo"
+    },
+    {
+      "id": 2,
+      "codigo": "PEL-FIS-002",
+      "nombre": "Temperaturas Extremas",
+      "tipo": "Físico",
+      "descripcion": "Exposición a altas temperaturas en zona de forjado y tratamiento térmico",
+      "nivelRiesgoBase": "Alto",
+      "estado": "Activo"
+    },
+    {
+      "id": 3,
+      "codigo": "PEL-QUI-001",
+      "nombre": "Vapores Químicos",
+      "tipo": "Químico",
+      "descripcion": "Inhalación de vapores de solventes y químicos en área de pintura",
+      "nivelRiesgoBase": "Alto",
+      "estado": "Activo"
+    },
+    {
+      "id": 4,
+      "codigo": "PEL-QUI-002",
+      "nombre": "Derrame de Aceites",
+      "tipo": "Químico",
+      "descripcion": "Derrame de aceites hidráulicos y lubricantes en pisos industriales",
+      "nivelRiesgoBase": "Medio",
+      "estado": "Activo"
+    },
+    {
+      "id": 5,
+      "codigo": "PEL-ERG-001",
+      "nombre": "Movimiento Repetitivo",
+      "tipo": "Ergonómico",
+      "descripcion": "Tareas repetitivas en línea de ensamblaje sin pausas activas",
+      "nivelRiesgoBase": "Bajo",
+      "estado": "Activo"
+    },
+    {
+      "id": 6,
+      "codigo": "PEL-MEC-001",
+      "nombre": "Atrapamiento por Maquinaria",
+      "tipo": "Mecánico",
+      "descripcion": "Riesgo de atrapamiento en prensas hidráulicas y bandas transportadoras",
+      "nivelRiesgoBase": "Crítico",
+      "estado": "Activo"
+    },
+    {
+      "id": 7,
+      "codigo": "PEL-ELE-001",
+      "nombre": "Descarga Eléctrica",
+      "tipo": "Eléctrico",
+      "descripcion": "Contacto con tableros eléctricos y cableado expuesto en subestaciones",
+      "nivelRiesgoBase": "Crítico",
+      "estado": "Activo"
+    },
+    {
+      "id": 8,
+      "codigo": "PEL-BIO-001",
+      "nombre": "Agentes Biológicos",
+      "tipo": "Biológico",
+      "descripcion": "Exposición a hongos y bacterias en sistemas de ventilación",
+      "nivelRiesgoBase": "Bajo",
+      "estado": "Inactivo"
+    }
+  ],
+  "evaluaciones-riesgo": [
+    {
+      "id": 1,
+      "codigo": "ER-2026-001",
+      "sector": "Zona de Forjado",
+      "tipoPeligro": "Físico",
+      "descripcion": "Evaluación de exposición a temperaturas extremas en el área de forjado caliente",
+      "probabilidad": 4,
+      "severidad": 4,
+      "nivelRiesgo": "Crítico",
+      "medidasControl": "Instalar barreras térmicas, rotación de personal cada 30 min, monitoreo constante de temperatura",
+      "estado": "Evaluado",
+      "fechaEvaluacion": "2026-05-04",
+      "usuarioId": 1
+    },
+    {
+      "id": 2,
+      "codigo": "ER-2026-002",
+      "sector": "Almacén de Químicos",
+      "tipoPeligro": "Químico",
+      "descripcion": "Evaluación de riesgos por almacenamiento inadecuado de solventes inflamables",
+      "probabilidad": 3,
+      "severidad": 5,
+      "nivelRiesgo": "Alto",
+      "medidasControl": "Implementar sistema de ventilación forzada, capacitación en manejo de químicos, señalización",
+      "estado": "En Evaluación",
+      "fechaEvaluacion": "2026-05-08",
+      "usuarioId": 1
+    },
+    {
+      "id": 3,
+      "codigo": "ER-2026-003",
+      "sector": "Línea de Ensamblaje",
+      "tipoPeligro": "Ergonómico",
+      "descripcion": "Evaluación de movimientos repetitivos en operarios de ensamblaje manual",
+      "probabilidad": 3,
+      "severidad": 2,
+      "nivelRiesgo": "Medio",
+      "medidasControl": "Implementar pausas activas cada hora, rotación de puestos, sillas ergonómicas",
+      "estado": "Evaluado",
+      "fechaEvaluacion": "2026-05-02",
+      "usuarioId": 1
+    },
+    {
+      "id": 4,
+      "codigo": "ER-2026-004",
+      "sector": "Prensa Hidráulica 500T",
+      "tipoPeligro": "Mecánico",
+      "descripcion": "Evaluación de riesgo de atrapamiento por falta de guardas de seguridad en prensa",
+      "probabilidad": 3,
+      "severidad": 5,
+      "nivelRiesgo": "Crítico",
+      "medidasControl": "Instalar guardas de seguridad con interlocks, capacitación obligatoria, supervisión permanente",
+      "estado": "Pendiente",
+      "fechaEvaluacion": "2026-05-10",
+      "usuarioId": 1
+    },
+    {
+      "id": 5,
+      "codigo": "ER-2026-005",
+      "sector": "Sala Eléctrica",
+      "tipoPeligro": "Eléctrico",
+      "descripcion": "Evaluación de tableros eléctricos con cableado expuesto y falta de EPP",
+      "probabilidad": 2,
+      "severidad": 5,
+      "nivelRiesgo": "Alto",
+      "medidasControl": "Aislar cableado expuesto, entregar EPP dieléctrico, bloquear acceso no autorizado",
+      "estado": "Cerrado",
+      "fechaEvaluacion": "2026-04-28",
+      "usuarioId": 1
+    }
+  ],
+  "mitigaciones": [
+    {
+      "id": 1,
+      "riskAssessmentId": 1,
+      "ticketId": 1,
+      "codigo": "MIT-2026-001",
+      "descripcion": "Instalación de barreras térmicas alrededor del horno de forjado y adquisición de trajes térmicos para operarios",
+      "responsable": "Juan Pérez - Mto. Industrial",
+      "fechaAsignacion": "2026-05-05",
+      "fechaEjecucion": "2026-05-12",
+      "estado": "Verificado",
+      "resultado": "Aprobado",
+      "observaciones": "Barreras instaladas correctamente. Personal capacitado en uso de EPP térmico."
+    },
+    {
+      "id": 2,
+      "riskAssessmentId": 2,
+      "ticketId": 2,
+      "codigo": "MIT-2026-002",
+      "descripcion": "Implementación de sistema de extracción de vapores en almacén de químicos",
+      "responsable": "María García - Seg. Industrial",
+      "fechaAsignacion": "2026-05-09",
+      "fechaEjecucion": "",
+      "estado": "En Progreso",
+      "resultado": "",
+      "observaciones": "Se adquirieron los extractores. Pendiente instalación eléctrica."
+    },
+    {
+      "id": 3,
+      "riskAssessmentId": 3,
+      "ticketId": null,
+      "codigo": "MIT-2026-003",
+      "descripcion": "Programa de pausas activas y adquisición de sillas ergonómicas para línea de ensamblaje",
+      "responsable": "Carlos Mendoza - RRHH",
+      "fechaAsignacion": "2026-05-03",
+      "fechaEjecucion": "2026-05-08",
+      "estado": "Implementado",
+      "resultado": "Aprobado",
+      "observaciones": "Sillas entregadas y personal capacitado en pausas activas. Pendiente verificación final."
+    },
+    {
+      "id": 4,
+      "riskAssessmentId": 5,
+      "ticketId": 3,
+      "codigo": "MIT-2026-004",
+      "descripcion": "Aislamiento de cableado expuesto y adquisición de EPP dieléctrico para sala eléctrica",
+      "responsable": "Roberto Silva - Electricista",
+      "fechaAsignacion": "2026-04-29",
+      "fechaEjecucion": "2026-05-02",
+      "estado": "Cerrado",
+      "resultado": "Aprobado",
+      "observaciones": "Cableado aislado. EPP entregado y certificado. Riesgo mitigado exitosamente."
+    }
+  ],
+  "patrones-riesgo": [
+    {
+      "id": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "tipoIncidente": "Temperatura Extrema",
+      "tipoPeligro": "Físico",
+      "descripcion": "Exposición recurrente a temperaturas extremas en forjado",
+      "frecuencia": 4,
+      "fechaPrimeraOcurrencia": "2026-04-15",
+      "periodoAnalisisDias": 30,
+      "revisada": false,
+      "fechaRevision": "",
+      "revisadoPor": null
+    },
+    {
+      "id": 2,
+      "sectorId": 3,
+      "sector": "Línea de Ensamblaje",
+      "tipoIncidente": "Movimiento Repetitivo",
+      "tipoPeligro": "Ergonómico",
+      "descripcion": "Quejas recurrentes por fatiga muscular en ensamblaje",
+      "frecuencia": 3,
+      "fechaPrimeraOcurrencia": "2026-04-20",
+      "periodoAnalisisDias": 30,
+      "revisada": true,
+      "fechaRevision": "2026-05-10",
+      "revisadoPor": 1
+    }
+  ],
+  "niveles-criticidad-area": [
+    {
+      "id": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "nivelCriticidad": "Crítico",
+      "intensidadMapa": "muy_alta",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 2,
+      "sectorId": 2,
+      "sector": "Almacén de Químicos",
+      "nivelCriticidad": "Importante",
+      "intensidadMapa": "alta",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 3,
+      "sectorId": 3,
+      "sector": "Línea de Ensamblaje",
+      "nivelCriticidad": "Moderado",
+      "intensidadMapa": "media",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 4,
+      "sectorId": 4,
+      "sector": "Prensa Hidráulica 500T",
+      "nivelCriticidad": "Crítico",
+      "intensidadMapa": "muy_alta",
+      "ultimaActualizacion": "2026-05-14"
+    },
+    {
+      "id": 5,
+      "sectorId": 5,
+      "sector": "Sala Eléctrica",
+      "nivelCriticidad": "Importante",
+      "intensidadMapa": "alta",
+      "ultimaActualizacion": "2026-05-14"
+    }
+  ],
+  "alertas-patron": [
+    {
+      "id": 1,
+      "patronId": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "tipoRiesgo": "Temperatura Extrema",
+      "numeroOcurrencias": 4,
+      "fechaPrimerReporte": "2026-04-15",
+      "estado": "Activa",
+      "fechaGeneracion": "2026-05-14"
+    }
+  ],
+  "resumenes-diarios": [
+    {
+      "id": 1,
+      "fecha": "2026-05-14",
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "totalNuevos": 2,
+      "totalEnProgreso": 1,
+      "totalResueltos": 0
+    },
+    {
+      "id": 2,
+      "fecha": "2026-05-14",
+      "sectorId": 2,
+      "sector": "Almacén de Químicos",
+      "totalNuevos": 1,
+      "totalEnProgreso": 1,
+      "totalResueltos": 0
+    },
+    {
+      "id": 3,
+      "fecha": "2026-05-14",
+      "sectorId": 3,
+      "sector": "Línea de Ensamblaje",
+      "totalNuevos": 0,
+      "totalEnProgreso": 0,
+      "totalResueltos": 1
+    },
+    {
+      "id": 4,
+      "fecha": "2026-05-13",
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "totalNuevos": 1,
+      "totalEnProgreso": 2,
+      "totalResueltos": 0
+    }
+  ],
+  "tickets-accion-correctiva": [
+    {
+      "id": 1,
+      "reporteId": 1,
+      "sectorId": 1,
+      "sector": "Zona de Forjado",
+      "tipoRiesgo": "Temperatura Extrema",
+      "nivelCriticidad": "Crítico",
+      "estado": "En Progreso",
+      "instrucciones": "Instalar barreras térmicas y rotar personal cada 30 min",
+      "tecnicoAsignadoId": 1,
+      "tecnicoNombre": "Juan Pérez López",
+      "fechaCreacion": "2026-05-05",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false
+    },
+    {
+      "id": 2,
+      "reporteId": 2,
+      "sectorId": 2,
+      "sector": "Almacén de Químicos",
+      "tipoRiesgo": "Vapores Químicos",
+      "nivelCriticidad": "Importante",
+      "estado": "Pendiente",
+      "instrucciones": "Implementar sistema de extracción de vapores",
+      "tecnicoAsignadoId": 2,
+      "tecnicoNombre": "María García Ruiz",
+      "fechaCreacion": "2026-05-09",
+      "fechaCierre": "",
+      "slaLimiteHoras": 72,
+      "slaIncumplido": false
+    },
+    {
+      "id": 3,
+      "reporteId": 5,
+      "sectorId": 5,
+      "sector": "Sala Eléctrica",
+      "tipoRiesgo": "Descarga Eléctrica",
+      "nivelCriticidad": "Importante",
+      "estado": "Cerrado",
+      "instrucciones": "Aislar cableado expuesto y entregar EPP dieléctrico",
+      "tecnicoAsignadoId": 3,
+      "tecnicoNombre": "Roberto Silva Mendoza",
+      "fechaCreacion": "2026-04-29",
+      "fechaCierre": "2026-05-02",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "w",
+      "tipoRiesgo": "d",
+      "nivelCriticidad": "Importante",
+      "estado": "Pendiente",
+      "instrucciones": "2",
+      "tecnicoAsignadoId": 1,
+      "tecnicoNombre": "Juan Pérez López",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "2222-02-12",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 4
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "123",
+      "tipoRiesgo": "123",
+      "nivelCriticidad": "Tolerable",
+      "estado": "Pendiente",
+      "instrucciones": "",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 5
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "123",
+      "tipoRiesgo": "123",
+      "nivelCriticidad": "Tolerable",
+      "estado": "Medida Implementada",
+      "instrucciones": "123",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 6
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "werewrew",
+      "tipoRiesgo": "werwer",
+      "nivelCriticidad": "Moderado",
+      "estado": "SLA Incumplido",
+      "instrucciones": "r3434ewr",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 7
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "wqeqweqweqw",
+      "tipoRiesgo": "qweqweqw",
+      "nivelCriticidad": "Moderado",
+      "estado": "Pendiente",
+      "instrucciones": "eqweqweqw",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "11111-11-11",
+      "fechaCierre": "1111-11-11",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 8
+    },
+    {
+      "reporteId": null,
+      "sectorId": null,
+      "sector": "21",
+      "tipoRiesgo": "21",
+      "nivelCriticidad": "Tolerable",
+      "estado": "Pendiente",
+      "instrucciones": "12112",
+      "tecnicoAsignadoId": null,
+      "tecnicoNombre": "",
+      "fechaCreacion": "2026-05-14",
+      "fechaCierre": "",
+      "slaLimiteHoras": 48,
+      "slaIncumplido": false,
+      "id": 9
+    }
+  ],
+  "verificaciones-medida": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "supervisorId": 1,
+      "supervisorNombre": "Victor Jhosef Laura Acosta",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "Las barreras térmicas cumplen con los estándares de seguridad requeridos",
+      "fechaVerificacion": "2026-05-12"
+    },
+    {
+      "id": 2,
+      "ticketId": 3,
+      "supervisorId": 1,
+      "supervisorNombre": "Victor Jhosef Laura Acosta",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "Cableado aislado correctamente, EPP entregado y certificado",
+      "fechaVerificacion": "2026-05-02"
+    },
+    {
+      "ticketId": 21,
+      "supervisorId": null,
+      "supervisorNombre": "eeqwwqe",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "212112",
+      "fechaVerificacion": "2026-05-14",
+      "id": 3
+    },
+    {
+      "ticketId": 9,
+      "supervisorId": null,
+      "supervisorNombre": "eqweqw",
+      "veredicto": "Rechazado",
+      "comentarioJustificacion": "eqweqwe",
+      "fechaVerificacion": "2026-05-14",
+      "id": 4
+    },
+    {
+      "ticketId": 9,
+      "supervisorId": null,
+      "supervisorNombre": "qdqwdqw",
+      "veredicto": "Aprobado",
+      "comentarioJustificacion": "weqweqweq",
+      "fechaVerificacion": "2026-05-14",
+      "id": 5
+    }
+  ],
+  "historiales-ticket": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para riesgo crítico en Zona de Forjado",
+      "fecha": "2026-05-05"
+    },
+    {
+      "id": 2,
+      "ticketId": 1,
+      "evento": "Técnico asignado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Juan Pérez López asignado como técnico responsable",
+      "fecha": "2026-05-05"
+    },
+    {
+      "id": 3,
+      "ticketId": 1,
+      "evento": "Medida implementada",
+      "usuarioId": 1,
+      "usuarioNombre": "Juan Pérez López",
+      "detalles": "Barreras térmicas instaladas y personal capacitado",
+      "fecha": "2026-05-12"
+    },
+    {
+      "id": 4,
+      "ticketId": 1,
+      "evento": "Verificación aprobada",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Verificación de eficacia aprobada por el supervisor",
+      "fecha": "2026-05-12"
+    },
+    {
+      "id": 5,
+      "ticketId": 3,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para riesgo en Sala Eléctrica",
+      "fecha": "2026-04-29"
+    },
+    {
+      "id": 6,
+      "ticketId": 3,
+      "evento": "Ticket cerrado",
+      "usuarioId": 1,
+      "usuarioNombre": "Roberto Silva Mendoza",
+      "detalles": "Riesgo mitigado exitosamente",
+      "fecha": "2026-05-02"
+    },
+    {
+      "id": 7,
+      "ticketId": 2,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para riesgo químico en Almacén de Químicos",
+      "fecha": "2026-05-09"
+    },
+    {
+      "id": 8,
+      "ticketId": 2,
+      "evento": "SLA Alerta generada",
+      "usuarioId": 1,
+      "usuarioNombre": "Sistema",
+      "detalles": "SLA de 72h excedido para ticket #2",
+      "fecha": "2026-05-14"
+    },
+    {
+      "ticketId": 9,
+      "evento": "Ticket creado",
+      "usuarioId": 1,
+      "usuarioNombre": "Victor Jhosef Laura Acosta",
+      "detalles": "Ticket creado para 21",
+      "fecha": "2026-05-14",
+      "id": 9
+    }
+  ],
+  "alertas-sla": [
+    {
+      "id": 1,
+      "ticketId": 2,
+      "horasTranscurridas": 120,
+      "slaLimiteHoras": 72,
+      "fechaAlerta": "2026-05-14",
+      "notificadoA": 1,
+      "notificadoNombre": "Victor Jhosef Laura Acosta"
+    }
+  ],
+  "notificaciones-criticas": [
+    {
+      "id": 1,
+      "ticketId": 1,
+      "supervisorId": 1,
+      "supervisorNombre": "Victor Jhosef Laura Acosta",
+      "mensaje": "El ticket #1 (Zona de Forjado) ha superado el nivel de riesgo crítico. Se requiere supervisión inmediata.",
+      "enviada": true,
+      "fechaEnvio": "2026-05-10"
+    }
+  ],
+  "tecnicos": [
+    {
+      "id": 1,
+      "numeroDocumento": "DNI-12345678",
+      "nombreCompleto": "Juan Pérez López",
+      "especialidad": "Mantenimiento Industrial",
+      "telefono": "+51 999 111 222",
+      "email": "juan.perez@riskguard.com",
+      "estado": "Activo"
+    },
+    {
+      "id": 2,
+      "numeroDocumento": "DNI-23456789",
+      "nombreCompleto": "María García Ruiz",
+      "especialidad": "Seguridad Industrial",
+      "telefono": "+51 999 333 444",
+      "email": "maria.garcia@riskguard.com",
+      "estado": "Activo"
+    },
+    {
+      "id": 3,
+      "numeroDocumento": "DNI-34567890",
+      "nombreCompleto": "Roberto Silva Mendoza",
+      "especialidad": "Electricista Industrial",
+      "telefono": "+51 999 555 666",
+      "email": "roberto.silva@riskguard.com",
+      "estado": "Activo"
+    },
+    {
+      "id": 4,
+      "numeroDocumento": "DNI-45678901",
+      "nombreCompleto": "Carlos Mendoza Ríos",
+      "especialidad": "Recursos Humanos",
+      "telefono": "+51 999 777 888",
+      "email": "carlos.mendoza@riskguard.com",
+      "estado": "Inactivo"
+    }
+  ],
+  "heatMapZones": [
+    {
+      "id": 1,
+      "type": "Sector",
+      "sectorId": 1,
+      "assetId": null,
+      "code": "SEC-001",
+      "name": "Calderas",
+      "description": "Sector de calderas y sistemas de presion.",
+      "heatIndex": 94,
+      "riskLevel": "Critico",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:10:00",
+      "position": "wide"
+    },
+    {
+      "id": 2,
+      "type": "Sector",
+      "sectorId": 2,
+      "assetId": null,
+      "code": "SEC-002",
+      "name": "Quimicos",
+      "description": "Sector de almacenamiento y manipulacion de quimicos.",
+      "heatIndex": 72,
+      "riskLevel": "Alto",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:08:00",
+      "position": "wide"
+    },
+    {
+      "id": 3,
+      "type": "Sector",
+      "sectorId": 3,
+      "assetId": null,
+      "code": "SEC-003",
+      "name": "Almacen",
+      "description": "Zona de almacenamiento general de materiales.",
+      "heatIndex": 26,
+      "riskLevel": "Bajo",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:00:00",
+      "position": "wide"
+    },
+    {
+      "id": 4,
+      "type": "Sector",
+      "sectorId": 4,
+      "assetId": null,
+      "code": "SEC-004",
+      "name": "Ensamblaje",
+      "description": "Linea de ensamblaje y control de piezas.",
+      "heatIndex": 32,
+      "riskLevel": "Bajo",
+      "status": "Inactivo",
+      "updatedAt": "2026-05-14T08:03:00",
+      "position": "center"
+    },
+    {
+      "id": 5,
+      "type": "Sector",
+      "sectorId": 5,
+      "assetId": null,
+      "code": "SEC-005",
+      "name": "Planta Sur",
+      "description": "Area de apoyo y valvulas auxiliares.",
+      "heatIndex": 65,
+      "riskLevel": "Medio",
+      "status": "Activo",
+      "updatedAt": "2026-05-14T08:07:00",
+      "position": "center"
+    }
+  ],
+  "tickets": [
+    {
+      "id": 1,
+      "code": "T-001",
+      "heatMapId": 1,
+      "sector": "Calderas",
+      "assetName": "Caldera B-12",
+      "incidentType": "Fuga de presion",
+      "riskLevel": "Critico",
+      "assignedTechnician": "",
+      "requiredSpecialty": "Calderas",
+      "assignmentDetails": "",
+      "status": "Pendiente",
+      "elapsedTime": "1 hora restante",
+      "slaStatus": "En tiempo",
+      "description": "Presion irregular detectada cerca de la valvula principal.",
+      "generatedAt": "2026-05-14T07:10:00"
+    },
+    {
+      "id": 2,
+      "code": "T-002",
+      "heatMapId": 2,
+      "sector": "Quimicos",
+      "assetName": "Almacen quimico Q-02",
+      "incidentType": "Utensilios expuestos",
+      "riskLevel": "Bajo",
+      "assignedTechnician": "Ana Paredes",
+      "requiredSpecialty": "Mecanica industrial",
+      "assignmentDetails": "Verificar almacenamiento seguro y retirar utensilios expuestos.",
+      "status": "En Progreso",
+      "elapsedTime": "15 minutos restantes",
+      "slaStatus": "En tiempo",
+      "description": "Material no almacenado correctamente en mesa secundaria.",
+      "generatedAt": "2026-05-14T07:35:00"
+    },
+    {
+      "id": 3,
+      "code": "T-003",
+      "heatMapId": 5,
+      "sector": "Planta Sur",
+      "assetName": "Valvula Sur V-08",
+      "incidentType": "Valvula trabada",
+      "riskLevel": "Critico",
+      "assignedTechnician": "Ana Paredes",
+      "requiredSpecialty": "Mecanica industrial",
+      "assignmentDetails": "Revisar bloqueo de valvula y reportar causa probable.",
+      "status": "En Progreso",
+      "elapsedTime": "40 minutos restantes",
+      "slaStatus": "SLA Incumplido",
+      "description": "Valvula del sistema auxiliar no responde al cierre manual.",
+      "generatedAt": "2026-05-14T06:20:00"
+    },
+    {
+      "id": 4,
+      "code": "T-004",
+      "heatMapId": 4,
+      "sector": "Ensamblaje",
+      "assetName": "Compresor A",
+      "incidentType": "Piezas expuestas",
+      "riskLevel": "Bajo",
+      "assignedTechnician": "",
+      "requiredSpecialty": "Mecanica industrial",
+      "assignmentDetails": "",
+      "status": "Pendiente",
+      "elapsedTime": "1 hora restante",
+      "slaStatus": "En tiempo",
+      "description": "Piezas metalicas fuera de contenedor delimitado.",
+      "generatedAt": "2026-05-14T07:58:00"
+    }
+  ],
+  "technicians": [
+    {
+      "id": 1,
+      "code": "TEC-01",
+      "firstName": "Ana",
+      "lastName": "Paredes",
+      "fullName": "Ana Paredes",
+      "specialty": "Mecanica industrial",
+      "email": "ana.paredes@riskguard.tech",
+      "phone": "987654321",
+      "status": "Activo"
+    },
+    {
+      "id": 2,
+      "code": "TEC-02",
+      "firstName": "Marco",
+      "lastName": "Ruiz",
+      "fullName": "Marco Ruiz",
+      "specialty": "Electricidad",
+      "email": "marco.ruiz@riskguard.tech",
+      "phone": "987654322",
+      "status": "Activo"
+    },
+    {
+      "id": 3,
+      "code": "TEC-03",
+      "firstName": "Luis",
+      "lastName": "Carpio",
+      "fullName": "Luis Carpio",
+      "specialty": "Calderas",
+      "email": "luis.carpio@riskguard.tech",
+      "phone": "987654323",
+      "status": "Activo"
+    }
+  ],
+  "assets": [
+    {
+      "id": 1,
+      "name": "Caldera de Vapor",
+      "code": "ACT-001",
+      "brand": "Fulton",
+      "sector": "Calderas",
+      "riskLevel": "Critico",
+      "lastReview": "2026-03-15",
+      "status": "Critico"
+    },
+    {
+      "id": 2,
+      "name": "Brazo Robotico",
+      "code": "ACT-002",
+      "brand": "Kuka",
+      "sector": "Ensamblaje",
+      "riskLevel": "Medio",
+      "lastReview": "2026-04-02",
+      "status": "Operativo"
+    },
+    {
+      "id": 3,
+      "name": "Tanque de Acido Sulfurico",
+      "code": "ACT-003",
+      "brand": "ChemTank",
+      "sector": "Quimicos",
+      "riskLevel": "Alto",
+      "lastReview": "2026-04-20",
+      "status": "Mantenimiento"
+    },
+    {
+      "id": 4,
+      "name": "Montacarga Electrico",
+      "code": "ACT-004",
+      "brand": "Toyota",
+      "sector": "Almacen",
+      "riskLevel": "Bajo",
+      "lastReview": "2026-01-10",
+      "status": "Operativo"
+    }
+  ],
+  "preventiveMaintenances": [
+    {
+      "id": 1,
+      "assetId": 1,
+      "assetName": "Caldera de Vapor",
+      "technician": "Luis Carpio",
+      "scheduledDate": "2026-05-17",
+      "reactivationDate": "2026-05-20",
+      "description": "Revision preventiva de presion y sellos.",
+      "status": "Programado",
+      "createdAt": "2026-05-14T08:15:00"
+    },
+    {
+      "id": 2,
+      "assetId": 2,
+      "assetName": "Brazo Robotico",
+      "technician": "Ana Paredes",
+      "scheduledDate": "2026-05-14",
+      "reactivationDate": "2026-05-16",
+      "description": "Revision de articulaciones y calibracion de brazo.",
+      "status": "Finalizado",
+      "createdAt": "2026-05-14T07:06:20.190Z",
+      "finishedAt": "2026-05-14T14:30:28.462Z"
+    },
+    {
+      "id": 3,
+      "assetId": 3,
+      "assetName": "Tanque de Acido Sulfurico",
+      "technician": "Luis Carpio",
+      "scheduledDate": "2026-05-14",
+      "reactivationDate": "2026-05-18",
+      "description": "Inspeccion de sellos y contencion secundaria.",
+      "status": "En Mantenimiento",
+      "createdAt": "2026-05-14T07:06:33.075Z"
+    }
+  ],
+  "archivedReports": [
+    {
+      "id": 1,
+      "heatMapId": 2,
+      "code": "INC-110",
+      "ticketCode": "T-010",
+      "date": "2025-10-24",
+      "sector": "Quimicos",
+      "status": "Cerrado",
+      "documentUrl": "/reports/T-010.pdf",
+      "integrityHash": "RG-92F1A",
+      "archivedAt": "2026-05-13T16:30:00"
+    },
+    {
+      "id": 2,
+      "heatMapId": 1,
+      "code": "INC-111",
+      "ticketCode": "T-011",
+      "date": "2025-10-19",
+      "sector": "Calderas",
+      "status": "Cerrado",
+      "documentUrl": "/reports/T-011.pdf",
+      "integrityHash": "RG-48C2B",
+      "archivedAt": "2026-05-12T13:10:00"
+    },
+    {
+      "id": 3,
+      "heatMapId": 4,
+      "code": "INC-112",
+      "ticketCode": "T-012",
+      "date": "2025-10-10",
+      "sector": "Ensamblaje",
+      "status": "Cerrado",
+      "documentUrl": "/reports/T-012.pdf",
+      "integrityHash": "RG-21D8E",
+      "archivedAt": "2026-05-10T09:40:00"
+    },
+    {
+      "id": 4,
+      "heatMapId": 5,
+      "code": "INC-113",
+      "ticketCode": "T-013",
+      "date": "2025-09-10",
+      "sector": "Planta Sur",
+      "status": "Cerrado",
+      "documentUrl": "/reports/T-013.pdf",
+      "integrityHash": "RG-73B5F",
+      "archivedAt": "2026-05-08T15:20:00"
+    }
+  ],
+  "users": [
+    {
+      "id": "manager_001",
+      "name": "Carlos López",
+      "email": "carlos@riskguard.com",
+      "role": "MANAGER",
+      "account_status": "ACTIVE",
+      "creation_date": "2024-01-01T08:00:00Z",
+      "site_area_id": "plant_a"
+    },
+    {
+      "id": "supervisor_001",
+      "name": "Ana Torres",
+      "email": "ana@riskguard.com",
+      "role": "SUPERVISOR",
+      "account_status": "ACTIVE",
+      "creation_date": "2024-01-15T08:00:00Z",
+      "site_area_id": "plant_a"
+    },
+    {
+      "id": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "roleId": "4afbd60b-8da6-46a6-9b48-2d04b8fa2161",
+      "sectorId": 2,
+      "fullName": "Supervisor Turno Alpha",
+      "email": "supervisor@riskguard.tech",
+      "password": "Risk123",
+      "status": "active",
+      "failedAttempts": 0,
+      "blockedUntil": null
+    },
+    {
+      "id": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "roleId": "af74b6d7-8217-44d6-b8d1-9bd5cd7555d2",
+      "sectorId": null,
+      "fullName": "Administrador RiskGuard",
+      "email": "administrador@riskguard.tech",
+      "password": "Risk123",
+      "status": "active",
+      "failedAttempts": 0,
+      "blockedUntil": null
+    },
+    {
+      "id": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "roleId": "c1a42619-e994-48f0-92c6-cdf0a104e7a1",
+      "sectorId": 4,
+      "fullName": "Operario Planta Sur",
+      "email": "operario@riskguard.tech",
+      "password": "Risk123",
+      "status": "active",
+      "failedAttempts": 0,
+      "blockedUntil": null
+    }
+  ],
+  "monthly_reports": [
+    {
+      "id": "RPT_2024_03",
+      "evaluated_month": 3,
+      "evaluated_year": 2024,
+      "site_area_id": "plant_a",
+      "general_status": "Archived",
+      "creation_date": "2024-03-15T10:00:00Z",
+      "update_date": "2024-04-05T14:30:00Z"
+    },
+    {
+      "id": "RPT_2024_04",
+      "evaluated_month": 4,
+      "evaluated_year": 2024,
+      "site_area_id": "plant_a",
+      "general_status": "Active",
+      "creation_date": "2024-04-15T10:00:00Z",
+      "update_date": "2024-05-02T14:30:00Z"
+    }
+  ],
+  "cumulative_st_indicators": [
+    {
+      "id": "IND_2024_03",
+      "monthly_report_id": "RPT_2024_03",
+      "accident_rate_index": 25.7,
+      "administrative_errors_count": 3,
+      "processed_by": true,
+      "calculation_date": "2024-04-05T14:30:00Z"
+    },
+    {
+      "id": "IND_2024_04",
+      "monthly_report_id": "RPT_2024_04",
+      "accident_rate_index": 30.1,
+      "administrative_errors_count": 4,
+      "processed_by": true,
+      "calculation_date": "2024-05-05T14:30:00Z"
+    }
+  ],
+  "historical_incident_records": [
+    {
+      "id": "INC_006",
+      "monthly_report_id": "RPT_2024_03",
+      "date": "2024-03-03",
+      "section": "GAS_PLANT",
+      "incident_type": "Pressure Anomaly",
+      "description": "High pressure alert in pipeline B — valve showed 140% of nominal value",
+      "resolved": false,
+      "closing_date": null,
+      "resolution_time_hours": null,
+      "criticality": "CRITICAL",
+      "operator_id": "OP_003"
+    },
+    {
+      "id": "INC_007",
+      "monthly_report_id": "RPT_2024_03",
+      "date": "2024-03-18",
+      "section": "CONTROL_ROOM",
+      "incident_type": "Server Failure",
+      "description": "Monitoring system offline for 2 hours due to power fluctuation",
+      "resolved": true,
+      "closing_date": "2024-03-18",
+      "resolution_time_hours": 2,
+      "criticality": "LOW",
+      "operator_id": "OP_005"
+    },
+    {
+      "id": "INC_008",
+      "monthly_report_id": "RPT_2024_04",
+      "date": "2024-04-07",
+      "section": "WAREHOUSE_B",
+      "incident_type": "Chemical Leak",
+      "description": "Acid leak from container IBC-12 — exceeds safety threshold, zone evacuated",
+      "resolved": false,
+      "closing_date": null,
+      "resolution_time_hours": null,
+      "criticality": "CRITICAL",
+      "operator_id": "OP_002"
+    },
+    {
+      "id": "INC_009",
+      "monthly_report_id": "RPT_2024_04",
+      "date": "2024-04-22",
+      "section": "GAS_PLANT",
+      "incident_type": "Pressure Anomaly",
+      "description": "Valve failure in compressor unit — manual bypass activated",
+      "resolved": true,
+      "closing_date": "2024-04-23",
+      "resolution_time_hours": 10,
+      "criticality": "HIGH",
+      "operator_id": "OP_003"
+    },
+    {
+      "id": "INC_010",
+      "monthly_report_id": "RPT_2024_04",
+      "date": "2024-04-14",
+      "section": "TURBINE_04",
+      "incident_type": "Abnormal Vibration",
+      "description": "Turbine bearing vibration exceeded 8mm/s threshold — unit shut down for inspection",
+      "resolved": false,
+      "closing_date": null,
+      "resolution_time_hours": null,
+      "criticality": "CRITICAL",
+      "operator_id": "OP_004"
+    }
+  ],
+  "annual_ohs_plan": [
+    {
+      "id": "PLAN_2024",
+      "year": 2024,
+      "global_compliance": 72,
+      "goal": 80,
+      "completed_activities": 86,
+      "total_activities": 120,
+      "critical_months": 2,
+      "update_date": "2024-04-15T10:00:00Z",
+      "monthly_details": [
+        {
+          "month": 1,
+          "compliance": 70,
+          "completed_activities": 8,
+          "planned_activities": 12,
+          "status": "acceptable"
+        },
+        {
+          "month": 2,
+          "compliance": 45,
+          "completed_activities": 5,
+          "planned_activities": 12,
+          "status": "critical"
+        },
+        {
+          "month": 3,
+          "compliance": 42,
+          "completed_activities": 5,
+          "planned_activities": 11,
+          "status": "critical"
+        },
+        {
+          "month": 4,
+          "compliance": 83,
+          "completed_activities": 10,
+          "planned_activities": 12,
+          "status": "optimal"
+        },
+        {
+          "month": 5,
+          "compliance": 91,
+          "completed_activities": 11,
+          "planned_activities": 12,
+          "status": "optimal"
+        },
+        {
+          "month": 6,
+          "compliance": 75,
+          "completed_activities": 9,
+          "planned_activities": 12,
+          "status": "acceptable"
+        }
+      ],
+      "details_by_sector": [
+        {
+          "sector": "WAREHOUSE_B",
+          "compliance": 90,
+          "completed_activities": 18,
+          "planned_activities": 20
+        },
+        {
+          "sector": "GAS_PLANT",
+          "compliance": 75,
+          "completed_activities": 15,
+          "planned_activities": 20
+        },
+        {
+          "sector": "TURBINE_04",
+          "compliance": 60,
+          "completed_activities": 12,
+          "planned_activities": 20
+        }
+      ],
+      "next_review": "2024-07-15T00:00:00Z"
+    },
+    {
+      "id": "PLAN_2023",
+      "year": 2023,
+      "global_compliance": 68,
+      "goal": 80,
+      "completed_activities": 95,
+      "total_activities": 140,
+      "critical_months": 3,
+      "update_date": "2023-12-31T10:00:00Z",
+      "monthly_details": [
+        {
+          "month": 1,
+          "compliance": 55,
+          "completed_activities": 7,
+          "planned_activities": 12,
+          "status": "acceptable"
+        },
+        {
+          "month": 2,
+          "compliance": 40,
+          "completed_activities": 5,
+          "planned_activities": 12,
+          "status": "critical"
+        },
+        {
+          "month": 3,
+          "compliance": 38,
+          "completed_activities": 4,
+          "planned_activities": 12,
+          "status": "critical"
+        },
+        {
+          "month": 4,
+          "compliance": 72,
+          "completed_activities": 9,
+          "planned_activities": 12,
+          "status": "acceptable"
+        },
+        {
+          "month": 5,
+          "compliance": 80,
+          "completed_activities": 10,
+          "planned_activities": 12,
+          "status": "optimal"
+        },
+        {
+          "month": 6,
+          "compliance": 85,
+          "completed_activities": 10,
+          "planned_activities": 12,
+          "status": "optimal"
+        }
+      ],
+      "details_by_sector": [
+        {
+          "sector": "WAREHOUSE_B",
+          "compliance": 78,
+          "completed_activities": 14,
+          "planned_activities": 18
+        },
+        {
+          "sector": "GAS_PLANT",
+          "compliance": 62,
+          "completed_activities": 11,
+          "planned_activities": 18
+        }
+      ],
+      "next_review": "2024-01-15T00:00:00Z"
+    }
+  ],
+  "predictive_indicators": [
+    {
+      "id": "PRED_001",
+      "calculation_date": "2024-04-15T10:00:00Z",
+      "period_days": 30,
+      "total_incidents": 47,
+      "previous_month_variation": 12,
+      "average_resolution_time_hours": 6.4,
+      "resolution_goal_hours": 4,
+      "sectors_with_increasing_trend": [
+        {
+          "sector": "WAREHOUSE_B",
+          "events": 14,
+          "variation_percentage": 45,
+          "status": "critical"
+        },
+        {
+          "sector": "GAS_PLANT",
+          "events": 9,
+          "variation_percentage": 28,
+          "status": "alert"
+        }
+      ],
+      "recurring_incident_types": [
+        {
+          "type": "Chemical Leak",
+          "count": 16,
+          "percentage": 34,
+          "trend": "increasing"
+        },
+        {
+          "type": "Unsafe Condition",
+          "count": 12,
+          "percentage": 26,
+          "trend": "stable"
+        },
+        {
+          "type": "Pressure Anomaly",
+          "count": 8,
+          "percentage": 17,
+          "trend": "increasing"
+        }
+      ]
+    },
+    {
+      "id": "PRED_002",
+      "calculation_date": "2024-03-15T10:00:00Z",
+      "period_days": 30,
+      "total_incidents": 42,
+      "previous_month_variation": -5,
+      "average_resolution_time_hours": 5.1,
+      "resolution_goal_hours": 4,
+      "sectors_with_increasing_trend": [
+        {
+          "sector": "TURBINE_04",
+          "events": 11,
+          "variation_percentage": 38,
+          "status": "critical"
+        }
+      ],
+      "recurring_incident_types": [
+        {
+          "type": "Abnormal Vibration",
+          "count": 14,
+          "percentage": 33,
+          "trend": "increasing"
+        },
+        {
+          "type": "Chemical Leak",
+          "count": 10,
+          "percentage": 24,
+          "trend": "decreasing"
+        }
+      ]
+    }
+  ],
+  "critical_alerts": [
+    {
+      "id": "ALERT_001",
+      "creation_date": "2024-04-12T08:30:00Z",
+      "type": "CRITICAL",
+      "sector": "WAREHOUSE_B",
+      "risk_type": "Chemical Leak",
+      "elapsed_hours": 72,
+      "responsible_supervisor": "Ana Torres",
+      "status": "unresolved",
+      "message": "Fuga de ácido en contenedor IBC-12 supera el umbral de seguridad. Se requiere evacuación inmediata.",
+      "read": false
+    },
+    {
+      "id": "ALERT_002",
+      "creation_date": "2024-04-10T14:00:00Z",
+      "type": "CRITICAL",
+      "sector": "GAS_PLANT",
+      "risk_type": "Pressure Anomaly",
+      "elapsed_hours": 96,
+      "responsible_supervisor": "Carlos Mendoza",
+      "status": "unresolved",
+      "message": "Presión en tubería B al 140% del valor nominal. Equipo de mantenimiento notificado sin respuesta.",
+      "read": false
+    },
+    {
+      "id": "ALERT_003",
+      "creation_date": "2024-04-09T11:00:00Z",
+      "type": "ALERT",
+      "sector": "SOUTH_ACCESS",
+      "risk_type": "Unsafe Condition",
+      "elapsed_hours": 120,
+      "responsible_supervisor": "Ana Torres",
+      "status": "resolved",
+      "message": "Condición insegura en acceso sur corregida. Señalización renovada.",
+      "read": true
+    }
+  ],
+  "generated_reports": [
+    {
+      "type": "compliance",
+      "month": null,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T02:05:23.988Z",
+      "file_name": "RiskGuard_Cumplimiento_todos_2026-05-15.pdf",
+      "status": "generated",
+      "size_kb": 15,
+      "id": "dgqrwUy"
+    },
+    {
+      "type": "monthly",
+      "month": 1,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T02:27:04.290Z",
+      "file_name": "RiskGuard_Reporte_Mensual_enero_2026.pdf",
+      "status": "generated",
+      "size_kb": 14,
+      "id": "DmNMTQ6"
+    },
+    {
+      "type": "audit",
+      "month": 1,
+      "year": 2026,
+      "start_date": "2026-05-27T05:00:00.000Z",
+      "end_date": "2026-05-31T05:00:00.000Z",
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T02:27:20.133Z",
+      "file_name": "RiskGuard_Auditoria_27-5-2026_31-5-2026.pdf",
+      "status": "generated",
+      "size_kb": 10,
+      "id": "Z4PRqZP"
+    },
+    {
+      "type": "compliance",
+      "month": null,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T03:28:16.045Z",
+      "file_name": "RiskGuard_Cumplimiento_todos_2026-05-15.pdf",
+      "status": "generated",
+      "size_kb": 16,
+      "id": "sY8Mb7k"
+    },
+    {
+      "type": "compliance",
+      "month": null,
+      "year": 2026,
+      "start_date": null,
+      "end_date": null,
+      "sector_filter": null,
+      "format": "pdf",
+      "generation_date": "2026-05-15T03:28:35.285Z",
+      "file_name": "RiskGuard_Cumplimiento_todos_2026-05-15.pdf",
+      "status": "generated",
+      "size_kb": 16,
+      "id": "7fkvraL"
+    }
+  ],
+  "kpi_dashboard": [
+    {
+      "id": "KPI_001",
+      "name": "active_incidents",
+      "value": 3,
+      "goal": 0,
+      "status": "alert",
+      "update_date": "2024-04-15T15:00:00Z"
+    },
+    {
+      "id": "KPI_002",
+      "name": "resolved_incidents",
+      "value": 6,
+      "goal": 10,
+      "status": "optimal",
+      "update_date": "2024-04-15T15:00:00Z"
+    },
+    {
+      "id": "KPI_003",
+      "name": "critical_sectors",
+      "value": 2,
+      "goal": 0,
+      "status": "danger",
+      "update_date": "2024-04-15T15:00:00Z"
+    },
+    {
+      "id": "KPI_004",
+      "name": "ohs_plan_compliance",
+      "value": 72,
+      "goal": 80,
+      "status": "alert",
+      "update_date": "2024-04-15T15:00:00Z"
+    }
+  ],
+  "historical_trends": [
+    {
+      "id": "TREND_2024_03",
+      "month": 3,
+      "year": 2024,
+      "total_incidents": 12,
+      "incidents_by_type": {
+        "Unsafe Condition": 3,
+        "Chemical Leak": 4,
+        "Pressure Anomaly": 3,
+        "Server Failure": 2
+      },
+      "incidents_by_sector": {
+        "WAREHOUSE_B": 3,
+        "GAS_PLANT": 4,
+        "TURBINE_04": 3,
+        "CONTROL_ROOM": 2
+      }
+    },
+    {
+      "id": "TREND_2024_04",
+      "month": 4,
+      "year": 2024,
+      "total_incidents": 22,
+      "incidents_by_type": {
+        "Chemical Leak": 9,
+        "Pressure Anomaly": 7,
+        "Unsafe Condition": 4,
+        "Abnormal Vibration": 2
+      },
+      "incidents_by_sector": {
+        "WAREHOUSE_B": 9,
+        "GAS_PLANT": 7,
+        "SOUTH_ACCESS": 4,
+        "TURBINE_04": 2
+      }
+    }
+  ],
+  "roles": [
+    {
+      "id": "4afbd60b-8da6-46a6-9b48-2d04b8fa2161",
+      "code": "supervisor",
+      "name": "Supervisor",
+      "description": "Valida alertas, tickets y estado operativo de planta"
+    },
+    {
+      "id": "af74b6d7-8217-44d6-b8d1-9bd5cd7555d2",
+      "code": "administrator",
+      "name": "Administrador",
+      "description": "Gestiona accesos, roles y configuracion de usuarios"
+    },
+    {
+      "id": "c1a42619-e994-48f0-92c6-cdf0a104e7a1",
+      "code": "plant-operator",
+      "name": "Operario de planta",
+      "description": "Reporta condiciones inseguras desde el sector asignado"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "857bc86e-b22a-4cd2-b3e1-f589373e4d4b",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-SESSION-DEMO-001",
+      "createdAt": "2026-05-14T08:05:00.000Z",
+      "lastActivityAt": "2026-05-14T08:05:25.000Z",
+      "isValid": false,
+      "closedAt": "2026-05-14T08:05:30.000Z",
+      "closeReason": "session-expired-by-inactivity"
+    },
+    {
+      "id": "11cc99b8-30b9-4f97-9cca-2e7d9d0dc54a",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-0f1f137f-016f-4e92-b3ab-81c5f78cc04b",
+      "createdAt": "2026-05-16T01:08:28.306Z",
+      "lastActivityAt": "2026-05-16T01:08:29.668Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:29.668Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "1cacff05-c4ac-4eff-a93a-319f1abdd463",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-6b257640-79ba-40e1-ad85-941cccf04270",
+      "createdAt": "2026-05-16T01:08:30.580Z",
+      "lastActivityAt": "2026-05-16T01:08:31.684Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:31.684Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "7ae50c96-a23a-48f1-bec5-11ec3ef3aade",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-46704191-7504-4aec-b641-735103ab757f",
+      "createdAt": "2026-05-16T01:08:32.476Z",
+      "lastActivityAt": "2026-05-16T01:08:38.401Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:38.401Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "43810ef8-80a7-4ad8-9163-31fdb2297730",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-2f5203b8-64f7-4374-9ffb-3ae8271da26b",
+      "createdAt": "2026-05-16T01:08:39.648Z",
+      "lastActivityAt": "2026-05-16T01:08:40.991Z",
+      "isValid": false,
+      "closedAt": "2026-05-16T01:08:40.991Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "f0ed1673-0a7a-4061-82ab-dd7b9815f216",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-5356e151-b75b-4e18-84d0-1f1dc9841df2",
+      "createdAt": "2026-06-10T18:03:03.628Z",
+      "lastActivityAt": "2026-06-10T18:03:03.628Z",
+      "isValid": true,
+      "closedAt": null,
+      "closeReason": ""
+    },
+    {
+      "id": "fe308742-7254-42d2-8601-a389571ae7f8",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "token": "RG-944aabfc-bc8b-4b90-81b8-9fbe82b64f11",
+      "createdAt": "2026-06-10T18:04:11.467Z",
+      "lastActivityAt": "2026-06-10T18:04:25.041Z",
+      "isValid": false,
+      "closedAt": "2026-06-10T18:04:25.042Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "de1d2ae0-bb3e-4ef8-a4f8-035a5ffe0508",
+      "userId": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "token": "RG-c0352633-7d8f-4209-9c10-90a6120e817c",
+      "createdAt": "2026-06-10T18:04:28.390Z",
+      "lastActivityAt": "2026-06-10T18:06:26.188Z",
+      "isValid": false,
+      "closedAt": "2026-06-10T18:06:26.188Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "8e5eb97e-8015-4cc0-97d9-f33febf6a48b",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "token": "RG-b960cbfc-6c31-4cd1-b462-71b19eaaf5ed",
+      "createdAt": "2026-06-10T18:06:29.499Z",
+      "lastActivityAt": "2026-06-10T18:06:29.499Z",
+      "isValid": true,
+      "closedAt": null,
+      "closeReason": ""
+    },
+    {
+      "id": "6fa04d66-14d3-4850-8992-8c23ab03f039",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-e7223e4c-240a-4e58-a5f5-fe7be54ec87b",
+      "createdAt": "2026-06-10T18:11:54.725Z",
+      "lastActivityAt": "2026-06-10T18:12:29.206Z",
+      "isValid": false,
+      "closedAt": "2026-06-10T18:12:29.206Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "480398b9-e4df-49e2-ad69-9e32b1e8a118",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "token": "RG-d6038f4c-9d99-4ac6-a403-22bd114e9f76",
+      "createdAt": "2026-06-10T18:12:39.225Z",
+      "lastActivityAt": "2026-06-10T18:12:56.410Z",
+      "isValid": false,
+      "closedAt": "2026-06-10T18:12:56.410Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "acc95ed7-68d0-4be3-8255-2abac6f0dbef",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "token": "RG-4d37e21a-0565-48d8-a813-3044a1cfb5df",
+      "createdAt": "2026-06-10T18:12:59.117Z",
+      "lastActivityAt": "2026-06-10T18:13:03.737Z",
+      "isValid": false,
+      "closedAt": "2026-06-10T18:13:03.737Z",
+      "closeReason": "manual-logout"
+    },
+    {
+      "id": "10752692-8b00-494c-838d-e27b469acd2c",
+      "userId": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "token": "RG-f0434fa9-445b-4d23-85c2-aa88c633b7a2",
+      "createdAt": "2026-06-10T18:13:10.260Z",
+      "lastActivityAt": "2026-06-10T18:13:10.260Z",
+      "isValid": true,
+      "closedAt": null,
+      "closeReason": ""
+    }
+  ],
+  "accessLogs": [
+    {
+      "id": "536fa6b1-cb77-498b-bb02-a5aa9e0eb77a",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-14T08:05:00.000Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "a71ddbd5-bf5c-4f9c-9523-c23b7fdc0f09",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-14T08:05:30.000Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "session-expired-by-inactivity"
+    },
+    {
+      "id": "3dc8c70f-08e8-40f0-88e0-52ed6cb50f18",
+      "userId": null,
+      "email": "usuario@riskguard.tech",
+      "attemptAt": "2026-05-14T08:10:00.000Z",
+      "wasSuccessful": false,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "email-not-registered"
+    },
+    {
+      "id": "9efd03c7-d6ce-4d4c-9ce4-be8682d70a15",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:28.384Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "0ab6a5ad-b2aa-47af-8aed-31a8fd41a1fb",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:29.696Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "cc5fbf96-434f-4503-81dc-edf6bdb95663",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:30.642Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "5f1942f7-b781-486f-88a1-16e96ef0a1fa",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:31.721Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "c0bf2eb2-e367-4197-b144-1b6d0f2ca824",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:32.510Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "36204a7e-02a8-4bfb-af1b-bf32b749ba15",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:38.437Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "b45d19d1-638c-4252-9143-10a1ba78b3da",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:39.717Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "47011881-4461-4e6b-afa0-d60c94a46b9c",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-05-16T01:08:41.025Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "73e73734-5bd7-4406-a060-a6b7371b9932",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-06-10T18:03:03.698Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "a7405366-e8b0-4003-bcd7-537a6b8411e5",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "email": "operario@riskguard.tech",
+      "attemptAt": "2026-06-10T18:04:11.529Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "752104a6-290f-4987-99d3-456e88fe8284",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "email": "operario@riskguard.tech",
+      "attemptAt": "2026-06-10T18:04:25.081Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "ab615bc5-fd76-4f77-9820-e8382bc6332b",
+      "userId": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "email": "administrador@riskguard.tech",
+      "attemptAt": "2026-06-10T18:04:28.454Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "5a264199-69bc-4901-91f6-adcfc1e32a31",
+      "userId": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "email": "administrador@riskguard.tech",
+      "attemptAt": "2026-06-10T18:06:26.229Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "6806e411-505b-4458-8b9f-075d90618c40",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "email": "operario@riskguard.tech",
+      "attemptAt": "2026-06-10T18:06:29.556Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "1d1ff7a8-ae32-42fa-b414-99690304ff86",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-06-10T18:11:54.806Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "4f175eb1-4cef-4422-b114-98962d79058b",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-06-10T18:12:29.234Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "2d5bae26-a2fe-4a46-af54-1525e2ce8dd5",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "email": "operario@riskguard.tech",
+      "attemptAt": "2026-06-10T18:12:39.257Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "320d27ac-a9af-4d1c-ab5b-3f52e6f1ae48",
+      "userId": "2268ec4e-8123-446c-a9d4-79a435bb59743",
+      "email": "operario@riskguard.tech",
+      "attemptAt": "2026-06-10T18:12:56.440Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "0b27c157-515e-4f60-9668-7bfe0e340a57",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-06-10T18:12:59.166Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    },
+    {
+      "id": "f6a5b330-1282-4fd9-b9fb-3cde82c19928",
+      "userId": "e5e103d0-1f8e-4b27-8dd3-03a71651b344",
+      "email": "supervisor@riskguard.tech",
+      "attemptAt": "2026-06-10T18:13:03.774Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": "manual-logout"
+    },
+    {
+      "id": "2ec6adbe-bf84-4425-8fdb-90264e97bb89",
+      "userId": "9efc1661-6df5-49a1-afcf-81bdcefaac26",
+      "email": "administrador@riskguard.tech",
+      "attemptAt": "2026-06-10T18:13:10.316Z",
+      "wasSuccessful": true,
+      "ipAddress": "192.168.1.15",
+      "failureReason": ""
+    }
+  ]
+}
