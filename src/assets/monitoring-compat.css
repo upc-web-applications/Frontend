@@ -1,0 +1,311 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f5f7fb;
+  background: #0a0c0f;
+  --p-primary-color: #ff5b00;
+  --p-primary-hover-color: #ff6b1a;
+  --p-primary-active-color: #e65100;
+  --p-form-field-focus-border-color: #ff5b00;
+  --p-form-field-focus-ring-color: rgba(255, 91, 0, 0.32);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #0a0c0f;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  min-height: calc(100vh - 32px);
+  background: #0a0c0f;
+}
+
+.sidebar {
+  background: #080f1a;
+  border-right: 1px solid #1d2635;
+  padding: 1.4rem 1rem;
+}
+
+.brand {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.brand span {
+  color: #ff5b00;
+}
+
+.sidebar-subtitle {
+  color: #687386;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  margin-bottom: 2.3rem;
+}
+
+.side-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 0.8rem;
+  border-radius: 6px;
+  color: #8a8f9a;
+  margin-bottom: 0.35rem;
+}
+
+.side-link.router-link-active {
+  color: #ff5b00;
+  background: rgba(255, 91, 0, 0.12);
+  border-left: 3px solid #ff5b00;
+}
+
+.disabled-link {
+  cursor: default;
+  opacity: 0.75;
+}
+
+.main-area {
+  min-width: 0;
+  min-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+}
+
+.topbar {
+  height: 58px;
+  background: #0c1421;
+  border-bottom: 1px solid #1d2635;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+}
+
+.content {
+  flex: 1;
+  padding: 1.5rem;
+  padding-bottom: 3rem;
+}
+
+.app-footer {
+  width: 100%;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1d222d;
+  border-top: 1px solid #2a3140;
+  color: #f5f7fb;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.55rem 1rem;
+}
+
+.panel {
+  background: #111821;
+  border: 1px solid #202a38;
+  border-radius: 8px;
+}
+
+.muted {
+  color: #8a8f9a;
+}
+
+.orange-button {
+  background: #ff5b00 !important;
+  border-color: #ff5b00 !important;
+  color: #ffffff !important;
+}
+
+.status-banner {
+  background: rgba(0, 201, 123, 0.12);
+  border-left: 4px solid #00c97b;
+  color: #00c97b;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.risk-critical {
+  background: #d96367;
+}
+
+.risk-high {
+  background: #f3c95f;
+}
+
+.risk-medium {
+  background: #f3c95f;
+}
+
+.risk-low {
+  background: #84a087;
+}
+
+.risk-neutral {
+  background: #1a1e24;
+}
+
+.table-dark.p-datatable .p-datatable-thead > tr > th,
+.table-dark .p-datatable-thead > tr > th {
+  background: #303948 !important;
+  color: #f5f7fb !important;
+  border-color: #4b5668 !important;
+}
+
+.table-dark.p-datatable .p-datatable-tbody > tr,
+.table-dark.p-datatable .p-datatable-tbody > tr.p-row-odd,
+.table-dark.p-datatable .p-datatable-tbody > tr.p-row-even,
+.table-dark .p-datatable-tbody > tr,
+.table-dark .p-datatable-tbody > tr.p-row-odd,
+.table-dark .p-datatable-tbody > tr.p-row-even {
+  background: #111821 !important;
+  color: #f5f7fb !important;
+}
+
+.table-dark.p-datatable .p-datatable-tbody > tr:nth-child(even),
+.table-dark .p-datatable-tbody > tr:nth-child(even) {
+  background: #111821 !important;
+}
+
+.table-dark.p-datatable .p-datatable-tbody > tr > td,
+.table-dark .p-datatable-tbody > tr > td {
+  background: #111821 !important;
+  color: #e6ebf5 !important;
+  border-color: #4b5668 !important;
+}
+
+.table-dark.p-datatable .p-paginator,
+.table-dark .p-paginator,
+.table-dark .p-paginator .p-paginator-page,
+.table-dark .p-paginator .p-paginator-next,
+.table-dark .p-paginator .p-paginator-prev,
+.table-dark .p-paginator .p-paginator-first,
+.table-dark .p-paginator .p-paginator-last {
+  background: #111821 !important;
+  color: #aab4c4 !important;
+  border-color: #303948 !important;
+}
+
+.table-dark .p-paginator .p-paginator-page.p-paginator-page-selected {
+  background: #303948;
+  color: #f5f7fb;
+}
+
+.p-select,
+.p-inputtext,
+.p-textarea {
+  background: #070d17 !important;
+  border-color: #263142 !important;
+  color: #e6ebf5 !important;
+}
+
+.p-inputtext:disabled,
+.p-disabled,
+.p-component:disabled {
+  background: #0b1420 !important;
+  border-color: #263142 !important;
+  color: #7f8898 !important;
+  opacity: 1 !important;
+}
+
+.p-select-label,
+.p-select-dropdown {
+  color: #aab4c4 !important;
+}
+
+.p-select-overlay,
+.p-select-option {
+  background: #111821 !important;
+  color: #e6ebf5 !important;
+}
+
+.p-select-option.p-select-option-selected,
+.p-select-option:hover {
+  background: #243044 !important;
+  color: #f5f7fb !important;
+}
+
+.p-inputtext:enabled:focus,
+.p-textarea:enabled:focus,
+.p-select:not(.p-disabled).p-focus,
+.p-select:not(.p-disabled):focus,
+.date-input:focus {
+  border-color: #ff5b00 !important;
+  box-shadow: 0 0 0 1px rgba(255, 91, 0, 0.32) !important;
+  outline: none !important;
+}
+
+.date-input:disabled {
+  background: #0b1420 !important;
+  border-color: #263142 !important;
+  color: #7f8898 !important;
+}
+
+.p-toggleswitch.p-toggleswitch-checked .p-toggleswitch-slider {
+  background: #ff5b00 !important;
+}
+
+.p-toggleswitch .p-toggleswitch-slider {
+  background: #303948 !important;
+  border-color: #4b5668 !important;
+}
+
+.p-button.p-button-text,
+.p-button.p-button-rounded.p-button-text,
+.p-button.p-button-text:not(:disabled):hover,
+.p-button.p-button-rounded.p-button-text:not(:disabled):hover {
+  color: #ff5b00 !important;
+}
+
+.p-selectbutton .p-togglebutton,
+.p-selectbutton .p-togglebutton.p-togglebutton-checked,
+.p-selectbutton .p-togglebutton.p-highlight,
+.p-togglebutton.p-togglebutton-checked,
+.p-togglebutton.p-highlight {
+  border-color: #ff5b00 !important;
+}
+
+.p-selectbutton .p-togglebutton.p-togglebutton-checked,
+.p-selectbutton .p-togglebutton.p-highlight,
+.p-togglebutton.p-togglebutton-checked,
+.p-togglebutton.p-highlight {
+  background: #ff5b00 !important;
+  color: #ffffff !important;
+}
+
+.p-selectbutton .p-togglebutton:not(.p-togglebutton-checked),
+.p-togglebutton:not(.p-togglebutton-checked) {
+  color: #ff5b00 !important;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .side-link {
+    display: inline-flex;
+    margin-right: 0.35rem;
+  }
+}
