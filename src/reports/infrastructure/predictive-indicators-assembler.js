@@ -11,9 +11,7 @@ export class PredictiveIndicatorsAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['predictive_indicators'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['predictive_indicators'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }
