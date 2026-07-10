@@ -58,8 +58,9 @@ const roleName = computed(() => {
 })
 
 function setLocale(language) {
+  if (locale.value === language) return
   locale.value = language
-  localStorage.setItem('riskguard-locale', language)
+  try { localStorage.setItem('riskguard-locale', language) } catch {}
 }
 
 function closeSidebar() {

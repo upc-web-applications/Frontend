@@ -4,15 +4,16 @@ import { useI18n } from 'vue-i18n'
 const { locale, availableLocales } = useI18n()
 
 function setLocale(language) {
+  if (locale.value === language) return
   locale.value = language
-  localStorage.setItem('riskguard-locale', language)
+  try { localStorage.setItem('riskguard-locale', language) } catch {}
 }
 </script>
 
 <template>
   <div class="language-switcher" role="group" aria-label="Language selector">
     <button
-      v-for="language in availableLocales"
+      v-for="language in availableLocales || []"
       :key="language"
       type="button"
       class="language-option"

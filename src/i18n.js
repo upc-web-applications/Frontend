@@ -9,7 +9,6 @@ const savedLocale = localStorage.getItem('riskguard-locale')
 const locale = ['es', 'en'].includes(savedLocale) ? savedLocale : 'es'
 
 const i18n = createI18n({
-    legacy: false,
     locale,
     fallbackLocale: 'en',
     messages: { en, es }

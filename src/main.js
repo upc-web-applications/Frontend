@@ -35,7 +35,13 @@ import i18n from '@/i18n.js'
 import pinia from '@/pinia.js'
 import router from '@/router.js'
 
-createApp(App)
+const app = createApp(App)
+
+app.config.errorHandler = (err, _instance, info) => {
+  console.error('[RiskGuard Error]', err, info)
+}
+
+app
   .use(i18n)
   .use(PrimeVue, {
     theme: {
