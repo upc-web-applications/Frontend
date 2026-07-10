@@ -11,9 +11,7 @@ export class CriticalAlertsAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['critical_alerts'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['critical_alerts'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

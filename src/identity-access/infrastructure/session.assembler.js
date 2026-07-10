@@ -10,7 +10,7 @@ export class SessionAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    let resources = response.data instanceof Array ? response.data : response.data['sessions']
+    let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['sessions'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

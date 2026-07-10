@@ -6,7 +6,7 @@ export class MitigationAssembler {
     static toEntityFromResource(r) { return new Mitigation({ ...r }) }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
-        const data = response.data instanceof Array ? response.data : response.data['mitigaciones']
+        const data = (response.data instanceof Array ? response.data : (response.data ? response.data['mitigaciones'] : null)) ?? []
         return data.map(r => this.toEntityFromResource(r))
     }
 }

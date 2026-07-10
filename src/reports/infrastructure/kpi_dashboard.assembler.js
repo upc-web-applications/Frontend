@@ -11,9 +11,7 @@ export class KPIDashboardAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['kpi_dashboard'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['kpi_dashboard'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

@@ -10,7 +10,7 @@ export class AssetAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    const resources = response.data instanceof Array ? response.data : response.data['assets']
+    const resources = (response.data instanceof Array ? response.data : (response.data ? response.data['assets'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

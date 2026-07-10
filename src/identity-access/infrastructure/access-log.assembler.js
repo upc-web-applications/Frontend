@@ -10,7 +10,7 @@ export class AccessLogAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    let resources = response.data instanceof Array ? response.data : response.data['accessLogs']
+    let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['accessLogs'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

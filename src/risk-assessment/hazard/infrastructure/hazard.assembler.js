@@ -6,7 +6,7 @@ export class HazardAssembler {
     static toEntityFromResource(r) { return new Hazard({ ...r }) }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
-        const data = response.data instanceof Array ? response.data : response.data['peligros']
+        const data = (response.data instanceof Array ? response.data : (response.data ? response.data['peligros'] : null)) ?? []
         return data.map(r => this.toEntityFromResource(r))
     }
 }

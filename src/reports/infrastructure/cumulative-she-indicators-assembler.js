@@ -11,9 +11,7 @@ export class CumulativeSTIndicatorsAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['cumulative_st_indicators'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['cumulative_st_indicators'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

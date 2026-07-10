@@ -11,9 +11,7 @@ export class HistoricalIncidentRecordsAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['historical_incident_records'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['historical_incident_records'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

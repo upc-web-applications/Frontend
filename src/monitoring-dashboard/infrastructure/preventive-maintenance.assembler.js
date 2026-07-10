@@ -10,7 +10,7 @@ export class PreventiveMaintenanceAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    const resources = response.data instanceof Array ? response.data : response.data['preventiveMaintenances']
+    const resources = (response.data instanceof Array ? response.data : (response.data ? response.data['preventiveMaintenances'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

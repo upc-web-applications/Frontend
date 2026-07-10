@@ -20,12 +20,16 @@ const verificationStore = useVerificacionMedidaStore()
 const slaStore = useAlertaSLAStore()
 
 onMounted(async () => {
-  if (!store.loaded) store.fetchDashboard()
-  if (!inspectionStore.loaded) inspectionStore.fetchAll()
-  if (!ticketStore.loaded) await ticketStore.fetchAll()
-  await ticketStore.refreshSlaStatus()
-  if (!verificationStore.loaded) verificationStore.fetchAll()
-  if (!slaStore.loaded) slaStore.fetchAll()
+  try {
+    if (!store.loaded) store.fetchDashboard()
+    if (!inspectionStore.loaded) inspectionStore.fetchAll()
+    if (!ticketStore.loaded) await ticketStore.fetchAll()
+    await ticketStore.refreshSlaStatus()
+    if (!verificationStore.loaded) verificationStore.fetchAll()
+    if (!slaStore.loaded) slaStore.fetchAll()
+  } catch (e) {
+    console.error('Error loading dashboard data', e)
+  }
 })
 
 function riskSeverity(level) {
