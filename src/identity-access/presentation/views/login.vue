@@ -4,9 +4,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js'
 import LanguageSwitcher from '@/shared/presentation/components/language-switcher.vue'
+import riskguardLogo from '@/assets/riskguard-logo.png'
 
 const homeByRole = {
-  'plant-operator': '/inspection/new',
+  'plant-operator': '/inspection/list',
   supervisor: '/monitoring/dashboard',
   administrator: '/reportes/dashboard'
 }
@@ -59,8 +60,7 @@ function login() {
 <template>
   <div class="login-grid">
     <section class="brand-side">
-      <div class="shield"></div>
-      <div class="risk-logo login-logo">Risk<span>Guard</span></div>
+      <img class="login-logo-img" :src="riskguardLogo" alt="RiskGuard Solutions" />
     </section>
     <section class="form-side">
       <div class="login-card">
@@ -106,38 +106,31 @@ function login() {
   display: grid;
   grid-template-columns: 1fr 1.05fr;
   min-height: 100vh;
-  background: #07101c;
+  background: var(--rg-bg);
 }
 
 .brand-side {
-  background: #050b14;
+  background: var(--rg-bg);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  border-right: 1px solid var(--rg-border);
 }
 
 .form-side {
-  background: #101b2b;
+  background: var(--rg-bg-2);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
 }
 
-.shield {
-  width: 64px;
-  height: 72px;
-  background: #ff5b00;
-  clip-path: polygon(50% 0, 88% 14%, 88% 48%, 50% 100%, 12% 48%, 12% 14%);
-  margin-bottom: 1rem;
-}
-
-.login-logo {
-  font-size: clamp(3rem, 5.4vw, 5.2rem);
-  text-transform: uppercase;
-  color: #f6f8fb;
+.login-logo-img {
+  width: min(340px, 74%);
+  max-height: 260px;
+  object-fit: contain;
 }
 
 .login-card {
@@ -156,7 +149,7 @@ function login() {
 
 .separator {
   height: 1px;
-  background: #243044;
+  background: var(--rg-border);
   margin: 2rem 0 1.2rem;
 }
 
@@ -169,8 +162,13 @@ function login() {
     min-height: 220px;
   }
 
-  .login-logo {
-    font-size: 2.6rem;
+  .brand-side {
+    border-right: 0;
+    border-bottom: 1px solid var(--rg-border);
+  }
+
+  .login-logo-img {
+    width: min(260px, 78%);
   }
 }
 </style>

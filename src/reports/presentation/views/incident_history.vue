@@ -64,9 +64,14 @@ const resetFilters = () => {
 };
 
 const formatDate = (d) => {
-  if (!d) return '—';
+  if (!d) return '-';
+  const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d);
+  if (dateOnly) {
+    const [, year, month, day] = dateOnly;
+    return `${day}/${month}/${year}`;
+  }
   const dt = new Date(d);
-  return isNaN(dt) ? '—' : dt.toLocaleDateString('es-PE');
+  return isNaN(dt) ? '-' : dt.toLocaleDateString('es-PE');
 };
 
 const exportPDF = () => {
@@ -78,22 +83,22 @@ const exportPDF = () => {
   doc.setFontSize(16); doc.setTextColor(BRAND); doc.setFont('helvetica', 'bold');
   doc.text('RiskGuard', 14, 10);
   doc.setFontSize(9); doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'normal');
-  doc.text('Historial de Incidentes — Solo lectura | Ley N° 29783', 14, 17);
+  doc.text('Historial de Incidentes - Solo lectura | Ley Nro. 29783', 14, 17);
   doc.setFontSize(7); doc.setTextColor('#6B7280');
   doc.text(`Exportado: ${new Date().toLocaleDateString('es-PE')}`, 283, 17, { align: 'right' });
 
   autoTable(doc, {
     startY: 28,
-    head: [['ID', 'Fecha', 'Sector', 'Tipo de Incidente', 'Descripción', 'Criticidad', 'Estado', 'Hrs. Resolución']],
+    head: [['ID', 'Fecha', 'Sector', 'Tipo de Incidente', 'Descripcion', 'Criticidad', 'Estado', 'Hrs. Resolucion']],
     body: filteredIncidents.value.map(i => [
       i.id,
       formatDate(i.date),
-      i.section || i.sector || '—',
-      i.incident_type || '—',
+      i.section || i.sector || '-',
+      i.incident_type || '-',
       (i.description || '').substring(0, 45),
-      i.criticality || i.severity || '—',
+      i.criticality || i.severity || '-',
       i.resolved ? 'Resuelto' : 'Pendiente',
-      i.resolution_time_hours ?? '—'
+      i.resolution_time_hours ?? '-'
     ]),
     headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 7 },
     bodyStyles: { fontSize: 7, textColor: [30, 30, 30] },
@@ -106,7 +111,7 @@ const exportPDF = () => {
   for (let p = 1; p <= pages; p++) {
     doc.setPage(p);
     doc.setFontSize(6); doc.setTextColor('#6B7280');
-    doc.text(`Página ${p} de ${pages} — RiskGuard — Documento de solo lectura`, 148, 205, { align: 'center' });
+    doc.text(`Pagina ${p} de ${pages} - RiskGuard - Documento de solo lectura`, 148, 205, { align: 'center' });
   }
 
   doc.save(`RiskGuard_Historial_Incidentes_${new Date().toISOString().slice(0,10)}.pdf`);
@@ -243,16 +248,16 @@ const exportPDF = () => {
         </pv-column>
 
         <pv-column :header="t('predictive_indicators.sector')" style="width:13%">
-          <template #body="{ data }">{{ data.section || data.sector || '—' }}</template>
+          <template #body="{ data }">{{ data.section || data.sector || '-' }}</template>
         </pv-column>
 
         <pv-column :header="t('my_reports.type')" style="width:15%">
-          <template #body="{ data }">{{ data.incident_type || '—' }}</template>
+          <template #body="{ data }">{{ data.incident_type || '-' }}</template>
         </pv-column>
 
         <pv-column :header="t('incident_history.description')" style="width:18%">
           <template #body="{ data }">
-            <span class="description-cell">{{ data.description || '—' }}</span>
+            <span class="description-cell">{{ data.description || '-' }}</span>
           </template>
         </pv-column>
 
@@ -267,13 +272,13 @@ const exportPDF = () => {
                   'info'
                 "
             />
-            <span v-else>—</span>
+            <span v-else>-</span>
           </template>
         </pv-column>
 
         <pv-column :header="t('incident_history.operator')" style="width:10%">
           <template #body="{ data }">
-            {{ data.operator_id || data.operario_id || '—' }}
+            {{ data.operator_id || data.operario_id || '-' }}
           </template>
         </pv-column>
 
@@ -288,7 +293,7 @@ const exportPDF = () => {
 
         <pv-column :header="t('incident_history.resolution_hours')" style="width:10%">
           <template #body="{ data }">
-            {{ data.resolution_time_hours != null ? `${data.resolution_time_hours}h` : '—' }}
+            {{ data.resolution_time_hours != null ? `${data.resolution_time_hours}h` : '-' }}
           </template>
         </pv-column>
 

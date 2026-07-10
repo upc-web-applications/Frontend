@@ -1,7 +1,7 @@
 import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 /**
- * @author u20241a322  Blancas Chávez, Carlos Franco
+ * @author u20241a322  Blancas Chavez, Carlos Franco
  */
 export class InspectionApi extends BaseApi {
     #ep

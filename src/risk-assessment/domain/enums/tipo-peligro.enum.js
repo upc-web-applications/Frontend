@@ -1,6 +1,6 @@
 export const TipoPeligro = Object.freeze({
-    FISICO: 'Físico',
-    QUIMICO: 'Químico',
-    ERGONOMICO: 'Ergonómico',
+    FISICO: 'Fisico',
+    QUIMICO: 'Quimico',
+    ERGONOMICO: 'Ergonomico',
     OTRO: 'Otro'
 })

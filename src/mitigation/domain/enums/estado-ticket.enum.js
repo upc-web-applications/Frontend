@@ -1,8 +1,8 @@
 export const EstadoTicket = Object.freeze({
-    PENDIENTE: 'Pendiente',
-    EN_PROGRESO: 'En Progreso',
-    MEDIDA_IMPLEMENTADA: 'Medida Implementada',
+    ASIGNADO: 'Asignado',
+    EN_EJECUCION: 'En ejecucion',
+    MITIGACION_REPORTADA: 'Mitigacion reportada',
+    EN_VERIFICACION: 'En verificacion',
     CERRADO: 'Cerrado',
-    SLA_INCUMPLIDO: 'SLA Incumplido',
-    ESCALADO: 'Escalado'
+    REABIERTO: 'Reabierto'
 })

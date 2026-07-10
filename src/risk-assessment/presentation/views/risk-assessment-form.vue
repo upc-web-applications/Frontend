@@ -18,14 +18,14 @@ const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
 const form = ref({ codigo:'', sector:'', tipoPeligro:'', descripcion:'', probabilidad:1, severidad:1, nivelRiesgo:'Bajo', medidasControl:'', estado:'Pendiente', fechaEvaluacion: new Date().toISOString().split('T')[0], usuarioId:null })
 
-const peligroOptions = ['Físico', 'Químico', 'Ergonómico', 'Biológico', 'Mecánico', 'Eléctrico', 'Psicosocial', 'Otro']
+const peligroOptions = ['Fisico', 'Quimico', 'Ergonomico', 'Biologico', 'Mecanico', 'Electrico', 'Psicosocial', 'Otro']
 
 const matrizIPERC = {
     1:{1:'Bajo',2:'Bajo',3:'Medio',4:'Alto',5:'Alto'},
-    2:{1:'Bajo',2:'Medio',3:'Medio',4:'Alto',5:'Crítico'},
-    3:{1:'Medio',2:'Medio',3:'Alto',4:'Alto',5:'Crítico'},
-    4:{1:'Medio',2:'Alto',3:'Alto',4:'Crítico',5:'Crítico'},
-    5:{1:'Alto',2:'Alto',3:'Crítico',4:'Crítico',5:'Crítico'}
+    2:{1:'Bajo',2:'Medio',3:'Medio',4:'Alto',5:'Critico'},
+    3:{1:'Medio',2:'Medio',3:'Alto',4:'Alto',5:'Critico'},
+    4:{1:'Medio',2:'Alto',3:'Alto',4:'Critico',5:'Critico'},
+    5:{1:'Alto',2:'Alto',3:'Critico',4:'Critico',5:'Critico'}
 }
 
 function calcularNivelRiesgo() {
@@ -73,11 +73,11 @@ const submit = async () => {
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('evaluacionRiesgo.status') }}</label>
-          <pv-select v-model="form.estado" :options="['Pendiente','En Evaluación','Evaluado','Cerrado']" size="small" style="width:100%" />
+          <pv-select v-model="form.estado" :options="['Pendiente','En Evaluacion','Evaluado','Cerrado']" size="small" style="width:100%" />
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('evaluacionRiesgo.sector') }} *</label>
-          <pv-input-text v-model="form.sector" size="small" style="width:100%" placeholder="Ej: Almacén, Producción, Taller" />
+          <pv-input-text v-model="form.sector" size="small" style="width:100%" placeholder="Ej: Almacen, Produccion, Taller" />
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('evaluacionRiesgo.hazardType') }} *</label>

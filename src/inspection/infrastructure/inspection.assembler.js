@@ -1,6 +1,6 @@
 import { Inspection } from '@/inspection/domain/model/inspection.entity.js'
 /**
- * @author u20241a322  Blancas Chávez, Carlos Franco
+ * @author u20241a322  Blancas Chavez, Carlos Franco
  */
 export class InspectionAssembler {
     static toEntityFromResource(r) { return new Inspection({ ...r }) }

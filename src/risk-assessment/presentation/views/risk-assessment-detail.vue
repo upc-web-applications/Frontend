@@ -17,8 +17,13 @@ const mitigationStore = useMitigationStore()
 const assessment = computed(() => store.getById(route.params.id))
 const mitigations = computed(() => mitigationStore.mitigations.filter(m => m.riskAssessmentId === parseInt(route.params.id)))
 
-const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge rg-badge-amber','Alto':'rg-badge rg-badge-red','Crítico':'rg-badge rg-badge-red' }[n] ?? 'rg-badge rg-badge-gray')
-const mitStatusClass = (s) => ({ 'Pendiente':'rg-badge rg-badge-gray','En Progreso':'rg-badge rg-badge-amber','Implementado':'rg-badge rg-badge-purple','Verificado':'rg-badge rg-badge-green','Cerrado':'rg-badge rg-badge-green' }[s] ?? 'rg-badge rg-badge-gray')
+const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge rg-badge-amber','Alto':'rg-badge rg-badge-red','Critico':'rg-badge rg-badge-red' }[n] ?? 'rg-badge rg-badge-gray')
+const mitStatusClass = (s) => ({
+    'En ejecucion': 'rg-badge rg-badge-amber',
+    'Mitigacion reportada': 'rg-badge rg-badge-purple',
+    'En verificacion': 'rg-badge rg-badge-orange',
+    'Cerrado': 'rg-badge rg-badge-green'
+}[s] ?? 'rg-badge rg-badge-gray')
 
 onMounted(() => {
     if (!store.loaded) store.fetchAll()
@@ -52,7 +57,7 @@ onMounted(() => {
         </div>
         <div class="rg-detail-row">
           <span class="rg-detail-label">{{ t('evaluacionRiesgo.status') }}</span>
-          <span class="rg-detail-value"><span :class="assessment.estado==='Evaluado'?'rg-badge rg-badge-green':assessment.estado==='En Evaluación'?'rg-badge rg-badge-amber':assessment.estado==='Cerrado'?'rg-badge rg-badge-purple':'rg-badge rg-badge-gray'">{{ assessment.estado }}</span></span>
+          <span class="rg-detail-value"><span :class="assessment.estado==='Evaluado'?'rg-badge rg-badge-green':assessment.estado==='En Evaluacion'?'rg-badge rg-badge-amber':assessment.estado==='Cerrado'?'rg-badge rg-badge-purple':'rg-badge rg-badge-gray'">{{ assessment.estado }}</span></span>
         </div>
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.date') }}</span><span class="rg-detail-value">{{ assessment.fechaEvaluacion }}</span></div>
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('evaluacionRiesgo.controlMeasures') }}</span><span class="rg-detail-value">{{ assessment.medidasControl || '-' }}</span></div>

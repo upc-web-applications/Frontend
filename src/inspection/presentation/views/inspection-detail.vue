@@ -1,14 +1,14 @@
 <script setup>
 /**
- * @author u20241a322  Blancas Chávez, Carlos Franco
+ * @author u20241a322  Blancas Chavez, Carlos Franco
  */
 import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useInspectionStore } from '@/inspection/application/inspection.store.js'
-import { useAreaStore } from '@/area/application/area.store.js'
-import { useAssetStore } from '@/asset/application/asset.store.js'
-import { useSiteStore } from '@/site/application/site.store.js'
+import { useAreaStore } from '@/organization-assets/area/application/area.store.js'
+import { useAssetStore } from '@/organization-assets/asset/application/asset.store.js'
+import { useSiteStore } from '@/organization-assets/site/application/site.store.js'
 
 const { t } = useI18n(); const route = useRoute(); const router = useRouter()
 const store = useInspectionStore(); const areaStore = useAreaStore()
@@ -21,12 +21,12 @@ const siteName   = computed(() => siteStore.sites.find(s => s.id === inspection.
 const assetName = computed(() => assetStore.assets.find(a => a.id === inspection.value?.activoId)?.nombre ?? 'No vinculado')
 
 const urgClass  = (u) => ({ 'Alto':'rg-badge rg-badge-red','Medio':'rg-badge rg-badge-amber','Bajo':'rg-badge rg-badge-green' }[u] ?? 'rg-badge rg-badge-gray')
-const statClass = (s) => ({ 'Pendiente':'rg-badge rg-badge-amber','En Progreso':'rg-badge rg-badge-orange','Resuelto':'rg-badge rg-badge-green' }[s] ?? 'rg-badge rg-badge-gray')
+const statClass = (s) => ({ 'Recibido':'rg-badge rg-badge-amber','Pendiente':'rg-badge rg-badge-amber','En revision':'rg-badge rg-badge-orange','Convertido a ticket':'rg-badge rg-badge-purple','No procede':'rg-badge rg-badge-gray','Cancelada':'rg-badge rg-badge-gray','Resuelto':'rg-badge rg-badge-green' }[s] ?? 'rg-badge rg-badge-gray')
 const fmtDate   = (d) => d ? new Date(d).toLocaleDateString('es-PE', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' }) : '-'
 
-const statusBg = computed(() => ({ 'Pendiente':'rgba(245,158,11,0.08)','En Progreso':'rgba(232,70,10,0.08)','Resuelto':'rgba(34,197,94,0.08)' }[inspection.value?.estado] ?? 'transparent'))
-const statusBorder = computed(() => ({ 'Pendiente':'rgba(245,158,11,0.25)','En Progreso':'rgba(232,70,10,0.25)','Resuelto':'rgba(34,197,94,0.25)' }[inspection.value?.estado] ?? 'transparent'))
-const statusColor  = computed(() => ({ 'Pendiente':'#f59e0b','En Progreso':'#E8460A','Resuelto':'#22c55e' }[inspection.value?.estado] ?? 'white'))
+const statusBg = computed(() => ({ 'Recibido':'rgba(245,158,11,0.08)','Pendiente':'rgba(245,158,11,0.08)','En revision':'rgba(232,70,10,0.08)','Convertido a ticket':'rgba(124,58,237,0.12)','Resuelto':'rgba(34,197,94,0.08)' }[inspection.value?.estado] ?? 'transparent'))
+const statusBorder = computed(() => ({ 'Recibido':'rgba(245,158,11,0.25)','Pendiente':'rgba(245,158,11,0.25)','En revision':'rgba(232,70,10,0.25)','Convertido a ticket':'rgba(124,58,237,0.28)','Resuelto':'rgba(34,197,94,0.25)' }[inspection.value?.estado] ?? 'transparent'))
+const statusColor  = computed(() => ({ 'Recibido':'#f59e0b','Pendiente':'#f59e0b','En revision':'#E8460A','Convertido a ticket':'#a78bfa','Resuelto':'#22c55e' }[inspection.value?.estado] ?? 'white'))
 
 onMounted(() => {
     if (!store.loaded) store.fetchAll()
@@ -71,7 +71,7 @@ onMounted(() => {
 
       <!-- RIGHT -->
       <div class="rg-card" style="display:flex;flex-direction:column;gap:12px">
-        <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em">Evidencia fotográfica</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em">Evidencia fotografica</div>
         <div v-if="inspection.fotoUrl">
           <img :src="inspection.fotoUrl" style="width:100%;border-radius:8px;border:1px solid var(--rg-border);cursor:pointer" @click="showPhoto = true" />
           <div style="font-size:0.72rem;color:var(--rg-text-muted);margin-top:6px;text-align:center">Click para ampliar</div>
@@ -82,7 +82,7 @@ onMounted(() => {
         </div>
         <div style="padding:12px;background:var(--rg-bg-3);border-radius:8px;border:1px solid var(--rg-border)">
           <div style="font-size:0.62rem;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Ticket</div>
-          <div style="font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--rg-primary)">{{ inspection.ticket }}</div>
+          <div style="font-size:1.4rem;font-weight:800;color:var(--rg-primary)">{{ inspection.ticket }}</div>
         </div>
       </div>
     </div>

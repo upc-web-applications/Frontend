@@ -16,7 +16,11 @@
     "verificaciones": "Verifications",
     "historial": "History",
     "alertasSLA": "SLA Alerts",
-    "notifCriticas": "Critical Notif."
+    "notifCriticas": "Critical Notif.",
+    "receivedReports": "Received reports",
+    "correctiveTickets": "Corrective tickets",
+    "operationalManagement": "Operational management",
+    "dashboard": "Dashboard"
   },
   "common": {
     "save": "Save",
@@ -45,7 +49,7 @@
     "high": "High",
     "critical": "Critical",
     "pending": "Pending",
-    "progress": "In Progress",
+    "progress": "In execution",
     "closed": "Closed",
     "create": "Create",
     "submit": "Submit",
@@ -75,7 +79,16 @@
     "next": "Next",
     "first": "First",
     "last": "Last",
-    "menu": "Menu"
+    "menu": "Menu",
+    "review": "In review",
+    "convertedToTicket": "Converted to ticket",
+    "notApplicable": "Not applicable",
+    "cancelled": "Cancelled",
+    "assignedPending": "Assigned",
+    "implementedMeasure": "Mitigation reported",
+    "verification": "In verification",
+    "reopened": "Reopened",
+    "saved": "Saved"
   },
   "sede": {
     "title": "Site Management",
@@ -138,8 +151,37 @@
     "reportDate": "Report Date",
     "correctiveAction": "Corrective Action",
     "sendReport": "Send Report",
-    "deleteConfirm": "Are you sure you want to delete this inspection?",
-    "noPhoto": "No photo evidence"
+    "deleteConfirm": "Do you want to cancel this inspection?",
+    "noPhoto": "No photo evidence",
+    "pending": "Pending",
+    "inReview": "In review",
+    "convertedToTicket": "Converted to ticket",
+    "cancelled": "Cancelled",
+    "cancelConfirm": "Do you want to cancel this inspection? The supervisor will no longer see it as a pending report.",
+    "cancelSuccess": "Inspection cancelled",
+    "createdSuccess": "Report submitted",
+    "requiredWarning": "Complete the required fields before submitting",
+    "sendError": "Submission failed. Check your connection.",
+    "typeAndSector": "Type and sector",
+    "stepUrgency": "Urgency",
+    "stepDescription": "Description",
+    "stepSubmit": "Submit",
+    "otherType": "Specify the type",
+    "photoEvidence": "Photo evidence",
+    "attachPhoto": "Attach photo (JPG/PNG, max. 5MB)",
+    "invalidPhotoType": "Only JPG or PNG images are allowed",
+    "photoTooLarge": "The image exceeds the allowed size. Maximum 5 MB",
+    "readyToSubmit": "Ready to submit",
+    "priority": "Priority",
+    "suggestedSla": "Suggested SLA",
+    "riskInput": "IPERC input",
+    "received": "Received",
+    "receivedStatus": "Received",
+    "toAssign": "To assign",
+    "assignTechnician": "Assign technician",
+    "converted": "Converted to ticket",
+    "notApplicable": "Not applicable",
+    "slaLimit": "SLA limit"
   },
   "peligro": {
     "title": "Hazard Catalog",
@@ -154,7 +196,8 @@
     "status": "Status",
     "deleteConfirm": "Are you sure you want to delete this hazard?",
     "deleteSuccess": "Hazard deleted",
-    "saveSuccess": "Hazard saved"
+    "saveSuccess": "Hazard saved",
+    "deleteError": "Could not delete hazard"
   },
   "evaluacionRiesgo": {
     "title": "Risk Assessments",
@@ -173,7 +216,8 @@
     "controlMeasures": "Control Measures",
     "deleteConfirm": "Are you sure you want to delete this assessment?",
     "deleteSuccess": "Assessment deleted",
-    "saveSuccess": "Assessment saved"
+    "saveSuccess": "Assessment saved",
+    "deleteError": "Could not delete assessment"
   },
   "mitigacion": {
     "title": "Damage Mitigation",
@@ -193,7 +237,8 @@
     "deleteConfirm": "Are you sure you want to delete this mitigation?",
     "deleteSuccess": "Mitigation deleted",
     "saveSuccess": "Mitigation saved",
-    "newFromAssess": "New Mitigation"
+    "newFromAssess": "New Mitigation",
+    "deleteError": "Could not delete mitigation"
   },
   "patronRiesgo": {
     "title": "Recurring Risk Patterns",
@@ -203,7 +248,8 @@
     "reviewed": "Reviewed",
     "reviewDate": "Review Date",
     "firstOccurrence": "First Occurrence",
-    "markReviewed": "Mark as Reviewed"
+    "markReviewed": "Mark as Reviewed",
+    "saveError": "Could not save risk pattern"
   },
   "nivelCriticidad": {
     "title": "Heat Map by Sector",
@@ -228,7 +274,7 @@
     "title": "Daily Summary",
     "date": "Date",
     "new": "New",
-    "inProgress": "In Progress",
+    "inProgress": "In execution",
     "resolved": "Resolved"
   },
   "ticketCorrectivo": {
@@ -247,7 +293,13 @@
     "createdAt": "Created At",
     "closedAt": "Closed At",
     "instructions": "Instructions",
-    "saveSuccess": "Ticket saved"
+    "saveSuccess": "Ticket saved",
+    "assigned": "Assigned",
+    "execution": "In execution",
+    "mitigationReported": "Mitigation reported",
+    "verification": "In verification",
+    "fromReport": "From report",
+    "workflowNote": "A corrective ticket represents a work order already assigned to a technician."
   },
   "verificacion": {
     "title": "Measure Verifications",
@@ -258,7 +310,8 @@
     "veredict": "Verdict",
     "comment": "Justification",
     "date": "Verification Date",
-    "saveSuccess": "Verification saved"
+    "saveSuccess": "Verification saved",
+    "pending": "Pending verification"
   },
   "historialTicket": {
     "title": "Ticket History",
@@ -267,7 +320,9 @@
     "details": "Details",
     "user": "User",
     "date": "Date",
-    "filterByTicket": "Filter by Ticket"
+    "filterByTicket": "Filter by Ticket",
+    "events": "Events",
+    "lastDate": "Last date"
   },
   "alertaSLA": {
     "title": "SLA Alerts",
@@ -276,7 +331,8 @@
     "hoursElapsed": "Hours Elapsed",
     "slaLimit": "SLA Limit",
     "alertDate": "Alert Date",
-    "notifiedTo": "Notified To"
+    "notifiedTo": "Notified To",
+    "explanation": "Created when the allowed time by criticality has been exceeded."
   },
   "notificacionCritica": {
     "title": "Critical Notifications",
@@ -313,8 +369,8 @@
     "status": "Status: Optimal",
     "heatMap": "Operational heat map",
     "activeAlerts": "Active alerts",
-    "pendingTickets": "Pending tickets",
-    "inProgress": "In progress",
+    "pendingTickets": "Reports to review",
+    "inProgress": "Tickets in execution",
     "criticalAlerts": "Critical alerts",
     "sstCompliance": "SST compliance",
     "selectSector": "Select a sector to see active tickets.",
@@ -339,9 +395,16 @@
     "export_png": "Export PNG",
     "spike_month": "Month with >20% increase",
     "normal_month": "Normal month",
-    "executive_summary_preview": "Preview — Executive Summary",
+    "executive_summary_preview": "Preview - Executive Summary",
     "by_type": "By Type",
-    "plant_safe": "The plant is operating within safe parameters"
+    "plant_safe": "The plant is operating within safe parameters",
+    "reportsToReview": "Reports to review",
+    "reportsToAssign": "Reports to assign",
+    "ticketsInExecution": "Tickets in execution",
+    "pendingVerifications": "Pending verifications",
+    "slaAlerts": "SLA alerts",
+    "receivedReports": "Received reports",
+    "receivedReportsHint": "Incidents submitted by operators that still need a supervisor decision."
   },
   "tickets": {
     "title": "Ticket management",
@@ -458,7 +521,7 @@
     "newTechnician": "New technician"
   },
   "footer": {
-    "content": "All rights reserved. Developed by Group 4 - Section 12190."
+    "content": "(c) 2026 RiskGuard Solutions. All rights reserved."
   },
   "pageNotFound": {
     "title": "Page not found",
@@ -470,10 +533,10 @@
     "nuevo_reporte": "New Report",
     "mis_reportes": "My Reports",
     "historial": "Incident History",
-    "notificaciones": "Critical Alerts",
+    "notificaciones": "Escalations",
     "indicadores": "Predictive Indicators",
     "plan_sst": "SST Plan",
-    "role_manager": "Manager"
+    "role_manager": "Administrator"
   },
   "header": {
     "search": "Search",
@@ -517,7 +580,7 @@
     "sector": "Sector",
     "all_sectors": "All Sectors",
     "generate": "Generate",
-    "partial_period_notice": "Partial period — the current month has not yet ended. Data may be incomplete."
+    "partial_period_notice": "Partial period - the current month has not yet ended. Data may be incomplete."
   },
   "my_reports": {
     "title": "Report History",
@@ -542,19 +605,32 @@
   },
   "notifications": {
     "title": "Notification Center",
+    "admin_escalations": "Administration Escalations",
+    "admin_escalations_hint": "Critical alerts raised by the supervisor-system flow for administrative decision.",
+    "pending_escalations": "pending",
+    "escalation": "Escalation",
+    "source_supervisor": "Source supervisor",
+    "take_review": "Take review",
+    "escalation_reviewed": "Escalation taken into review",
+    "flow_report": "Submits the incident",
+    "flow_review": "Assesses and manages the ticket",
+    "flow_escalation": "Receives critical alerts and expired SLA",
     "critical": "Critical",
     "alert": "Alert",
     "info": "Information",
     "sector": "Sector",
     "risk_type": "Risk Type",
     "time_elapsed": "Time Elapsed",
+    "time_sla": "Time / SLA",
     "see_details": "See Details",
     "no_notifications": "No new notifications",
     "hours": "hours",
     "days": "days",
     "unresolved": "Unresolved",
     "in_review": "In Review",
-    "resolved": "Resolved"
+    "resolved": "Resolved",
+    "type": "Type",
+    "message": "Message"
   },
   "plan_sst": {
     "title": "Annual SST Plan Compliance",
@@ -572,7 +648,7 @@
     "report_pdf": "Export Annual Report PDF",
     "back": "Back",
     "compliance_percentage": "Compliance %",
-    "green_optimal": "≥80% Optimal",
+    "green_optimal": ">=80% Optimal",
     "yellow_attention": "50-79% Attention",
     "red_critical": "<50% Critical"
   },
@@ -628,7 +704,7 @@
   },
   "incident_history": {
     "title": "Incident History",
-    "subtitle": "Immutable record for legal traceability — Law N° 29783",
+    "subtitle": "Immutable record for legal traceability - Law No. 29783",
     "records": "records",
     "export_pdf": "Export PDF",
     "readonly_notice": "Historical records are read-only and cannot be modified or deleted.",
@@ -669,5 +745,10 @@
     "role": "Validated role",
     "sector": "Assigned sector",
     "logout": "Sign out"
+  },
+  "roles": {
+    "administrator": "Administrator",
+    "supervisor": "Supervisor",
+    "operator": "Operator"
   }
 }

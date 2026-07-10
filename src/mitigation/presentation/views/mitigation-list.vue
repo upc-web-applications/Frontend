@@ -17,7 +17,7 @@ const store = useMitigationStore()
 
 onMounted(() => { if (!store.loaded) store.fetchAll() })
 
-const statusClass = (s) => ({ 'Pendiente':'rg-badge rg-badge-gray','En Progreso':'rg-badge rg-badge-amber','Implementado':'rg-badge rg-badge-purple','Verificado':'rg-badge rg-badge-green','Cerrado':'rg-badge rg-badge-green' }[s] ?? 'rg-badge rg-badge-gray')
+const statusClass = (s) => ({ 'En ejecucion':'rg-badge rg-badge-amber','Mitigacion reportada':'rg-badge rg-badge-purple','En verificacion':'rg-badge rg-badge-orange','Cerrado':'rg-badge rg-badge-green' }[s] ?? 'rg-badge rg-badge-gray')
 const resultClass = (r) => r === 'Aprobado' ? 'rg-badge rg-badge-green' : r === 'Rechazado' ? 'rg-badge rg-badge-red' : ''
 
 const confirmDelete = (mit) => {

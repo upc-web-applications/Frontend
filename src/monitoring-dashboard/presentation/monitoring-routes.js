@@ -13,9 +13,9 @@ const technicianForm = () => import('./views/technician-form.vue')
 
 const monitoringRoutes = [
   { path: 'dashboard', name: 'monitoring-dashboard', component: dashboard, meta: { title: 'Dashboard' } },
-  { path: 'tickets', name: 'monitoring-tickets', component: ticketList, meta: { title: 'Tickets' } },
-  { path: 'tickets/:id/assign', name: 'monitoring-ticket-assign', component: ticketAssignment, meta: { title: 'Assign Ticket' } },
-  { path: 'tickets/:id/assignment', name: 'monitoring-ticket-assignment', component: ticketAssignment, meta: { title: 'Ticket Assignment' } },
+  { path: 'tickets', name: 'monitoring-tickets', redirect: '/mitigation/tickets' },
+  { path: 'tickets/:id/assign', name: 'monitoring-ticket-assign', redirect: to => `/mitigation/tickets/${to.params.id}/edit` },
+  { path: 'tickets/:id/assignment', name: 'monitoring-ticket-assignment', redirect: to => `/mitigation/tickets/${to.params.id}` },
   { path: 'maintenance/assets/new', name: 'monitoring-assets-new', component: assetForm, meta: { title: 'New Asset' } },
   { path: 'maintenance/assets/:id/maintenance', name: 'monitoring-assets-maintenance', component: assetMaintenance, meta: { title: 'Asset Maintenance' } },
   { path: 'maintenance/assets/:id/reactivate', name: 'monitoring-assets-reactivate', component: assetReactivation, meta: { title: 'Reactivate Asset' } },

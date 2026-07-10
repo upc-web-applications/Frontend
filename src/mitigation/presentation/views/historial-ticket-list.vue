@@ -47,9 +47,14 @@ const ticketsConHistorial = computed(() => {
 })
 
 const estadoClass = (s) => ({
-    'Pendiente':'rg-badge rg-badge-gray','En Progreso':'rg-badge rg-badge-amber',
-    'Medida Implementada':'rg-badge rg-badge-purple','Cerrado':'rg-badge rg-badge-green',
-    'SLA Incumplido':'rg-badge rg-badge-red','Escalado':'rg-badge rg-badge-red'
+    'Asignado': 'rg-badge rg-badge-gray',
+    'En ejecucion': 'rg-badge rg-badge-amber',
+    'Mitigacion reportada': 'rg-badge rg-badge-purple',
+    'En verificacion': 'rg-badge rg-badge-orange',
+    'Cerrado': 'rg-badge rg-badge-green',
+    'Reabierto': 'rg-badge rg-badge-red',
+    'SLA Incumplido': 'rg-badge rg-badge-red',
+    'Escalado': 'rg-badge rg-badge-red'
 }[s] ?? 'rg-badge rg-badge-gray')
 
 function toggleExpand(ticketId) {
@@ -107,7 +112,7 @@ function irATicket(ticketId) {
         </pv-column>
         <template #expansion="slotProps">
           <div v-if="expandedTicket === slotProps.data.ticketId && slotProps.data.entradas.length" style="padding:12px;background:var(--rg-bg-alt, #f8f9fa)">
-            <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">{{ t('historialTicket.title') }} — #{{ slotProps.data.ticketNumber ?? slotProps.data.ticketId }}</div>
+            <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px">{{ t('historialTicket.title') }} - #{{ slotProps.data.ticketNumber ?? slotProps.data.ticketId }}</div>
             <div v-for="h in slotProps.data.entradas" :key="h.id" style="display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--rg-border);font-size:0.8rem">
               <div style="min-width:120px;color:var(--rg-text-muted)">{{ h.fecha }}</div>
               <div style="min-width:120px;font-weight:600">{{ h.evento }}</div>

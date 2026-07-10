@@ -120,10 +120,10 @@ const trendByTypeData = computed(() => {
 
 const obtenerDetalleSector = (kpi) => {
   const label = t(`kpi.${kpi.name}`) || kpi.name;
-  const kpiVal = kpi.value != null ? ` — ${kpi.value}${kpi.name === 'ohs_plan_compliance' ? '%' : ''}` : '';
+  const kpiVal = kpi.value != null ? ` - ${kpi.value}${kpi.name === 'ohs_plan_compliance' ? '%' : ''}` : '';
 
   if (kpi.name === 'critical_sectors') {
-    // Sectores críticos = sectores con alertas activas (unresolved / in_review)
+    // Sectores criticos = sectores con alertas activas (unresolved / in_review)
     const alertsBySector = store.criticalAlerts
         .filter(a => a.status === 'unresolved' || a.status === 'in_review')
         .reduce((acc, a) => {
@@ -133,11 +133,11 @@ const obtenerDetalleSector = (kpi) => {
         }, {});
     const sectors = Object.values(alertsBySector).map(s => ({
       sector: s.sector,
-      compliance: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.compliance ?? '—',
-      completed_activities: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.completed_activities ?? '—',
-      planned_activities: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.planned_activities ?? '—',
+      compliance: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.compliance ?? '-',
+      completed_activities: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.completed_activities ?? '-',
+      planned_activities: store.annualOHSPlan?.details_by_sector?.find(d => d.sector === s.sector)?.planned_activities ?? '-',
       alertas_activas: s.alerts.length,
-      estado: s.alerts.some(a => a.type === 'CRITICAL') ? 'Crítico' : 'Alerta'
+      estado: s.alerts.some(a => a.type === 'CRITICAL') ? 'Critico' : 'Alerta'
     }));
     sectorDetailData.value = { title: label + kpiVal, sectors, incidents: [], mode: 'critical' };
 
@@ -145,16 +145,25 @@ const obtenerDetalleSector = (kpi) => {
     const sectors = (store.annualOHSPlan?.details_by_sector || [])
         .map(s => ({
           ...s,
-          estado: s.compliance >= 80 ? 'Óptimo' : s.compliance >= 50 ? 'Aceptable' : 'Crítico'
+          estado: s.compliance >= 80 ? 'Optimo' : s.compliance >= 50 ? 'Aceptable' : 'Critico'
         }))
         .sort((a, b) => a.compliance - b.compliance);
     sectorDetailData.value = { title: label + kpiVal, sectors, incidents: [], mode: 'compliance' };
 
   } else {
-    const filteredInc = store.incidents.filter(i =>
-        kpi.name === 'active_incidents'   ? !i.resolved :
-            kpi.name === 'resolved_incidents' ?  i.resolved : true
-    );
+    const hasOperationalTickets = store.operationalTickets.length > 0;
+    const filteredInc = hasOperationalTickets
+        ? store.operationalTickets.filter(ticket =>
+            kpi.name === 'active_incidents'
+                ? !['cerrado', 'resuelto', 'resolved', 'finalizado', 'closed'].includes((ticket.status || '').toString().toLowerCase())
+                : kpi.name === 'resolved_incidents'
+                    ? ['cerrado', 'resuelto', 'resolved', 'finalizado', 'closed'].includes((ticket.status || '').toString().toLowerCase())
+                    : true
+        )
+        : store.incidents.filter(i =>
+            kpi.name === 'active_incidents'   ? !i.resolved :
+                kpi.name === 'resolved_incidents' ?  i.resolved : true
+        );
     sectorDetailData.value = { title: label + kpiVal, sectors: [], incidents: filteredInc, mode: 'incidents' };
   }
   showSectorDetail.value = true;
@@ -200,6 +209,7 @@ const plantaSegura = computed(() => {
 
 onMounted(async () => {
   const tasks = [];
+  tasks.push(store.fetchOperationalData());
   if (!store.kpiDashboard.length)         tasks.push(store.fetchKPIDashboard());
   if (!store.historicalTrends.length)     tasks.push(store.fetchHistoricalTrends());
   if (!store.criticalAlerts.length)       tasks.push(store.fetchCriticalAlerts());
@@ -459,7 +469,7 @@ const exportDashboard = async () => {
       :draggable="false"
       style="width: 70vw; max-width: 900px;"
   >
-    <!-- Sectores críticos: muestra alertas activas por sector -->
+    <!-- Sectores criticos: muestra alertas activas por sector -->
     <div v-if="sectorDetailData.mode === 'critical' && sectorDetailData.sectors.length">
       <p class="detail-hint">Sectores con alertas activas no resueltas en este momento.</p>
       <pv-data-table :value="sectorDetailData.sectors" :rows="10">
@@ -472,18 +482,18 @@ const exportDashboard = async () => {
         <pv-column field="compliance" header="Cumplimiento SST" style="width:16%">
           <template #body="{ data }">
             <pv-tag
-                v-if="data.compliance !== '—'"
+                v-if="data.compliance !== '-'"
                 :value="`${data.compliance}%`"
                 :severity="data.compliance >= 80 ? 'success' : data.compliance >= 50 ? 'warning' : 'danger'"
             />
-            <span v-else>—</span>
+            <span v-else>-</span>
           </template>
         </pv-column>
         <pv-column field="estado" :header="t('common.status')">
           <template #body="{ data }">
             <pv-tag
                 :value="data.estado"
-                :severity="data.estado === 'Crítico' ? 'danger' : 'warning'"
+                :severity="data.estado === 'Critico' ? 'danger' : 'warning'"
             />
           </template>
         </pv-column>
@@ -509,7 +519,7 @@ const exportDashboard = async () => {
           <template #body="{ data }">
             <pv-tag
                 :value="data.estado"
-                :severity="data.estado === 'Óptimo' ? 'success' : data.estado === 'Aceptable' ? 'warning' : 'danger'"
+                :severity="data.estado === 'Optimo' ? 'success' : data.estado === 'Aceptable' ? 'warning' : 'danger'"
             />
           </template>
         </pv-column>
@@ -519,17 +529,19 @@ const exportDashboard = async () => {
       <pv-data-table :value="sectorDetailData.incidents" :rows="10" :paginator="sectorDetailData.incidents.length > 10">
         <pv-column field="id" header="ID" style="width:10%" />
         <pv-column :header="t('my_reports.date')" style="width:14%">
-          <template #body="{ data }">{{ new Date(data.date).toLocaleDateString('es-PE') }}</template>
+          <template #body="{ data }">{{ new Date(data.date || data.createdAt).toLocaleDateString('es-PE') }}</template>
         </pv-column>
         <pv-column :header="t('predictive_indicators.sector')" style="width:16%">
-          <template #body="{ data }">{{ data.section || data.sector || '—' }}</template>
+          <template #body="{ data }">{{ data.section || data.sector || '-' }}</template>
         </pv-column>
-        <pv-column field="incident_type" :header="t('my_reports.type')" />
+        <pv-column :header="t('my_reports.type')">
+          <template #body="{ data }">{{ data.incident_type || data.riskType || '-' }}</template>
+        </pv-column>
         <pv-column :header="t('common.status')">
           <template #body="{ data }">
             <pv-tag
-                :value="data.resolved ? t('notifications.resolved') : t('notifications.unresolved')"
-                :severity="data.resolved ? 'success' : 'danger'"
+                :value="data.resolved || ['cerrado', 'resuelto', 'resolved', 'finalizado', 'closed'].includes((data.status || '').toString().toLowerCase()) ? t('notifications.resolved') : t('notifications.unresolved')"
+                :severity="data.resolved || ['cerrado', 'resuelto', 'resolved', 'finalizado', 'closed'].includes((data.status || '').toString().toLowerCase()) ? 'success' : 'danger'"
             />
           </template>
         </pv-column>
@@ -579,7 +591,7 @@ const exportDashboard = async () => {
   font-size: 20px;
   color: var(--rg-text);
   font-weight: 700;
-  font-family: 'Syne', sans-serif;
+  font-family: 'Inter', 'Geist', system-ui, sans-serif;
 }
 
 .dashboard-subtitle {

@@ -6,10 +6,8 @@ export class GeneratedReportAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        console.log('GeneratedReport response:', response);
 
         if (response.status !== 200) {
-            console.error(`${response.status} - ${response.statusText}`);
             return [];
         }
 

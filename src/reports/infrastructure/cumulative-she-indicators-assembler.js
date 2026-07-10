@@ -6,10 +6,8 @@ export class CumulativeSTIndicatorsAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        console.log('CumulativeSTIndicators response:', response);
 
         if (response.status !== 200) {
-            console.error(`${response.status} - ${response.statusText}`);
             return [];
         }
 

@@ -43,7 +43,7 @@ async function marcarRevisada() {
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('common.description') }}</span><span class="rg-detail-value">{{ patron.descripcion }}</span></div>
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('patronRiesgo.frequency') }}</span><span class="rg-detail-value">{{ patron.frecuencia }}x</span></div>
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('patronRiesgo.firstOccurrence') }}</span><span class="rg-detail-value">{{ patron.fechaPrimeraOcurrencia }}</span></div>
-      <div class="rg-detail-row"><span class="rg-detail-label">{{ t('patronRiesgo.period') }}</span><span class="rg-detail-value">{{ patron.periodoAnalisisDias }} días</span></div>
+      <div class="rg-detail-row"><span class="rg-detail-label">{{ t('patronRiesgo.period') }}</span><span class="rg-detail-value">{{ patron.periodoAnalisisDias }} dias</span></div>
       <div class="rg-detail-row">
         <span class="rg-detail-label">{{ t('patronRiesgo.reviewed') }}</span>
         <span class="rg-detail-value"><span :class="revisadaClass(patron.revisada)">{{ patron.revisada ? t('common.yes') : t('common.no') }}</span></span>

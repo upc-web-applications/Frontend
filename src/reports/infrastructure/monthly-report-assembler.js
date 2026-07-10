@@ -6,10 +6,8 @@ export class MonthlyReportAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        console.log('MonthlyReport response:', response);
 
         if (response.status !== 200) {
-            console.error(`${response.status} - ${response.statusText}`);
             return [];
         }
 

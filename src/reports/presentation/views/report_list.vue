@@ -70,20 +70,32 @@ const filteredReports = computed(() => {
 });
 
 const formatDate = (dateStr) => {
-  if (!dateStr) return '—';
+  if (!dateStr) return '-';
   const d = new Date(dateStr);
-  if (isNaN(d.getTime())) return '—';
+  if (isNaN(d.getTime())) return '-';
   return d.toLocaleDateString('es-PE');
 };
 
 const formatSize = (sizeKb) => {
-  if (!sizeKb && sizeKb !== 0) return '—';
+  if (!sizeKb && sizeKb !== 0) return '-';
   if (sizeKb >= 1024) return `${(sizeKb / 1024).toFixed(1)} MB`;
   return `${sizeKb} KB`;
 };
 
+const reportIncidents = computed(() =>
+  store.operationalTickets.map(ticket => ({
+    id: ticket.id,
+    date: ticket.createdAt,
+    section: ticket.sector,
+    sector: ticket.sector,
+    incident_type: ticket.riskType,
+    resolved: ticket.status?.toLowerCase?.().includes('cerrado') || false,
+    resolution_time_hours: ticket.elapsedHours
+  }))
+);
+
 const loadData = () => Promise.all([
-  store.fetchIncidents(),
+  store.fetchOperationalData(),
   store.fetchKPIDashboard(),
   store.fetchAnnualOHSPlan()
 ]);
@@ -91,27 +103,27 @@ const loadData = () => Promise.all([
 const buildPdfDoc = (report) => {
   if (report.type === 'monthly') {
     return generateMonthlyPDF({ month: report.month, year: report.year,
-      incidents: store.incidents, kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan });
+      incidents: reportIncidents.value, kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan });
   }
   if (report.type === 'audit') {
     return generateAuditPDF({ dateFrom: report.start_date, dateTo: report.end_date,
-      incidents: store.incidents, annualOHSPlan: store.annualOHSPlan });
+      incidents: reportIncidents.value, annualOHSPlan: store.annualOHSPlan });
   }
   return generateCompliancePDF({ sectorFilter: report.sector_filter,
-    annualOHSPlan: store.annualOHSPlan, kpiDashboard: store.kpiDashboard, incidents: store.incidents });
+    annualOHSPlan: store.annualOHSPlan, kpiDashboard: store.kpiDashboard, incidents: reportIncidents.value });
 };
 
 const buildExcel = (report) => {
   if (report.type === 'monthly') {
     return generateMonthlyExcel({ month: report.month, year: report.year,
-      incidents: store.incidents, kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan });
+      incidents: reportIncidents.value, kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan });
   }
   if (report.type === 'audit') {
     return generateAuditExcel({ dateFrom: report.start_date, dateTo: report.end_date,
-      incidents: store.incidents, annualOHSPlan: store.annualOHSPlan });
+      incidents: reportIncidents.value, annualOHSPlan: store.annualOHSPlan });
   }
   return generateComplianceExcel({ sectorFilter: report.sector_filter,
-    annualOHSPlan: store.annualOHSPlan, kpiDashboard: store.kpiDashboard, incidents: store.incidents });
+    annualOHSPlan: store.annualOHSPlan, kpiDashboard: store.kpiDashboard, incidents: reportIncidents.value });
 };
 
 const downloadReport = async (report) => {
