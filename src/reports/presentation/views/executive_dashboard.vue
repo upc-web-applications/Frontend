@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
 import { onMounted, computed, ref } from 'vue';
+import RgChart from '@/shared/presentation/components/rg-chart.vue';
 import { generateExecutiveSummaryPDF, downloadPDF, pdfToBlob } from '@/reports/infrastructure/pdf-report.service.js';
 import { useToast } from 'primevue/usetoast';
 
@@ -363,7 +364,7 @@ const exportDashboard = async () => {
       </div>
 
       <div class="chart-wrapper">
-        <pv-chart
+        <rg-chart
             ref="chartRef"
             type="line"
             :data="showByType ? trendByTypeData : trendChartData"

@@ -2,6 +2,7 @@
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
 import { onMounted, computed } from 'vue';
+import RgChart from '@/shared/presentation/components/rg-chart.vue';
 import { useToast } from 'primevue/usetoast';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -245,7 +246,9 @@ const chartOptions = {
       <!-- Monthly Compliance Chart -->
       <div class="section-card">
         <h2 class="section-title">{{ t('plan_sst.monthly_compliance') }}</h2>
-        <pv-chart type="line" :data="chartData" :options="chartOptions" />
+        <div style="position: relative; height: 320px;">
+          <rg-chart type="line" :data="chartData" :options="chartOptions" />
+        </div>
       </div>
 
       <!-- By Sector -->
