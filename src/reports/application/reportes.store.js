@@ -322,18 +322,26 @@ export const useReportsStore = defineStore('reports', () => {
             if (isClosedStatus(ticket.status)) acc[ticket.sector].completed_activities += 1;
             return acc;
         }, {});
-        const monthlyDetails = Object.values(monthlyMap)
-            .sort((a, b) => a.month - b.month)
-            .map(month => {
-                const compliance = month.planned_activities
-                    ? Math.round((month.completed_activities / month.planned_activities) * 100)
-                    : 0;
-                return {
-                    ...month,
-                    compliance,
-                    status: compliance >= 80 ? 'optimal' : compliance >= 50 ? 'acceptable' : 'critical'
-                };
-            });
+
+        // Merge: preserve all 12 months from basePlan, enrich with operational data
+        const baseMonthly = basePlan?.monthly_details || [];
+        const monthlyDetails = Array.from({ length: 12 }, (_, i) => i + 1).map(month => {
+            const baseMonth = baseMonthly.find(m => m.month === month);
+            const opMonth = monthlyMap[month];
+            
+            const planned = opMonth?.planned_activities ?? baseMonth?.planned_activities ?? 0;
+            const completed = opMonth?.completed_activities ?? baseMonth?.completed_activities ?? 0;
+            const compliance = planned ? Math.round((completed / planned) * 100) : (baseMonth?.compliance ?? 0);
+            
+            return {
+                month,
+                planned_activities: planned,
+                completed_activities: completed,
+                compliance,
+                status: compliance >= 80 ? 'optimal' : compliance >= 50 ? 'acceptable' : 'critical'
+            };
+        });
+
         const detailsBySector = Object.values(sectorMap)
             .sort((a, b) => a.sector.localeCompare(b.sector))
             .map(sector => ({
@@ -347,7 +355,7 @@ export const useReportsStore = defineStore('reports', () => {
             ...(basePlan || {}),
             id: basePlan?.id || `PLAN_${currentYear}`,
             year: basePlan?.year || currentYear,
-            global_compliance: globalCompliance,
+            global_compliance: (globalCompliance || basePlan?.global_compliance) ?? 0,
             goal: basePlan?.goal || 80,
             completed_activities: completedActivities,
             total_activities: totalActivities,

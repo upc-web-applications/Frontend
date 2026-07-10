@@ -154,6 +154,7 @@ const chartData = computed(() => {
 
 const chartOptions = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       display: true,
