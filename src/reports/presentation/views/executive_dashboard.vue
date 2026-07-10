@@ -209,15 +209,18 @@ const plantaSegura = computed(() => {
 });
 
 onMounted(async () => {
-  const tasks = [];
-  tasks.push(store.fetchOperationalData());
-  if (!store.kpiDashboard.length)         tasks.push(store.fetchKPIDashboard());
-  if (!store.historicalTrends.length)     tasks.push(store.fetchHistoricalTrends());
-  if (!store.criticalAlerts.length)       tasks.push(store.fetchCriticalAlerts());
-  if (!store.incidents.length)            tasks.push(store.fetchIncidents());
-  if (!store.annualOHSPlan)               tasks.push(store.fetchAnnualOHSPlan());
-  if (!store.predictiveIndicators.length) tasks.push(store.fetchPredictiveIndicators());
-  await Promise.all(tasks);
+  // 1. PRIMERO: Traer TODO del backend
+  await Promise.all([
+    store.fetchKPIDashboard(),
+    store.fetchHistoricalTrends(),
+    store.fetchCriticalAlerts(),
+    store.fetchIncidents(),
+    store.fetchAnnualOHSPlan(),
+    store.fetchPredictiveIndicators()
+  ]);
+  
+  // 2. DESPUÉS: Enriquecer/fallback con datos operativos
+  await store.fetchOperationalData();
 });
 
 const exportChartPNG = () => {
