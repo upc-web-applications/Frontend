@@ -2,7 +2,7 @@ import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 export class AlertaPatronApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/alertas-patron') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/pattern-alerts') }
     getAlertas()                { return this.#ep.getAll() }
     getAlertaById(id)           { return this.#ep.getById(id) }
     getBySectorId(sId)          { return this.#ep.getByParam('sectorId', sId) }

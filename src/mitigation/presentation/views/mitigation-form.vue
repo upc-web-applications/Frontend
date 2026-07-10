@@ -19,7 +19,7 @@ const historialStore = useHistorialTicketStore()
 
 const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
-const form = ref({ riskAssessmentId: route.query.assessmentId || null, ticketId: null, codigo:'', descripcion:'', responsable:'', fechaAsignacion: new Date().toISOString().split('T')[0], fechaEjecucion:'', estado:'Pendiente', resultado:'', observaciones:'' })
+const form = ref({ riskAssessmentId: route.query.assessmentId || null, ticketId: null, codigo:'', descripcion:'', responsable:'', fechaAsignacion: new Date().toISOString().split('T')[0], fechaEjecucion:'', estado:'En ejecucion', resultado:'', observaciones:'' })
 
 onMounted(async () => {
     if (!assessmentStore.loaded) await assessmentStore.fetchAll()
@@ -40,10 +40,10 @@ const submit = async () => {
             if (updated && updated.ticketId) {
                 const tk = ticketStore.getById(updated.ticketId)
                 if (tk) {
-                    const newStatus = updated.estado === 'Implementado' ? 'Medida Implementada' : updated.estado === 'Verificado' ? 'En Progreso' : updated.estado === 'Cerrado' ? 'Cerrado' : null
+                    const newStatus = updated.estado === 'Mitigacion reportada' ? 'En verificacion' : updated.estado === 'Cerrado' ? 'Cerrado' : updated.estado === 'En ejecucion' ? 'En ejecucion' : null
                     if (newStatus && tk.estado !== newStatus) {
                         await ticketStore.update({ ...tk, estado: newStatus })
-                        await historialStore.add({ ticketId: tk.id, evento: 'Mitigación actualizada', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Mitigación ${updated.codigo}: ${updated.estado}`, fecha: new Date().toISOString().split('T')[0] })
+                        await historialStore.add({ ticketId: tk.id, evento: 'Mitigacion actualizada', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Mitigacion ${updated.codigo}: ${updated.estado}`, fecha: new Date().toISOString().split('T')[0] })
                     }
                 }
             }
@@ -51,9 +51,9 @@ const submit = async () => {
             const created = await store.add(payload)
             if (created && created.ticketId) {
                 const tk = ticketStore.getById(created.ticketId)
-                if (tk && created.estado === 'Implementado') {
-                    await ticketStore.update({ ...tk, estado: 'Medida Implementada' })
-                    await historialStore.add({ ticketId: tk.id, evento: 'Mitigación creada', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Mitigación ${created.codigo}: medida implementada`, fecha: created.fechaEjecucion || new Date().toISOString().split('T')[0] })
+                if (tk && created.estado === 'Mitigacion reportada') {
+                    await ticketStore.update({ ...tk, estado: 'En verificacion' })
+                    await historialStore.add({ ticketId: tk.id, evento: 'Mitigacion creada', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Mitigacion ${created.codigo}: medida implementada`, fecha: created.fechaEjecucion || new Date().toISOString().split('T')[0] })
                 }
             }
         }
@@ -80,7 +80,7 @@ const submit = async () => {
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('mitigacion.status') }}</label>
-          <pv-select v-model="form.estado" :options="['Pendiente','En Progreso','Implementado','Verificado','Cerrado']" size="small" style="width:100%" />
+          <pv-select v-model="form.estado" :options="['En ejecucion','Mitigacion reportada','En verificacion','Cerrado']" size="small" style="width:100%" />
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('mitigacion.assessment') }}</label>
@@ -90,7 +90,7 @@ const submit = async () => {
           <label class="rg-label">{{ t('mitigacion.ticket') }}</label>
           <pv-select v-model="form.ticketId" :options="ticketStore.tickets" option-label="id" option-value="id" size="small" style="width:100%" show-clear>
             <template #option="slotProps">
-              <span>#{{ slotProps.option.id }} — {{ slotProps.option.sector }} ({{ slotProps.option.estado }})</span>
+              <span>#{{ slotProps.option.id }} - {{ slotProps.option.sector }} ({{ slotProps.option.estado }})</span>
             </template>
           </pv-select>
         </div>

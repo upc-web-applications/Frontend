@@ -19,7 +19,7 @@ const riskOptions = computed(() => [
 const statusOptions = computed(() => [
   { label: t('common.all'), value: null },
   { label: t('common.pending'), value: 'Pendiente' },
-  { label: t('common.progress'), value: 'En Progreso' },
+  { label: t('common.progress'), value: 'En ejecucion' },
   { label: t('common.closed'), value: 'Cerrado' }
 ])
 

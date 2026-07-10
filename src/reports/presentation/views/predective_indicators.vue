@@ -11,6 +11,7 @@ const toast = useToast();
 
 onMounted(async () => {
   await Promise.all([
+    store.fetchOperationalData(),
     store.fetchPredictiveIndicators(),
     store.fetchKPIDashboard()
   ]);

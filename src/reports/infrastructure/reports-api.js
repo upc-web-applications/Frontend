@@ -10,6 +10,7 @@ import { PredictiveIndicatorsAssembler } from "@/reports/infrastructure/predicti
 import { CriticalAlertsAssembler } from "@/reports/infrastructure/critical-alerts-assembler.js";
 import { KPIDashboardAssembler } from "@/reports/infrastructure/kpi_dashboard.assembler.js";
 import { HistoricalTrendsAssembler } from "@/reports/infrastructure/historical-trends-assembler.js";
+import { TicketAssembler } from "@/monitoring-dashboard/infrastructure/ticket.assembler.js";
 
 const monthlyReportsEndpointPath = import.meta.env.VITE_MONTHLY_REPORTS_ENDPOINT_PATH;
 const generatedReportsEndpointPath = import.meta.env.VITE_GENERATED_REPORTS_ENDPOINT_PATH;
@@ -20,6 +21,7 @@ const predictiveIndicatorsEndpointPath = import.meta.env.VITE_PREDICTIVE_INDICAT
 const criticalAlertsEndpointPath = import.meta.env.VITE_CRITICAL_ALERTS_ENDPOINT_PATH;
 const kpiDashboardEndpointPath = import.meta.env.VITE_DASHBOARD_KPI_ENDPOINT_PATH;
 const trendsEndpointPath = import.meta.env.VITE_TRENDS_ENDPOINT_PATH;
+const supervisorTicketsEndpointPath = import.meta.env.VITE_TICKETS_ENDPOINT_PATH;
 
 export class ReportsApi extends BaseApi {
     #monthlyReportsEndpoint;
@@ -31,6 +33,7 @@ export class ReportsApi extends BaseApi {
     #criticalAlertsEndpoint;
     #kpiDashboardEndpoint;
     #trendsEndpoint;
+    #supervisorTicketsEndpoint;
 
     constructor() {
         super();
@@ -44,18 +47,7 @@ export class ReportsApi extends BaseApi {
         this.#criticalAlertsEndpoint = new BaseEndpoint(this, criticalAlertsEndpointPath);
         this.#kpiDashboardEndpoint = new BaseEndpoint(this, kpiDashboardEndpointPath);
         this.#trendsEndpoint = new BaseEndpoint(this, trendsEndpointPath);
-
-        console.log('ReportsApi initialized with endpoints:', {
-            monthlyReports: monthlyReportsEndpointPath,
-            generatedReports: generatedReportsEndpointPath,
-            indicators: indicatorsEndpointPath,
-            incidents: incidentsEndpointPath,
-            annualOHSPlan: annualOHSPlanEndpointPath,
-            predictiveIndicators: predictiveIndicatorsEndpointPath,
-            criticalAlerts: criticalAlertsEndpointPath,
-            kpiDashboard: kpiDashboardEndpointPath,
-            trends: trendsEndpointPath
-        });
+        this.#supervisorTicketsEndpoint = new BaseEndpoint(this, supervisorTicketsEndpointPath);
     }
 
     // ===== MONTHLY REPORTS =====
@@ -64,7 +56,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#monthlyReportsEndpoint.getAll();
             return MonthlyReportAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching monthly reports:', error);
             throw error;
         }
     }
@@ -74,7 +65,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#monthlyReportsEndpoint.getById(id);
             return MonthlyReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching monthly report:', error);
             throw error;
         }
     }
@@ -84,7 +74,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#monthlyReportsEndpoint.create(report);
             return MonthlyReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error creating monthly report:', error);
             throw error;
         }
     }
@@ -94,7 +83,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#monthlyReportsEndpoint.update(report.id, report);
             return MonthlyReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error updating monthly report:', error);
             throw error;
         }
     }
@@ -103,7 +91,6 @@ export class ReportsApi extends BaseApi {
         try {
             return await this.#monthlyReportsEndpoint.delete(id);
         } catch (error) {
-            console.error('Error deleting monthly report:', error);
             throw error;
         }
     }
@@ -114,7 +101,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#generatedReportsEndpoint.getAll();
             return GeneratedReportAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching generated reports:', error);
             throw error;
         }
     }
@@ -124,7 +110,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#generatedReportsEndpoint.getById(id);
             return GeneratedReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching generated report:', error);
             throw error;
         }
     }
@@ -134,7 +119,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#generatedReportsEndpoint.create(report);
             return GeneratedReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error creating generated report:', error);
             throw error;
         }
     }
@@ -143,7 +127,6 @@ export class ReportsApi extends BaseApi {
         try {
             return await this.#generatedReportsEndpoint.delete(id);
         } catch (error) {
-            console.error('Error deleting generated report:', error);
             throw error;
         }
     }
@@ -154,7 +137,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#indicatorsEndpoint.getAll();
             return CumulativeSTIndicatorsAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching indicators:', error);
             throw error;
         }
     }
@@ -164,7 +146,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#indicatorsEndpoint.getById(id);
             return CumulativeSTIndicatorsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching indicator:', error);
             throw error;
         }
     }
@@ -175,7 +156,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#incidentsEndpoint.getAll();
             return HistoricalIncidentRecordsAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching incidents:', error);
             throw error;
         }
     }
@@ -185,7 +165,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#incidentsEndpoint.getById(id);
             return HistoricalIncidentRecordsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching incident:', error);
             throw error;
         }
     }
@@ -195,7 +174,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#incidentsEndpoint.create(incident);
             return HistoricalIncidentRecordsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error creating incident:', error);
             throw error;
         }
     }
@@ -205,7 +183,14 @@ export class ReportsApi extends BaseApi {
             const response = await this.#incidentsEndpoint.update(incident.id, incident);
             return HistoricalIncidentRecordsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error updating incident:', error);
+            throw error;
+        }
+    }
+
+    async deleteIncident(id) {
+        try {
+            return await this.#incidentsEndpoint.delete(id);
+        } catch (error) {
             throw error;
         }
     }
@@ -216,7 +201,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#annualOHSPlanEndpoint.getAll();
             return AnnualOHSPlanAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching annual OHS plan:', error);
             throw error;
         }
     }
@@ -226,7 +210,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#annualOHSPlanEndpoint.getById(id);
             return AnnualOHSPlanAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching annual OHS plan:', error);
             throw error;
         }
     }
@@ -236,7 +219,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#annualOHSPlanEndpoint.update(plan.id, plan);
             return AnnualOHSPlanAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error updating annual OHS plan:', error);
             throw error;
         }
     }
@@ -247,7 +229,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#predictiveIndicatorsEndpoint.getAll();
             return PredictiveIndicatorsAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching predictive indicators:', error);
             throw error;
         }
     }
@@ -257,7 +238,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#predictiveIndicatorsEndpoint.getById(id);
             return PredictiveIndicatorsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching predictive indicator:', error);
             throw error;
         }
     }
@@ -268,7 +248,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#criticalAlertsEndpoint.getAll();
             return CriticalAlertsAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching critical alerts:', error);
             throw error;
         }
     }
@@ -278,7 +257,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#criticalAlertsEndpoint.getById(id);
             return CriticalAlertsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching critical alert:', error);
             throw error;
         }
     }
@@ -288,7 +266,15 @@ export class ReportsApi extends BaseApi {
             const response = await this.#criticalAlertsEndpoint.update(alert.id, alert);
             return CriticalAlertsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error updating critical alert:', error);
+            throw error;
+        }
+    }
+
+    async createCriticalAlert(alert) {
+        try {
+            const response = await this.#criticalAlertsEndpoint.create(alert);
+            return CriticalAlertsAssembler.toEntityFromResource(response.data);
+        } catch (error) {
             throw error;
         }
     }
@@ -297,7 +283,6 @@ export class ReportsApi extends BaseApi {
         try {
             return await this.#criticalAlertsEndpoint.delete(id);
         } catch (error) {
-            console.error('Error deleting critical alert:', error);
             throw error;
         }
     }
@@ -308,7 +293,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#kpiDashboardEndpoint.getAll();
             return KPIDashboardAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching KPI dashboard:', error);
             throw error;
         }
     }
@@ -318,7 +302,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#kpiDashboardEndpoint.getById(id);
             return KPIDashboardAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching KPI:', error);
             throw error;
         }
     }
@@ -329,7 +312,6 @@ export class ReportsApi extends BaseApi {
             const response = await this.#trendsEndpoint.getAll();
             return HistoricalTrendsAssembler.toEntitiesFromResponse(response);
         } catch (error) {
-            console.error('Error fetching historical trends:', error);
             throw error;
         }
     }
@@ -339,8 +321,17 @@ export class ReportsApi extends BaseApi {
             const response = await this.#trendsEndpoint.getById(id);
             return HistoricalTrendsAssembler.toEntityFromResource(response.data);
         } catch (error) {
-            console.error('Error fetching historical trend:', error);
             throw error;
         }
     }
+
+    async getSupervisorTickets() {
+        try {
+            const response = await this.#supervisorTicketsEndpoint.getAll();
+            return TicketAssembler.toEntitiesFromResponse(response);
+        } catch (error) {
+            throw error;
+        }
+    }
+
 }

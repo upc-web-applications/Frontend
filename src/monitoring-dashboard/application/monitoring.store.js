@@ -28,8 +28,8 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
   const filterStatus = ref(null)
   const loaded = ref(false)
 
-  const pendingTicketsCount = computed(() => tickets.value.filter(ticket => ticket.status === 'Pendiente').length)
-  const inProgressCount = computed(() => tickets.value.filter(ticket => ticket.status === 'En Progreso').length)
+  const reportsToReviewCount = computed(() => tickets.value.filter(ticket => ['Recibido', 'Pendiente'].includes(ticket.status)).length)
+  const ticketsInExecutionCount = computed(() => tickets.value.filter(ticket => ['Asignado', 'En ejecucion'].includes(ticket.status)).length)
   const totalAssetsCount = computed(() => assets.value.length)
   const totalSectorsCount = computed(() => sectors.value.length)
   const activeTechnicians = computed(() => technicians.value.filter(technician => technician.status === 'Activo'))
@@ -117,7 +117,7 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
       assignedTechnician: technicianName,
       assignmentDetails: details,
       requiredSpecialty: specialty,
-      status: 'En Progreso'
+      status: 'En ejecucion'
     }
     return monitoringApi.updateTicket(updatedTicket).then(response => {
       const ticketEntity = TicketAssembler.toEntityFromResource(response.data)
@@ -268,8 +268,8 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
     filterRisk,
     filterStatus,
     loaded,
-    pendingTicketsCount,
-    inProgressCount,
+    reportsToReviewCount,
+    ticketsInExecutionCount,
     totalAssetsCount,
     totalSectorsCount,
     activeTechnicians,

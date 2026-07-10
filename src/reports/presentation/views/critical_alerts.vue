@@ -1,15 +1,28 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
-import { onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 
 const { t } = useI18n();
 const store = useReportsStore();
 const toast = useToast();
 
+const pendingEscalations = computed(() =>
+  store.criticalAlerts.filter(alert => alert.status === 'unresolved')
+);
+
+const inReviewEscalations = computed(() =>
+  store.criticalAlerts.filter(alert => alert.status === 'in_review')
+);
+
+const resolvedEscalations = computed(() =>
+  store.criticalAlerts.filter(alert => alert.status === 'resolved')
+);
+
 onMounted(async () => {
   try {
+    await store.fetchOperationalData();
     await store.fetchCriticalAlerts();
   } catch (error) {
     toast.add({ severity: 'error', summary: t('common.error'), detail: error.message, life: 3000 });
@@ -37,9 +50,23 @@ const getStatusLabel = (status) => {
   return map[status] || status;
 };
 
+const markAsInReview = async (alert) => {
+  try {
+    await store.updateCriticalAlert({ ...alert, status: 'in_review', read: true });
+    toast.add({
+      severity: 'info',
+      summary: t('common.success'),
+      detail: t('notifications.escalation_reviewed'),
+      life: 3000
+    });
+  } catch (error) {
+    toast.add({ severity: 'error', summary: t('common.error'), detail: error.message, life: 3000 });
+  }
+};
+
 const markAsResolved = async (alert) => {
   try {
-    await store.updateCriticalAlert({ ...alert, status: 'resolved' });
+    await store.updateCriticalAlert({ ...alert, status: 'resolved', read: true });
     toast.add({
       severity: 'success',
       summary: t('common.success'),
@@ -72,14 +99,29 @@ const deleteAlert = async (alert) => {
     <!-- HEADER -->
     <div class="page-header">
       <div>
-        <h1 class="page-title">{{ t('notifications.title') }}</h1>
-        <p class="page-subtitle">{{ t('dashboard.monitor') }}</p>
+        <h1 class="page-title">{{ t('notifications.admin_escalations') }}</h1>
+        <p class="page-subtitle">{{ t('notifications.admin_escalations_hint') }}</p>
       </div>
       <pv-tag
-          :value="`${store.unresolvedCriticalAlerts.length} ${t('notifications.critical')}`"
+          :value="`${pendingEscalations.length} ${t('notifications.pending_escalations')}`"
           severity="danger"
           class="count-tag"
       />
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-item">
+        <strong>{{ pendingEscalations.length }}</strong>
+        <span>{{ t('notifications.unresolved') }}</span>
+      </div>
+      <div class="summary-item">
+        <strong>{{ inReviewEscalations.length }}</strong>
+        <span>{{ t('notifications.in_review') }}</span>
+      </div>
+      <div class="summary-item">
+        <strong>{{ resolvedEscalations.length }}</strong>
+        <span>{{ t('notifications.resolved') }}</span>
+      </div>
     </div>
 
     <!-- TABLE -->
@@ -105,7 +147,7 @@ const deleteAlert = async (alert) => {
       >
 
         <!-- TYPE -->
-        <pv-column field="type" :header="t('notifications.type')" sortable style="width: 10%">
+        <pv-column field="type" :header="t('notifications.escalation')" sortable style="width: 12%">
           <template #body="{ data }">
             <pv-tag
                 :value="data.type"
@@ -131,15 +173,15 @@ const deleteAlert = async (alert) => {
           </template>
         </pv-column>
 
-        <!-- ELAPSED -->
-        <pv-column field="elapsed_hours" :header="t('notifications.time_elapsed')" sortable style="width: 10%">
+        <!-- SLA TIME -->
+        <pv-column field="elapsed_hours" :header="t('notifications.time_sla')" sortable style="width: 10%">
           <template #body="{ data }">
-            {{ data.elapsed_hours }}h
+            {{ data.time_label || `${data.elapsed_hours}h` }}
           </template>
         </pv-column>
 
         <!-- SUPERVISOR -->
-        <pv-column field="responsible_supervisor" :header="t('sidebar.role_manager')" sortable style="width: 12%" />
+        <pv-column field="responsible_supervisor" :header="t('notifications.source_supervisor')" sortable style="width: 12%" />
 
         <!-- STATUS -->
         <pv-column field="status" :header="t('common.status')" sortable style="width: 10%">
@@ -155,6 +197,15 @@ const deleteAlert = async (alert) => {
         <pv-column :header="t('my_reports.actions')" style="width: 10%">
           <template #body="{ data }">
             <div class="actions">
+              <pv-button
+                  v-if="data.status === 'unresolved'"
+                  icon="pi pi-eye"
+                  rounded
+                  text
+                  size="small"
+                  @click="markAsInReview(data)"
+                  v-tooltip.top="t('notifications.take_review')"
+              />
               <pv-button
                   v-if="data.status !== 'resolved'"
                   icon="pi pi-check"
@@ -223,6 +274,34 @@ const deleteAlert = async (alert) => {
   border: 1px solid var(--border-color);
   border-radius: 10px;
   overflow: hidden;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.summary-item {
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #11151a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-item strong {
+  color: var(--primary-color);
+  font-size: 24px;
+}
+
+.summary-item span {
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
 .sector-badge {
@@ -303,5 +382,6 @@ const deleteAlert = async (alert) => {
   .alerts-container { padding: 15px; }
   .page-header { flex-direction: column; gap: 16px; }
   .page-title { font-size: 22px; }
+  .summary-grid { grid-template-columns: 1fr; }
 }
 </style>

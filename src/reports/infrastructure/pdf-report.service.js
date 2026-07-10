@@ -57,8 +57,8 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
 
   let y = addHeader(
     doc,
-    'Reporte Mensual de Gestión de SST',
-    `Período: ${monthName} ${year} | Ley N° 29783 — Seguridad y Salud en el Trabajo`
+    'Reporte Mensual de Gestion de SST',
+    `Periodo: ${monthName} ${year} | Ley Nro. 29783 - Seguridad y Salud en el Trabajo`
   );
 
   // KPIs section
@@ -67,10 +67,10 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
   const kpiMap = {};
   kpiDashboard.forEach(k => { kpiMap[k.name] = k; });
 
-  y = addKpiRow(doc, 'Incidentes activos', kpiMap.active_incidents?.value ?? '—', y);
-  y = addKpiRow(doc, 'Incidentes resueltos en el mes', kpiMap.resolved_incidents?.value ?? '—', y);
-  y = addKpiRow(doc, 'Sectores en estado crítico', kpiMap.critical_sectors?.value ?? '—', y);
-  y = addKpiRow(doc, 'Cumplimiento Plan SST', `${kpiMap.ohs_plan_compliance?.value ?? '—'}%`, y);
+  y = addKpiRow(doc, 'Incidentes activos', kpiMap.active_incidents?.value ?? '-', y);
+  y = addKpiRow(doc, 'Incidentes resueltos en el mes', kpiMap.resolved_incidents?.value ?? '-', y);
+  y = addKpiRow(doc, 'Sectores en estado critico', kpiMap.critical_sectors?.value ?? '-', y);
+  y = addKpiRow(doc, 'Cumplimiento Plan SST', `${kpiMap.ohs_plan_compliance?.value ?? '-'}%`, y);
 
   y += 6;
 
@@ -101,7 +101,7 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
     .filter(s => s.compliance < 50 && sectorSet.has(s.sector))
     .map(s => s.sector);
 
-  y = addSectionTitle(doc, 'Análisis del Período', y);
+  y = addSectionTitle(doc, 'Analisis del Periodo', y);
 
   if (Object.keys(totalPorTipo).length) {
     autoTable(doc, {
@@ -117,18 +117,18 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
     y = doc.lastAutoTable.finalY + 6;
   }
 
-  y = addKpiRow(doc, 'Porcentaje de resolución', `${porcentajeResolucion}%`, y);
-  y = addKpiRow(doc, 'Tiempo prom. resolución', tiempoPromedioResolucion ? `${tiempoPromedioResolucion} hrs` : '—', y);
-  y = addKpiRow(doc, 'Sectores críticos del período',
+  y = addKpiRow(doc, 'Porcentaje de resolucion', `${porcentajeResolucion}%`, y);
+  y = addKpiRow(doc, 'Tiempo prom. resolucion', tiempoPromedioResolucion ? `${tiempoPromedioResolucion} hrs` : '-', y);
+  y = addKpiRow(doc, 'Sectores criticos del periodo',
     sectoresCriticos.length ? sectoresCriticos.join(', ') : 'Ninguno', y);
   y += 8;
 
-  y = addSectionTitle(doc, 'Registro de Incidentes del Período', y);
+  y = addSectionTitle(doc, 'Registro de Incidentes del Periodo', y);
 
   if (monthIncidents.length === 0) {
     doc.setFontSize(9);
     doc.setTextColor(GRAY);
-    doc.text('No se registraron incidentes para el período seleccionado.', 20, y);
+    doc.text('No se registraron incidentes para el periodo seleccionado.', 20, y);
     y += 10;
   } else {
     autoTable(doc, {
@@ -137,8 +137,8 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
       body: monthIncidents.map(i => [
         i.id,
         new Date(i.date).toLocaleDateString('es-PE'),
-        i.section || i.sector || '—',
-        i.incident_type || '—',
+        i.section || i.sector || '-',
+        i.incident_type || '-',
         i.resolved ? 'Resuelto' : 'Pendiente'
       ]),
       headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
@@ -159,7 +159,7 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
       `${m.compliance}%`,
       m.completed_activities,
       m.planned_activities,
-      m.status === 'optimal' ? 'Óptimo' : m.status === 'acceptable' ? 'Aceptable' : 'Crítico'
+      m.status === 'optimal' ? 'Optimo' : m.status === 'acceptable' ? 'Aceptable' : 'Critico'
     ]);
 
     autoTable(doc, {
@@ -180,7 +180,7 @@ export function generateMonthlyPDF({ month, year, incidents, kpiDashboard, annua
     doc.setPage(p);
     doc.setFontSize(7);
     doc.setTextColor(GRAY);
-    doc.text(`Página ${p} de ${pageCount} — Documento generado por RiskGuard`, 105, 290, { align: 'center' });
+    doc.text(`Pagina ${p} de ${pageCount} - Documento generado por RiskGuard`, 105, 290, { align: 'center' });
   }
 
   return doc;
@@ -194,14 +194,14 @@ export function generateAuditPDF({ dateFrom, dateTo, incidents, annualOHSPlan })
 
   let y = addHeader(
     doc,
-    'Formato de Auditoría SUNAFIL — Ley N° 29783',
+    'Formato de Auditoria SUNAFIL - Ley Nro. 29783',
     `Rango: ${fromStr} al ${toStr}`
   );
 
   y = addSectionTitle(doc, 'Datos del Centro de Trabajo', y);
-  y = addKpiRow(doc, 'Razón social', 'RiskGuard S.A.C.', y);
+  y = addKpiRow(doc, 'Razon social', 'RiskGuard S.A.C.', y);
   y = addKpiRow(doc, 'RUC', '20123456789', y);
-  y = addKpiRow(doc, 'Actividad económica', 'Gestión de Seguridad Industrial', y);
+  y = addKpiRow(doc, 'Actividad economica', 'Gestion de Seguridad Industrial', y);
   y += 6;
 
   // Filter incidents by date range
@@ -212,7 +212,7 @@ export function generateAuditPDF({ dateFrom, dateTo, incidents, annualOHSPlan })
     return d >= from && d <= to;
   });
 
-  y = addSectionTitle(doc, 'Registro de Incidentes y Accidentes (Art. 28 — Ley 29783)', y);
+  y = addSectionTitle(doc, 'Registro de Incidentes y Accidentes (Art. 28 - Ley 29783)', y);
 
   if (filtered.length === 0) {
     doc.setFontSize(9);
@@ -222,15 +222,15 @@ export function generateAuditPDF({ dateFrom, dateTo, incidents, annualOHSPlan })
   } else {
     autoTable(doc, {
       startY: y,
-      head: [['N°', 'Fecha', 'Sector / Área', 'Tipo de incidente', 'Descripción', 'Estado', 'Hrs. resolución']],
+      head: [['Nro.', 'Fecha', 'Sector / Area', 'Tipo de incidente', 'Descripcion', 'Estado', 'Hrs. resolucion']],
       body: filtered.map((i, idx) => [
         idx + 1,
         new Date(i.date).toLocaleDateString('es-PE'),
-        i.section || i.sector || '—',
-        i.incident_type || '—',
+        i.section || i.sector || '-',
+        i.incident_type || '-',
         (i.description || '').substring(0, 40),
         i.resolved ? 'Resuelto' : 'Pendiente',
-        i.resolution_time_hours ?? '—'
+        i.resolution_time_hours ?? '-'
       ]),
       headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 7 },
       bodyStyles: { fontSize: 7, textColor: [30, 30, 30] },
@@ -244,11 +244,11 @@ export function generateAuditPDF({ dateFrom, dateTo, incidents, annualOHSPlan })
 
   // OHS compliance
   if (annualOHSPlan) {
-    y = addSectionTitle(doc, 'Cumplimiento del Plan de SST (Art. 38 — Ley 29783)', y);
+    y = addSectionTitle(doc, 'Cumplimiento del Plan de SST (Art. 38 - Ley 29783)', y);
     y = addKpiRow(doc, 'Cumplimiento global', `${annualOHSPlan.global_compliance}%`, y);
     y = addKpiRow(doc, 'Meta establecida', `${annualOHSPlan.goal}%`, y);
     y = addKpiRow(doc, 'Actividades completadas', `${annualOHSPlan.completed_activities} / ${annualOHSPlan.total_activities}`, y);
-    y = addKpiRow(doc, 'Meses críticos', annualOHSPlan.critical_months, y);
+    y = addKpiRow(doc, 'Meses criticos', annualOHSPlan.critical_months, y);
     y += 10;
 
     const sectorRows = (annualOHSPlan.details_by_sector || []).map(s => [
@@ -279,7 +279,7 @@ export function generateAuditPDF({ dateFrom, dateTo, incidents, annualOHSPlan })
     doc.setPage(p);
     doc.setFontSize(7);
     doc.setTextColor(GRAY);
-    doc.text(`Página ${p} de ${pageCount} — Documento generado por RiskGuard`, 105, 290, { align: 'center' });
+    doc.text(`Pagina ${p} de ${pageCount} - Documento generado por RiskGuard`, 105, 290, { align: 'center' });
   }
 
   return doc;
@@ -292,7 +292,7 @@ export function generateCompliancePDF({ sectorFilter, annualOHSPlan, kpiDashboar
   let y = addHeader(
     doc,
     'Reporte de Cumplimiento Normativo',
-    `Sector: ${sectorLabel} | Ley N° 29783`
+    `Sector: ${sectorLabel} | Ley Nro. 29783`
   );
 
   y = addSectionTitle(doc, 'Indicadores de Cumplimiento', y);
@@ -300,7 +300,7 @@ export function generateCompliancePDF({ sectorFilter, annualOHSPlan, kpiDashboar
   const kpiMap = {};
   kpiDashboard.forEach(k => { kpiMap[k.name] = k; });
 
-  y = addKpiRow(doc, 'Cumplimiento Plan SST global', `${kpiMap.ohs_plan_compliance?.value ?? '—'}%`, y);
+  y = addKpiRow(doc, 'Cumplimiento Plan SST global', `${kpiMap.ohs_plan_compliance?.value ?? '-'}%`, y);
   y = addKpiRow(doc, 'Meta Plan SST', `${kpiMap.ohs_plan_compliance?.goal ?? 80}%`, y);
   y += 6;
 
@@ -326,7 +326,7 @@ export function generateCompliancePDF({ sectorFilter, annualOHSPlan, kpiDashboar
           `${s.compliance}%`,
           s.completed_activities,
           s.planned_activities,
-          s.compliance >= 80 ? 'Óptimo' : s.compliance >= 50 ? 'Aceptable' : 'Crítico'
+          s.compliance >= 80 ? 'Optimo' : s.compliance >= 50 ? 'Aceptable' : 'Critico'
         ]),
         headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
         bodyStyles: { fontSize: 8 },
@@ -352,13 +352,13 @@ export function generateCompliancePDF({ sectorFilter, annualOHSPlan, kpiDashboar
   } else {
     autoTable(doc, {
       startY: y,
-      head: [['Fecha', 'Sector', 'Tipo', 'Estado', 'Hrs. resolución']],
+      head: [['Fecha', 'Sector', 'Tipo', 'Estado', 'Hrs. resolucion']],
       body: filteredIncidents.map(i => [
         new Date(i.date).toLocaleDateString('es-PE'),
-        i.section || i.sector || '—',
-        i.incident_type || '—',
+        i.section || i.sector || '-',
+        i.incident_type || '-',
         i.resolved ? 'Resuelto' : 'Pendiente',
-        i.resolution_time_hours ?? '—'
+        i.resolution_time_hours ?? '-'
       ]),
       headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
       bodyStyles: { fontSize: 8 },
@@ -374,7 +374,7 @@ export function generateCompliancePDF({ sectorFilter, annualOHSPlan, kpiDashboar
     doc.setPage(p);
     doc.setFontSize(7);
     doc.setTextColor(GRAY);
-    doc.text(`Página ${p} de ${pageCount} — Documento generado por RiskGuard`, 105, 290, { align: 'center' });
+    doc.text(`Pagina ${p} de ${pageCount} - Documento generado por RiskGuard`, 105, 290, { align: 'center' });
   }
 
   return doc;
@@ -386,7 +386,7 @@ export function generateExecutiveSummaryPDF({ predictiveIndicators, kpiDashboard
   const dateStr = new Date(date).toLocaleDateString('es-PE');
   let y = addHeader(
     doc,
-    'Resumen Ejecutivo — Indicadores Predictivos de Riesgo',
+    'Resumen Ejecutivo - Indicadores Predictivos de Riesgo',
     `Generado al: ${dateStr}`
   );
 
@@ -394,27 +394,27 @@ export function generateExecutiveSummaryPDF({ predictiveIndicators, kpiDashboard
   const kpiMap = {};
   kpiDashboard.forEach(k => { kpiMap[k.name] = k; });
 
-  y = addKpiRow(doc, 'Incidentes activos', kpiMap.active_incidents?.value ?? '—', y);
-  y = addKpiRow(doc, 'Incidentes resueltos en el mes', kpiMap.resolved_incidents?.value ?? '—', y);
-  y = addKpiRow(doc, 'Sectores críticos', kpiMap.critical_sectors?.value ?? '—', y);
-  y = addKpiRow(doc, 'Cumplimiento Plan SST', `${kpiMap.ohs_plan_compliance?.value ?? '—'}%`, y);
+  y = addKpiRow(doc, 'Incidentes activos', kpiMap.active_incidents?.value ?? '-', y);
+  y = addKpiRow(doc, 'Incidentes resueltos en el mes', kpiMap.resolved_incidents?.value ?? '-', y);
+  y = addKpiRow(doc, 'Sectores criticos', kpiMap.critical_sectors?.value ?? '-', y);
+  y = addKpiRow(doc, 'Cumplimiento Plan SST', `${kpiMap.ohs_plan_compliance?.value ?? '-'}%`, y);
   y += 6;
 
   predictiveIndicators.forEach((ind, idx) => {
-    y = addSectionTitle(doc, `Análisis Predictivo — Período ${ind.period_days} días`, y);
+    y = addSectionTitle(doc, `Analisis Predictivo - Periodo ${ind.period_days} dias`, y);
     y = addKpiRow(doc, 'Total incidentes', ind.total_incidents, y);
-    y = addKpiRow(doc, 'Variación vs. mes anterior', `${ind.previous_month_variation}%`, y);
-    y = addKpiRow(doc, 'Tiempo promedio resolución', `${ind.average_resolution_time_hours} hrs`, y);
-    y = addKpiRow(doc, 'Meta de resolución', `${ind.resolution_goal_hours} hrs`, y);
+    y = addKpiRow(doc, 'Variacion vs. mes anterior', `${ind.previous_month_variation}%`, y);
+    y = addKpiRow(doc, 'Tiempo promedio resolucion', `${ind.average_resolution_time_hours} hrs`, y);
+    y = addKpiRow(doc, 'Meta de resolucion', `${ind.resolution_goal_hours} hrs`, y);
     y += 4;
 
     if (ind.sectors_with_increasing_trend?.length) {
       autoTable(doc, {
         startY: y,
-        head: [['Sector en tendencia creciente', 'Eventos', 'Variación %', 'Estado']],
+        head: [['Sector en tendencia creciente', 'Eventos', 'Variacion %', 'Estado']],
         body: ind.sectors_with_increasing_trend.map(s => [
           s.sector, s.events, `${s.variation_percentage}%`,
-          s.status === 'critical' ? 'CRÍTICO' : 'ALERTA'
+          s.status === 'critical' ? 'CRITICO' : 'ALERTA'
         ]),
         headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
         bodyStyles: { fontSize: 8 },
@@ -452,7 +452,7 @@ export function generateExecutiveSummaryPDF({ predictiveIndicators, kpiDashboard
     doc.setPage(p);
     doc.setFontSize(7);
     doc.setTextColor(GRAY);
-    doc.text(`Página ${p} de ${pageCount} — Documento generado por RiskGuard`, 105, 290, { align: 'center' });
+    doc.text(`Pagina ${p} de ${pageCount} - Documento generado por RiskGuard`, 105, 290, { align: 'center' });
   }
 
   return doc;

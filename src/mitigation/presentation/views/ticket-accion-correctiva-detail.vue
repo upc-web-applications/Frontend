@@ -5,6 +5,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useTicketAccionCorrectivaStore } from '@/mitigation/application/ticket-accion-correctiva.store.js'
 import { useVerificacionMedidaStore } from '@/mitigation/application/verificacion-medida.store.js'
 import { useHistorialTicketStore } from '@/mitigation/application/historial-ticket.store.js'
+import { withSlaEvaluation } from '@/mitigation/application/sla-policy.js'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -13,18 +14,36 @@ const store = useTicketAccionCorrectivaStore()
 const verifStore = useVerificacionMedidaStore()
 const histStore = useHistorialTicketStore()
 
-const ticket = computed(() => store.getById(route.params.id))
+const ticket = computed(() => {
+    const current = store.getById(route.params.id)
+    return current ? withSlaEvaluation(current) : null
+})
 const verificaciones = computed(() => verifStore.verificaciones.filter(v => v.ticketId === parseInt(route.params.id)))
 const historiales = computed(() => histStore.historiales.filter(h => h.ticketId === parseInt(route.params.id)))
+const ticketStatus = computed(() => normalizeStatus(ticket.value?.estado))
+
+function normalizeStatus(status) {
+    const value = (status || '').toString().toLowerCase()
+    if (value.includes('pendiente') || value.includes('asignado')) return 'Asignado'
+    if (value.includes('progreso') || value.includes('ejecucion')) return 'En ejecucion'
+    if (value.includes('implementada') || value.includes('reportada')) return 'Mitigacion reportada'
+    if (value.includes('verificacion')) return 'En verificacion'
+    if (value.includes('cerrado')) return 'Cerrado'
+    if (value.includes('reabierto')) return 'Reabierto'
+    return status || 'Asignado'
+}
 
 const estadoClass = (s) => ({
-    'Pendiente':'rg-badge rg-badge-gray','En Progreso':'rg-badge rg-badge-amber',
-    'Medida Implementada':'rg-badge rg-badge-purple','Cerrado':'rg-badge rg-badge-green',
-    'SLA Incumplido':'rg-badge rg-badge-red','Escalado':'rg-badge rg-badge-red'
+    'Asignado':'rg-badge rg-badge-gray',
+    'En ejecucion':'rg-badge rg-badge-amber',
+    'Mitigacion reportada':'rg-badge rg-badge-purple',
+    'En verificacion':'rg-badge rg-badge-orange','Cerrado':'rg-badge rg-badge-green',
+    'Reabierto':'rg-badge rg-badge-red'
 }[s] ?? 'rg-badge rg-badge-gray')
 
-onMounted(() => {
-    if (!store.loaded) store.fetchAll()
+onMounted(async () => {
+    if (!store.loaded) await store.fetchAll()
+    await store.refreshSlaStatus()
     if (!verifStore.loaded) verifStore.fetchAll()
     histStore.fetchAll()
 })
@@ -49,7 +68,7 @@ onMounted(() => {
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('ticketCorrectivo.criticality') }}</span><span class="rg-detail-value">{{ ticket.nivelCriticidad }}</span></div>
         <div class="rg-detail-row">
           <span class="rg-detail-label">{{ t('common.status') }}</span>
-          <span class="rg-detail-value"><span :class="estadoClass(ticket.estado)">{{ ticket.estado }}</span></span>
+          <span class="rg-detail-value"><span :class="estadoClass(ticketStatus)">{{ ticketStatus }}</span></span>
         </div>
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('ticketCorrectivo.technician') }}</span><span class="rg-detail-value">{{ ticket.tecnicoNombre || '-' }}</span></div>
         <div class="rg-detail-row"><span class="rg-detail-label">{{ t('ticketCorrectivo.slaHours') }}</span><span class="rg-detail-value">{{ ticket.slaLimiteHoras }}h {{ ticket.slaIncumplido ? '(SLA incumplido)' : '' }}</span></div>
@@ -74,7 +93,7 @@ onMounted(() => {
               <span style="color:var(--rg-text-muted)">#{{ h.id }}</span>
             </div>
             <div style="color:var(--rg-text-muted);margin-top:2px">{{ h.detalles }}</div>
-            <div style="color:var(--rg-text-muted);font-size:0.7rem">{{ h.fecha }} — {{ h.usuarioNombre }}</div>
+            <div style="color:var(--rg-text-muted);font-size:0.7rem">{{ h.fecha }} - {{ h.usuarioNombre }}</div>
           </div>
           <div v-if="!historiales.length" style="color:var(--rg-text-muted);font-size:0.82rem;margin-top:4px">{{ t('common.noData') }}</div>
         </div>

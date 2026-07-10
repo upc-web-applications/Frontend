@@ -6,7 +6,7 @@ import { AlertaSLAAssembler } from '@/mitigation/infrastructure/alerta-sla.assem
 const api = new AlertaSLAApi()
 export const useAlertaSLAStore = defineStore('alertaSLA', () => {
     const alertas = ref([]); const errors = ref([]); const loaded = ref(false)
-    function fetchAll() { api.getAlertas().then(r => { alertas.value = AlertaSLAAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => errors.value.push(e)) }
+    function fetchAll() { return api.getAlertas().then(r => { alertas.value = AlertaSLAAssembler.toEntitiesFromResponse(r); loaded.value = true; return alertas.value }).catch(e => { errors.value.push(e); return Promise.reject(e) }) }
     function getById(id) { return alertas.value.find(a => a.id === parseInt(id)) }
     function getByTicketId(tId) { return alertas.value.filter(a => a.ticketId === parseInt(tId)) }
     function add(alerta) { return api.createAlerta(alerta).then(r => alertas.value.push(AlertaSLAAssembler.toEntityFromResource(r.data))).catch(e => errors.value.push(e)) }

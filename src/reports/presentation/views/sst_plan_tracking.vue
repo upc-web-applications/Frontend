@@ -27,7 +27,7 @@ const exportSSTpdf = () => {
   doc.setFontSize(18); doc.setTextColor(BRAND); doc.setFont('helvetica', 'bold');
   doc.text('RiskGuard', 14, 12);
   doc.setFontSize(10); doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'normal');
-  doc.text('Informe Anual — Plan de SST', 14, 20);
+  doc.text('Informe Anual - Plan de SST', 14, 20);
   doc.setFontSize(8); doc.setTextColor('#6B7280');
   doc.text(`Generado: ${new Date().toLocaleDateString('es-PE')}`, 196, 26, { align: 'right' });
 
@@ -43,8 +43,8 @@ const exportSSTpdf = () => {
     ['Cumplimiento global', `${plan.global_compliance}%`],
     ['Meta establecida', `${plan.goal}%`],
     ['Actividades completadas', `${plan.completed_activities} / ${plan.total_activities}`],
-    ['Meses críticos', plan.critical_months],
-    ['Estado', plan.global_compliance >= 80 ? 'Óptimo' : plan.global_compliance >= 50 ? 'Aceptable' : 'Crítico']
+    ['Meses criticos', plan.critical_months],
+    ['Estado', plan.global_compliance >= 80 ? 'Optimo' : plan.global_compliance >= 50 ? 'Aceptable' : 'Critico']
   ];
   rows.forEach(([label, val]) => {
     doc.setFontSize(10); doc.setFont('helvetica', 'normal'); doc.setTextColor(50, 50, 50);
@@ -67,7 +67,7 @@ const exportSSTpdf = () => {
     body: (plan.monthly_details || []).map(m => [
       new Date(plan.year || 2024, m.month - 1).toLocaleString(locale.value, { month: 'long' }),
       `${m.compliance}%`, m.completed_activities, m.planned_activities,
-      m.status === 'optimal' ? 'Óptimo' : m.status === 'acceptable' ? 'Aceptable' : 'Crítico'
+      m.status === 'optimal' ? 'Optimo' : m.status === 'acceptable' ? 'Aceptable' : 'Critico'
     ]),
     headStyles: { fillColor: [255, 91, 0], textColor: 255, fontStyle: 'bold', fontSize: 8 },
     bodyStyles: { fontSize: 8 },
@@ -101,7 +101,7 @@ const exportSSTpdf = () => {
   for (let p = 1; p <= pages; p++) {
     doc.setPage(p);
     doc.setFontSize(7); doc.setTextColor('#6B7280');
-    doc.text(`Página ${p} de ${pages} — RiskGuard`, 105, 290, { align: 'center' });
+    doc.text(`Pagina ${p} de ${pages} - RiskGuard`, 105, 290, { align: 'center' });
   }
 
   doc.save(`RiskGuard_Plan_SST_${plan.year || new Date().getFullYear()}.pdf`);

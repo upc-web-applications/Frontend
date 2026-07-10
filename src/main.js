@@ -23,9 +23,9 @@ import InputNumber from 'primevue/inputnumber'
 import InputText from 'primevue/inputtext'
 import Paginator from 'primevue/paginator'
 import Password from 'primevue/password'
+import ProgressBar from 'primevue/progressbar'
 import ProgressSpinner from 'primevue/progressspinner'
 import Select from 'primevue/select'
-import SelectButton from 'primevue/selectbutton'
 import Tag from 'primevue/tag'
 import Textarea from 'primevue/textarea'
 import Toast from 'primevue/toast'
@@ -61,9 +61,9 @@ createApp(App)
   .component('pv-input-text', InputText)
   .component('pv-paginator', Paginator)
   .component('pv-password', Password)
+  .component('pv-progress-bar', ProgressBar)
   .component('pv-spinner', ProgressSpinner)
   .component('pv-select', Select)
-  .component('pv-select-button', SelectButton)
   .component('pv-tag', Tag)
   .component('pv-textarea', Textarea)
   .component('pv-toast', Toast)

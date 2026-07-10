@@ -6,7 +6,7 @@ function saveWorkbook(wb, fileName) {
 
 function addHeaderSheet(wb, title, meta) {
   const rows = [
-    ['RiskGuard — ' + title],
+    ['RiskGuard - ' + title],
     [],
     ...meta.map(([k, v]) => [k, v]),
     []
@@ -21,9 +21,9 @@ export function generateMonthlyExcel({ month, year, incidents, kpiDashboard, ann
   const monthName = new Date(year, month - 1).toLocaleString(locale, { month: 'long' });
 
   addHeaderSheet(wb, 'Reporte Mensual de SST', [
-    ['Período', `${monthName} ${year}`],
+    ['Periodo', `${monthName} ${year}`],
     ['Generado', new Date().toLocaleDateString('es-PE')],
-    ['Ley aplicable', 'N° 29783 — Seguridad y Salud en el Trabajo']
+    ['Ley aplicable', 'Nro. 29783 - Seguridad y Salud en el Trabajo']
   ]);
 
   // KPIs
@@ -32,10 +32,10 @@ export function generateMonthlyExcel({ month, year, incidents, kpiDashboard, ann
 
   const kpiRows = [
     ['Indicador', 'Valor', 'Meta', 'Estado'],
-    ['Incidentes Activos',         kpiMap.active_incidents?.value ?? '—',     kpiMap.active_incidents?.goal ?? '—',     kpiMap.active_incidents?.status ?? '—'],
-    ['Incidentes Resueltos',       kpiMap.resolved_incidents?.value ?? '—',   kpiMap.resolved_incidents?.goal ?? '—',   kpiMap.resolved_incidents?.status ?? '—'],
-    ['Sectores Críticos',          kpiMap.critical_sectors?.value ?? '—',     kpiMap.critical_sectors?.goal ?? '—',     kpiMap.critical_sectors?.status ?? '—'],
-    ['Cumplimiento Plan SST (%)',  kpiMap.ohs_plan_compliance?.value ?? '—',  kpiMap.ohs_plan_compliance?.goal ?? '—',  kpiMap.ohs_plan_compliance?.status ?? '—']
+    ['Incidentes Activos',         kpiMap.active_incidents?.value ?? '-',     kpiMap.active_incidents?.goal ?? '-',     kpiMap.active_incidents?.status ?? '-'],
+    ['Incidentes Resueltos',       kpiMap.resolved_incidents?.value ?? '-',   kpiMap.resolved_incidents?.goal ?? '-',   kpiMap.resolved_incidents?.status ?? '-'],
+    ['Sectores Criticos',          kpiMap.critical_sectors?.value ?? '-',     kpiMap.critical_sectors?.goal ?? '-',     kpiMap.critical_sectors?.status ?? '-'],
+    ['Cumplimiento Plan SST (%)',  kpiMap.ohs_plan_compliance?.value ?? '-',  kpiMap.ohs_plan_compliance?.goal ?? '-',  kpiMap.ohs_plan_compliance?.status ?? '-']
   ];
   const wsKPI = XLSX.utils.aoa_to_sheet(kpiRows);
   wsKPI['!cols'] = [{ wch: 30 }, { wch: 12 }, { wch: 12 }, { wch: 14 }];
@@ -48,15 +48,15 @@ export function generateMonthlyExcel({ month, year, incidents, kpiDashboard, ann
   });
 
   const incRows = [
-    ['ID', 'Fecha', 'Sector', 'Tipo de Incidente', 'Descripción', 'Estado', 'Hrs. Resolución'],
+    ['ID', 'Fecha', 'Sector', 'Tipo de Incidente', 'Descripcion', 'Estado', 'Hrs. Resolucion'],
     ...monthIncidents.map(i => [
       i.id,
       new Date(i.date).toLocaleDateString('es-PE'),
-      i.section || i.sector || '—',
-      i.incident_type || '—',
-      i.description || '—',
+      i.section || i.sector || '-',
+      i.incident_type || '-',
+      i.description || '-',
       i.resolved ? 'Resuelto' : 'Pendiente',
-      i.resolution_time_hours ?? '—'
+      i.resolution_time_hours ?? '-'
     ])
   ];
   const wsInc = XLSX.utils.aoa_to_sheet(incRows);
@@ -72,7 +72,7 @@ export function generateMonthlyExcel({ month, year, incidents, kpiDashboard, ann
         m.compliance,
         m.completed_activities,
         m.planned_activities,
-        m.status === 'optimal' ? 'Óptimo' : m.status === 'acceptable' ? 'Aceptable' : 'Crítico'
+        m.status === 'optimal' ? 'Optimo' : m.status === 'acceptable' ? 'Aceptable' : 'Critico'
       ])
     ];
     const wsPlan = XLSX.utils.aoa_to_sheet(planRows);
@@ -90,11 +90,11 @@ export function generateAuditExcel({ dateFrom, dateTo, incidents, annualOHSPlan 
   const fromStr = new Date(dateFrom).toLocaleDateString('es-PE');
   const toStr   = new Date(dateTo).toLocaleDateString('es-PE');
 
-  addHeaderSheet(wb, 'Formato de Auditoría SUNAFIL', [
+  addHeaderSheet(wb, 'Formato de Auditoria SUNAFIL', [
     ['Rango de fechas', `${fromStr} al ${toStr}`],
     ['Generado', new Date().toLocaleDateString('es-PE')],
-    ['Ley aplicable', 'N° 29783 — Art. 28 y 38'],
-    ['Razón social', 'RiskGuard S.A.C.'],
+    ['Ley aplicable', 'Nro. 29783 - Art. 28 y 38'],
+    ['Razon social', 'RiskGuard S.A.C.'],
     ['RUC', '20123456789']
   ]);
 
@@ -106,15 +106,15 @@ export function generateAuditExcel({ dateFrom, dateTo, incidents, annualOHSPlan 
   });
 
   const incRows = [
-    ['N°', 'Fecha', 'Sector / Área', 'Tipo de Incidente', 'Descripción', 'Estado Final', 'Hrs. Resolución'],
+    ['Nro.', 'Fecha', 'Sector / Area', 'Tipo de Incidente', 'Descripcion', 'Estado Final', 'Hrs. Resolucion'],
     ...filtered.map((i, idx) => [
       idx + 1,
       new Date(i.date).toLocaleDateString('es-PE'),
-      i.section || i.sector || '—',
-      i.incident_type || '—',
-      i.description || '—',
+      i.section || i.sector || '-',
+      i.incident_type || '-',
+      i.description || '-',
       i.resolved ? 'Resuelto' : 'Pendiente',
-      i.resolution_time_hours ?? '—'
+      i.resolution_time_hours ?? '-'
     ])
   ];
   const wsInc = XLSX.utils.aoa_to_sheet(incRows);
@@ -127,7 +127,7 @@ export function generateAuditExcel({ dateFrom, dateTo, incidents, annualOHSPlan 
       ['Meta (%)', annualOHSPlan.goal],
       ['Actividades completadas', annualOHSPlan.completed_activities],
       ['Actividades planificadas', annualOHSPlan.total_activities],
-      ['Meses críticos', annualOHSPlan.critical_months],
+      ['Meses criticos', annualOHSPlan.critical_months],
       [],
       ['Sector', 'Cumplimiento (%)', 'Completadas', 'Planificadas', 'Resultado'],
       ...(annualOHSPlan.details_by_sector || []).map(s => [
@@ -154,7 +154,7 @@ export function generateComplianceExcel({ sectorFilter, annualOHSPlan, kpiDashbo
   addHeaderSheet(wb, 'Reporte de Cumplimiento Normativo', [
     ['Sector', sectorLabel],
     ['Generado', new Date().toLocaleDateString('es-PE')],
-    ['Ley aplicable', 'N° 29783']
+    ['Ley aplicable', 'Nro. 29783']
   ]);
 
   // KPI compliance
@@ -163,7 +163,7 @@ export function generateComplianceExcel({ sectorFilter, annualOHSPlan, kpiDashbo
 
   const kpiRows = [
     ['Indicador', 'Valor', 'Meta'],
-    ['Cumplimiento Plan SST (%)', kpiMap.ohs_plan_compliance?.value ?? '—', kpiMap.ohs_plan_compliance?.goal ?? 80]
+    ['Cumplimiento Plan SST (%)', kpiMap.ohs_plan_compliance?.value ?? '-', kpiMap.ohs_plan_compliance?.goal ?? 80]
   ];
   const wsKPI = XLSX.utils.aoa_to_sheet(kpiRows);
   wsKPI['!cols'] = [{ wch: 28 }, { wch: 12 }, { wch: 12 }];
@@ -179,7 +179,7 @@ export function generateComplianceExcel({ sectorFilter, annualOHSPlan, kpiDashbo
       ['Sector', 'Cumplimiento (%)', 'Completadas', 'Planificadas', 'Estado'],
       ...sectors.map(s => [
         s.sector, s.compliance, s.completed_activities, s.planned_activities,
-        s.compliance >= 80 ? 'Óptimo' : s.compliance >= 50 ? 'Aceptable' : 'Crítico'
+        s.compliance >= 80 ? 'Optimo' : s.compliance >= 50 ? 'Aceptable' : 'Critico'
       ])
     ];
     const wsSec = XLSX.utils.aoa_to_sheet(sectorRows);
@@ -193,13 +193,13 @@ export function generateComplianceExcel({ sectorFilter, annualOHSPlan, kpiDashbo
     : incidents;
 
   const incRows = [
-    ['Fecha', 'Sector', 'Tipo', 'Estado', 'Hrs. Resolución'],
+    ['Fecha', 'Sector', 'Tipo', 'Estado', 'Hrs. Resolucion'],
     ...filteredInc.map(i => [
       new Date(i.date).toLocaleDateString('es-PE'),
-      i.section || i.sector || '—',
-      i.incident_type || '—',
+      i.section || i.sector || '-',
+      i.incident_type || '-',
       i.resolved ? 'Resuelto' : 'Pendiente',
-      i.resolution_time_hours ?? '—'
+      i.resolution_time_hours ?? '-'
     ])
   ];
   const wsInc = XLSX.utils.aoa_to_sheet(incRows);

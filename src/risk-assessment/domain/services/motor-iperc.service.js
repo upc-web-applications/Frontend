@@ -1,12 +1,12 @@
 const MATRIZ_IPERC = {
     1: { 1: 'Bajo', 2: 'Bajo', 3: 'Medio', 4: 'Alto', 5: 'Alto' },
-    2: { 1: 'Bajo', 2: 'Medio', 3: 'Medio', 4: 'Alto', 5: 'Crítico' },
-    3: { 1: 'Medio', 2: 'Medio', 3: 'Alto', 4: 'Alto', 5: 'Crítico' },
-    4: { 1: 'Medio', 2: 'Alto', 3: 'Alto', 4: 'Crítico', 5: 'Crítico' },
-    5: { 1: 'Alto', 2: 'Alto', 3: 'Crítico', 4: 'Crítico', 5: 'Crítico' }
+    2: { 1: 'Bajo', 2: 'Medio', 3: 'Medio', 4: 'Alto', 5: 'Critico' },
+    3: { 1: 'Medio', 2: 'Medio', 3: 'Alto', 4: 'Alto', 5: 'Critico' },
+    4: { 1: 'Medio', 2: 'Alto', 3: 'Alto', 4: 'Critico', 5: 'Critico' },
+    5: { 1: 'Alto', 2: 'Alto', 3: 'Critico', 4: 'Critico', 5: 'Critico' }
 }
 
-const COLORES = { Bajo: '#22c55e', Medio: '#f59e0b', Alto: '#ef4444', Crítico: '#dc2626' }
+const COLORES = { Bajo: '#22c55e', Medio: '#f59e0b', Alto: '#ef4444', Critico: '#dc2626' }
 
 export class MotorIPERC {
     calcularNivel(probIdx, sevIdx) {
@@ -43,9 +43,9 @@ export class MotorIPERC {
     calcularCriticidadArea(evaluaciones, sectorId) {
         const delSector = evaluaciones.filter(e => e.sector === sectorId || e.sectorId === sectorId)
         if (!delSector.length) return { nivelCriticidad: 'Tolerable', intensidadMapa: 'baja' }
-        const pesos = { Bajo: 1, Medio: 2, Alto: 3, Crítico: 4 }
+        const pesos = { Bajo: 1, Medio: 2, Alto: 3, Critico: 4 }
         const promedio = delSector.reduce((s, e) => s + (pesos[e.nivelRiesgo] || 1), 0) / delSector.length
-        if (promedio >= 3.5) return { nivelCriticidad: 'Crítico', intensidadMapa: 'muy_alta' }
+        if (promedio >= 3.5) return { nivelCriticidad: 'Critico', intensidadMapa: 'muy_alta' }
         if (promedio >= 2.5) return { nivelCriticidad: 'Importante', intensidadMapa: 'alta' }
         if (promedio >= 1.5) return { nivelCriticidad: 'Moderado', intensidadMapa: 'media' }
         return { nivelCriticidad: 'Tolerable', intensidadMapa: 'baja' }

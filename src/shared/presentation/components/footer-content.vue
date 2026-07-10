@@ -6,7 +6,7 @@ const { t } = useI18n()
 
 <template>
   <footer class="footer-content">
-    <small>@ RiskGuard - {{ t('footer.content') }}</small>
+    <small>{{ t('footer.content') }}</small>
   </footer>
 </template>
 

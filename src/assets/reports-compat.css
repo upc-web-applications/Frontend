@@ -1,6 +1,6 @@
 @import './base.css';
 
-/* ── TOKENS ── */
+/* -- TOKENS -- */
 :root {
   --rg-primary:      #EF610F;
   --rg-primary-dim:  rgba(239, 97, 15, 0.12);
@@ -31,13 +31,13 @@
   --success-color:   var(--rg-green);
 }
 
-/* ── RESET ── */
+/* -- RESET -- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body { height: 100%; }
 #app { width: 100%; height: 100%; }
 
-/* ── TYPOGRAPHY ── */
+/* -- TYPOGRAPHY -- */
 body {
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
@@ -47,11 +47,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Syne only on orange page titles */
+/* Inter on orange page titles */
 .rg-page-title,
 .page-title,
 .dashboard-title {
-  font-family: 'Syne', sans-serif !important;
+  font-family: 'Inter', 'Geist', system-ui, sans-serif !important;
   font-weight: 800 !important;
   font-size: 18px !important;
   color: var(--rg-primary) !important;
@@ -71,7 +71,7 @@ h3 { font-size: 0.85rem; }
   color: var(--rg-text-muted) !important;
 }
 
-/* ── CARD ── */
+/* -- CARD -- */
 .rg-card,
 .kpi-card,
 .stat-card,
@@ -89,7 +89,7 @@ h3 { font-size: 0.85rem; }
   border-radius: 10px;
 }
 
-/* ── BADGES ── */
+/* -- BADGES -- */
 .rg-badge {
   display: inline-flex;
   align-items: center;
@@ -106,14 +106,14 @@ h3 { font-size: 0.85rem; }
 .rg-badge-gray   { background: rgba(107,127,153,0.15);color: #6B7F99; }
 .rg-badge-purple { background: rgba(129,140,248,0.15);color: #818CF8; }
 
-/* ── TABLE WRAPPER ── */
+/* -- TABLE WRAPPER -- */
 .rg-table-wrap {
   border: 1px solid var(--rg-border);
   border-radius: 10px;
   overflow: hidden;
 }
 
-/* ── PRIMEVUE DARK OVERRIDES ── */
+/* -- PRIMEVUE DARK OVERRIDES -- */
 .p-datatable .p-datatable-thead > tr > th {
   background: var(--rg-bg-3) !important;
   color: var(--rg-text-muted) !important;
@@ -193,7 +193,7 @@ h3 { font-size: 0.85rem; }
   color: var(--rg-text) !important;
 }
 
-/* ── BUTTON OVERRIDES ── */
+/* -- BUTTON OVERRIDES -- */
 .p-button-warning, .p-button.p-button-warning,
 .p-button[data-pc-severity="warning"] {
   background: #EF610F !important;
@@ -210,7 +210,7 @@ h3 { font-size: 0.85rem; }
 }
 .p-button-success:hover, .p-button.p-button-success:hover { background: #16a34a !important; border-color: #16a34a !important; }
 
-/* ── PRIMEVUE 4 TOKEN OVERRIDES ── */
+/* -- PRIMEVUE 4 TOKEN OVERRIDES -- */
 :root {
   /* Tags */
   --p-tag-success-background:  rgba(34,197,94,0.15);
@@ -292,7 +292,7 @@ h3 { font-size: 0.85rem; }
 .p-confirmdialog .p-confirmdialog-icon { color: #FBBF24 !important; }
 .p-confirmdialog .p-confirmdialog-message { color: #EEF2FF !important; }
 
-/* ── SCROLLBAR ── */
+/* -- SCROLLBAR -- */
 * {
   scrollbar-width: thin;
   scrollbar-color: rgba(255,255,255,0.1) transparent;

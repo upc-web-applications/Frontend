@@ -8,7 +8,9 @@ export class HistoricalIncidentRecords {
                     description = null,
                     resolved = null,
                     closing_date = null,
-                    resolution_time_hours = null
+                    resolution_time_hours = null,
+                    criticality = null,
+                    operator_id = null
                 }) {
         this.id = id;
         this.monthly_report_id = monthly_report_id;
@@ -19,5 +21,7 @@ export class HistoricalIncidentRecords {
         this.resolved = resolved;
         this.closing_date = closing_date;
         this.resolution_time_hours = resolution_time_hours;
+        this.criticality = criticality;
+        this.operator_id = operator_id;
     }
 }

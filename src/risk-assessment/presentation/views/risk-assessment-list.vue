@@ -17,7 +17,7 @@ const store = useRiskAssessmentStore()
 
 onMounted(() => { if (!store.loaded) store.fetchAll() })
 
-const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge rg-badge-amber','Alto':'rg-badge rg-badge-red','Crítico':'rg-badge rg-badge-red' }[n] ?? 'rg-badge rg-badge-gray')
+const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge rg-badge-amber','Alto':'rg-badge rg-badge-red','Critico':'rg-badge rg-badge-red' }[n] ?? 'rg-badge rg-badge-gray')
 
 const confirmDelete = (assessment) => {
     confirm.require({
@@ -45,7 +45,7 @@ const confirmDelete = (assessment) => {
         <pv-column field="severidad" :header="t('evaluacionRiesgo.severity')" style="width:90px" />
         <pv-column field="estado" :header="t('evaluacionRiesgo.status')" style="width:110px">
           <template #body="{ data }">
-            <span :class="{'rg-badge rg-badge-green': data.estado==='Evaluado','rg-badge rg-badge-amber': data.estado==='En Evaluación','rg-badge rg-badge-gray': data.estado==='Pendiente','rg-badge rg-badge-purple': data.estado==='Cerrado'}">{{ data.estado }}</span>
+            <span :class="{'rg-badge rg-badge-green': data.estado==='Evaluado','rg-badge rg-badge-amber': data.estado==='En Evaluacion','rg-badge rg-badge-gray': data.estado==='Pendiente','rg-badge rg-badge-purple': data.estado==='Cerrado'}">{{ data.estado }}</span>
           </template>
         </pv-column>
         <pv-column field="fechaEvaluacion" :header="t('evaluacionRiesgo.date')" style="width:120px" />

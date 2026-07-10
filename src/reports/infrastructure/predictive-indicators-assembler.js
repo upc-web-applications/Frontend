@@ -6,10 +6,8 @@ export class PredictiveIndicatorsAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        console.log('PredictiveIndicators response:', response);
 
         if (response.status !== 200) {
-            console.error(`${response.status} - ${response.statusText}`);
             return [];
         }
 

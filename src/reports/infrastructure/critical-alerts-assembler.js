@@ -6,10 +6,8 @@ export class CriticalAlertsAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        console.log('CriticalAlerts response:', response);
 
         if (response.status !== 200) {
-            console.error(`${response.status} - ${response.statusText}`);
             return [];
         }
 

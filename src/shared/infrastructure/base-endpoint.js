@@ -1,5 +1,5 @@
 /**
- * @author u20241a322  Blancas Chávez, Carlos Franco
+ * @author u20241a322  Blancas Chavez, Carlos Franco
  */
 export class BaseEndpoint {
     constructor(baseApi, endpointPath) {

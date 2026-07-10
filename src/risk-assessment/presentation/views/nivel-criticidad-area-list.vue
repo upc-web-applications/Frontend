@@ -28,7 +28,7 @@ const criticidadClass = (n) => ({
     'Tolerable': 'rg-badge rg-badge-green',
     'Moderado': 'rg-badge rg-badge-amber',
     'Importante': 'rg-badge rg-badge-orange',
-    'Crítico': 'rg-badge rg-badge-red'
+    'Critico': 'rg-badge rg-badge-red'
 }[n] ?? 'rg-badge rg-badge-gray')
 </script>
 

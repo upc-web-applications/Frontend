@@ -2,7 +2,7 @@ import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 export class TicketAccionCorrectivaApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/tickets-accion-correctiva') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/corrective-action-tickets') }
     getTickets()                { return this.#ep.getAll() }
     getTicketById(id)           { return this.#ep.getById(id) }
     getBySectorId(sId)          { return this.#ep.getByParam('sectorId', sId) }

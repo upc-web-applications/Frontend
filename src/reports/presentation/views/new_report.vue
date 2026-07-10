@@ -1,7 +1,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { useReportsStore } from '@/reports/application/reportes.store.js';
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import {
@@ -56,20 +56,43 @@ const years = computed(() => {
   }));
 });
 
-const sectors = computed(() => [
-  { label: t('new_report.all_sectors'), value: null },
-  { label: 'Warehouse B', value: 'WAREHOUSE_B' },
-  { label: 'Gas Plant', value: 'GAS_PLANT' },
-  { label: 'Turbine 04', value: 'TURBINE_04' },
-  { label: 'South Access', value: 'SOUTH_ACCESS' },
-  { label: 'Control Room', value: 'CONTROL_ROOM' },
-  { label: 'Warehouse C', value: 'WAREHOUSE_C' }
-]);
-
 const formats = [
   { label: 'PDF', value: 'pdf' },
   { label: 'Excel', value: 'xlsx' }
 ];
+
+onMounted(async () => {
+  await Promise.all([
+    store.fetchOperationalData(),
+    store.fetchAnnualOHSPlan()
+  ]);
+});
+
+const reportIncidents = computed(() =>
+  store.operationalTickets.map(ticket => ({
+    id: ticket.id,
+    date: ticket.createdAt,
+    section: ticket.sector,
+    sector: ticket.sector,
+    incident_type: ticket.riskType,
+    resolved: ticket.status?.toLowerCase?.().includes('cerrado') || false,
+    resolution_time_hours: ticket.elapsedHours
+  }))
+);
+
+const sectors = computed(() => {
+  const sectorNames = new Set([
+    ...(store.annualOHSPlan?.details_by_sector || []).map(sector => sector.sector),
+    ...store.operationalTickets.map(ticket => ticket.sector)
+  ].filter(Boolean));
+
+  return [
+    { label: t('new_report.all_sectors'), value: null },
+    ...Array.from(sectorNames)
+      .sort((a, b) => a.localeCompare(b))
+      .map(sector => ({ label: sector, value: sector }))
+  ];
+});
 
 const isParcial = computed(() => {
   if (reportType.value !== 'monthly' || !selectedMonth.value) return false;
@@ -91,7 +114,7 @@ const generateReport = async () => {
 
     // Ensure data is loaded
     await Promise.all([
-      store.fetchIncidents(),
+      store.fetchOperationalData(),
       store.fetchKPIDashboard(),
       store.fetchAnnualOHSPlan()
     ]);
@@ -106,22 +129,22 @@ const generateReport = async () => {
     let fileName = '';
 
     if (isExcel) {
-      // ── EXCEL ──────────────────────────────────────────
+      // -- EXCEL ------------------------------------------
       if (reportType.value === 'monthly') {
         fileName = generateMonthlyExcel({
-          month, year, incidents: store.incidents,
+          month, year, incidents: reportIncidents.value,
           kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan,
           locale: locale.value
         });
       } else if (reportType.value === 'audit') {
         fileName = generateAuditExcel({
           dateFrom: dateFrom.value, dateTo: dateTo.value,
-          incidents: store.incidents, annualOHSPlan: store.annualOHSPlan
+          incidents: reportIncidents.value, annualOHSPlan: store.annualOHSPlan
         });
       } else {
         fileName = generateComplianceExcel({
           sectorFilter: selectedSector.value, annualOHSPlan: store.annualOHSPlan,
-          kpiDashboard: store.kpiDashboard, incidents: store.incidents
+          kpiDashboard: store.kpiDashboard, incidents: reportIncidents.value
         });
       }
 
@@ -136,12 +159,12 @@ const generateReport = async () => {
       toast.add({ severity: 'success', summary: t('common.success'), detail: t('success.report_generated'), life: 3000 });
 
     } else {
-      // ── PDF ────────────────────────────────────────────
+      // -- PDF --------------------------------------------
       let doc = null;
 
       if (reportType.value === 'monthly') {
         doc = generateMonthlyPDF({
-          month, year, incidents: store.incidents,
+          month, year, incidents: reportIncidents.value,
           kpiDashboard: store.kpiDashboard, annualOHSPlan: store.annualOHSPlan,
           locale: locale.value
         });
@@ -149,7 +172,7 @@ const generateReport = async () => {
       } else if (reportType.value === 'audit') {
         doc = generateAuditPDF({
           dateFrom: dateFrom.value, dateTo: dateTo.value,
-          incidents: store.incidents, annualOHSPlan: store.annualOHSPlan
+          incidents: reportIncidents.value, annualOHSPlan: store.annualOHSPlan
         });
         const from = new Date(dateFrom.value).toLocaleDateString('es-PE').replace(/\//g, '-');
         const to   = new Date(dateTo.value).toLocaleDateString('es-PE').replace(/\//g, '-');
@@ -157,7 +180,7 @@ const generateReport = async () => {
       } else {
         doc = generateCompliancePDF({
           sectorFilter: selectedSector.value, annualOHSPlan: store.annualOHSPlan,
-          kpiDashboard: store.kpiDashboard, incidents: store.incidents
+          kpiDashboard: store.kpiDashboard, incidents: reportIncidents.value
         });
         const sectorPart = selectedSector.value || 'todos';
         fileName = `RiskGuard_Cumplimiento_${sectorPart}_${new Date().toISOString().slice(0,10)}.pdf`;
@@ -184,7 +207,6 @@ const generateReport = async () => {
 
   } catch (error) {
     toast.add({ severity: 'error', summary: t('common.error'), detail: error.message, life: 3000 });
-    console.error(error);
   }
 };
 
@@ -207,11 +229,12 @@ const closePreview = () => {
       <!-- REPORT TYPE SELECTOR -->
       <div class="form-section">
         <h2 class="section-title">{{ t('my_reports.report_type') }}</h2>
-        <pv-select-button
+        <pv-select
             v-model="reportType"
             :options="reportTypes"
             option-label="label"
             option-value="value"
+            :placeholder="t('my_reports.report_type')"
             class="w-full"
         />
       </div>

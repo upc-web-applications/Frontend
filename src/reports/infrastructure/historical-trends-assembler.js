@@ -6,10 +6,8 @@ export class HistoricalTrendsAssembler {
     }
 
     static toEntitiesFromResponse(response) {
-        console.log('HistoricalTrends response:', response);
 
         if (response.status !== 200) {
-            console.error(`${response.status} - ${response.statusText}`);
             return [];
         }
 
