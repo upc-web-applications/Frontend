@@ -10,7 +10,7 @@ export class TicketAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    const resources = response.data instanceof Array ? response.data : response.data['tickets']
+    const resources = (response.data instanceof Array ? response.data : (response.data ? response.data['tickets'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

@@ -3,7 +3,7 @@ export class PatronRiesgoAssembler {
     static toEntityFromResource(r) { return new PatronRiesgo({ ...r }) }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
-        const data = response.data instanceof Array ? response.data : response.data['patrones']
+        const data = (response.data instanceof Array ? response.data : (response.data ? response.data['patrones'] : null)) ?? []
         return data.map(r => this.toEntityFromResource(r))
     }
 }

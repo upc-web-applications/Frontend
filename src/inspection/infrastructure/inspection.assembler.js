@@ -6,7 +6,7 @@ export class InspectionAssembler {
     static toEntityFromResource(r) { return new Inspection({ ...r }) }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
-        const data = response.data instanceof Array ? response.data : response.data['inspecciones']
+        const data = (response.data instanceof Array ? response.data : (response.data ? response.data['inspecciones'] : null)) ?? []
         return data.map(r => this.toEntityFromResource(r))
     }
 }
