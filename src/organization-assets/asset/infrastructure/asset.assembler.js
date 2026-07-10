@@ -8,6 +8,7 @@ export class AssetAssembler {
             id: r.id,
             codigo: r.code,
             nombre: r.name,
+            tipo: r.type,
             descripcion: r.description,
             areaId: r.areaId,
             sedeId: r.headquartersId,

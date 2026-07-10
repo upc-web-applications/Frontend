@@ -267,8 +267,8 @@ const exportPDF = () => {
                 v-if="data.criticality || data.severity"
                 :value="data.criticality || data.severity"
                 :severity="
-                  (data.criticality || data.severity) === 'CRITICAL' ? 'danger' :
-                  (data.criticality || data.severity) === 'HIGH'     ? 'warning' :
+                  (data.criticality || data.severity || '').toLowerCase() === 'critical' ? 'danger' :
+                  (data.criticality || data.severity || '').toLowerCase() === 'high'     ? 'warning' :
                   'info'
                 "
             />

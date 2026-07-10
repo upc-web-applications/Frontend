@@ -47,7 +47,7 @@ const confirmDelete = (asset) => {
         <pv-column field="codigo" :header="t('activo.code')" style="width:110px" sortable />
         <pv-column field="nombre" :header="t('activo.name')" sortable />
         <pv-column field="tipo" :header="t('activo.type')" style="width:130px">
-          <template #body="{ data }"><span class="rg-badge rg-badge-gray">{{ data.tipo }}</span></template>
+          <template #body="{ data }"><span class="rg-badge rg-badge-gray">{{ t(`activo.typeOptions.${data.tipo}`) || data.tipo }}</span></template>
         </pv-column>
         <pv-column :header="t('activo.area')" style="width:160px">
           <template #body="{ data }">{{ areaName(data.areaId) }}</template>

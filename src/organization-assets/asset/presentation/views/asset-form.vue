@@ -15,10 +15,17 @@ const route = useRoute(); const router = useRouter(); const toast = useToast()
 const store = useAssetStore(); const areaStore = useAreaStore(); const siteStore = useSiteStore()
 const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
-const form = ref({ codigo:'', nombre:'', descripcion:'', tipo:'Maquinaria', areaId:null, sedeId:null, estado:'Activo', fechaAdquisicion:'', ultimoMantenimiento:'' })
+const form = ref({ codigo:'', nombre:'', descripcion:'', tipo:'Machinery', areaId:null, sedeId:null, estado:'Activo', fechaAdquisicion:'', ultimoMantenimiento:'' })
 
 const siteOptions = computed(() => siteStore.sites.filter(s => s.estado === 'Activo').map(s => ({ label: s.nombre, value: s.id })))
 const areaOptions = computed(() => areaStore.areas.filter(a => a.sedeId === form.value.sedeId && a.estado === 'Activo').map(a => ({ label: a.nombre, value: a.id })))
+
+const typeOptions = [
+  { label: t('activo.typeOptions.Machinery'), value: 'Machinery' },
+  { label: t('activo.typeOptions.Equipment'), value: 'Equipment' },
+  { label: t('activo.typeOptions.Infrastructure'), value: 'Infrastructure' },
+  { label: t('activo.typeOptions.Vehicle'), value: 'Vehicle' }
+]
 
 watch(() => form.value.sedeId, () => { form.value.areaId = null })
 
@@ -64,7 +71,7 @@ const submit = async () => {
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('activo.type') }}</label>
-          <pv-select v-model="form.tipo" :options="['Maquinaria','Equipo','Infraestructura','Vehiculo']" size="small" style="width:100%" />
+          <pv-select v-model="form.tipo" :options="typeOptions" optionLabel="label" optionValue="value" size="small" style="width:100%" />
         </div>
         <div class="rg-form-field">
           <label class="rg-label">{{ t('activo.status') }}</label>

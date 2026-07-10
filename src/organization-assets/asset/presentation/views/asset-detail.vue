@@ -30,7 +30,7 @@ onMounted(() => { if (!store.loaded) store.fetchAll(); if (!areaStore.loaded) ar
     <div class="rg-card">
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.code') }}</span><span class="rg-detail-value">{{ asset.codigo }}</span></div>
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.name') }}</span><span class="rg-detail-value">{{ asset.nombre }}</span></div>
-      <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.type') }}</span><span class="rg-detail-value"><span class="rg-badge rg-badge-gray">{{ asset.tipo }}</span></span></div>
+      <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.type') }}</span><span class="rg-detail-value"><span class="rg-badge rg-badge-gray">{{ t(`activo.typeOptions.${asset.tipo}`) || asset.tipo }}</span></span></div>
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.sede') }}</span><span class="rg-detail-value">{{ siteName }}</span></div>
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.area') }}</span><span class="rg-detail-value">{{ areaName }}</span></div>
       <div class="rg-detail-row"><span class="rg-detail-label">{{ t('activo.status') }}</span><span class="rg-detail-value"><span :class="asset.estado==='Activo'?'rg-badge rg-badge-green':'rg-badge rg-badge-gray'">{{ asset.estado }}</span></span></div>
