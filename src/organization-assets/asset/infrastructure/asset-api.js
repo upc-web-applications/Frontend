@@ -5,7 +5,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
  */
 export class AssetApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/org-assets') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/assets') }
     getAssets()            { return this.#ep.getAll() }
     getAssetById(id)       { return this.#ep.getById(id) }
     getByAreaId(aId)        { return this.#ep.getByParam('areaId', aId) }
