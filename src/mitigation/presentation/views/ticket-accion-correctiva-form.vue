@@ -8,6 +8,7 @@ import { useHistorialTicketStore } from '@/mitigation/application/historial-tick
 import { useTecnicoStore } from '@/mitigation/technician/application/tecnico.store.js'
 import { useInspectionStore } from '@/inspection/application/inspection.store.js'
 import { useAreaStore } from '@/organization-assets/area/application/area.store.js'
+import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js'
 
 const { t } = useI18n()
 const route = useRoute()
@@ -18,6 +19,7 @@ const historialStore = useHistorialTicketStore()
 const tecnicoStore = useTecnicoStore()
 const inspectionStore = useInspectionStore()
 const areaStore = useAreaStore()
+const identityStore = useIdentityAccessStore()
 
 const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
@@ -77,14 +79,14 @@ const submit = async () => {
     saving.value = true
     try {
         if (isEdit.value) {
-            const updated = await store.update({ ...form.value, id: parseInt(route.params.id) })
+            const updated = await store.update({ ...form.value, id: route.params.id })
             if (updated) {
-                await historialStore.add({ ticketId: updated.id, evento: 'Ticket actualizado', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Estado cambiado a: ${updated.estado}`, fecha: new Date().toISOString().split('T')[0] })
+                await historialStore.add({ ticketId: updated.id, evento: 'Ticket actualizado', usuarioId: identityStore.currentUser?.id || 1, usuarioNombre: identityStore.currentUser?.name || 'Usuario', detalles: `Estado cambiado a: ${updated.estado}`, fecha: new Date().toISOString().split('T')[0] })
             }
         } else {
             const created = await store.add({ ...form.value })
             if (created && created.id) {
-                await historialStore.add({ ticketId: created.id, evento: 'Ticket creado', usuarioId: 1, usuarioNombre: 'Victor Jhosef Laura Acosta', detalles: `Ticket creado para ${created.sector || 'sector asignado'}`, fecha: created.fechaCreacion || new Date().toISOString().split('T')[0] })
+                await historialStore.add({ ticketId: created.id, evento: 'Ticket creado', usuarioId: identityStore.currentUser?.id || 1, usuarioNombre: identityStore.currentUser?.name || 'Usuario', detalles: `Ticket creado para ${created.sector || 'sector asignado'}`, fecha: created.fechaCreacion || new Date().toISOString().split('T')[0] })
                 if (created.reporteId) {
                     const report = inspectionStore.getById(created.reporteId)
                     if (report) await inspectionStore.update({ ...report, estado: 'Convertido a ticket', accionCorrectiva: `Ticket #${created.ticketNumber || created.id}` })

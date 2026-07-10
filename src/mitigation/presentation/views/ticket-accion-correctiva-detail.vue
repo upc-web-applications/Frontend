@@ -18,8 +18,8 @@ const ticket = computed(() => {
     const current = store.getById(route.params.id)
     return current ? withSlaEvaluation(current) : null
 })
-const verificaciones = computed(() => verifStore.verificaciones.filter(v => v.ticketId === parseInt(route.params.id)))
-const historiales = computed(() => histStore.historiales.filter(h => h.ticketId === parseInt(route.params.id)))
+const verificaciones = computed(() => verifStore.verificaciones.filter(v => v.ticketId === route.params.id))
+const historiales = computed(() => histStore.historiales.filter(h => h.ticketId === route.params.id))
 const ticketStatus = computed(() => normalizeStatus(ticket.value?.estado))
 
 function normalizeStatus(status) {

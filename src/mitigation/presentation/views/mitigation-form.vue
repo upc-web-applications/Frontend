@@ -36,7 +36,7 @@ const submit = async () => {
     try {
         const payload = { ...form.value }
         if (isEdit.value) {
-            const updated = await store.update({ ...payload, id: parseInt(route.params.id) })
+            const updated = await store.update({ ...payload, id: route.params.id })
             if (updated && updated.ticketId) {
                 const tk = ticketStore.getById(updated.ticketId)
                 if (tk) {

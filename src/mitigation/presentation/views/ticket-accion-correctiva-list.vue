@@ -80,7 +80,7 @@ function clearTicketFilters() {
 const confirmDelete = (ticket) => {
     confirm.require({
         message: 'Eliminar este ticket?', header: t('common.confirm'), icon: 'pi pi-exclamation-triangle', acceptClass: 'p-button-danger',
-        accept: () => store.remove(ticket.id).then(() => toast.add({ severity: 'success', summary: 'Ticket eliminado', life: 3000 })).catch(() => toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el ticket', life: 5000 }))
+        accept: () => store.remove(ticket.id).then(() => toast.add({ severity: 'success', summary: 'Ticket eliminado', life: 3000 })).catch((err) => { const msg = err?.response?.data?.detail || err?.response?.data?.title || err?.message || 'No se pudo eliminar el ticket'; toast.add({ severity: 'error', summary: 'Error', detail: msg, life: 5000 }) })
     })
 }
 </script>

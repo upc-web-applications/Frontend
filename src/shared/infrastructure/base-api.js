@@ -18,6 +18,18 @@ export class BaseApi {
             }
             return config
         })
+
+        this.#http.interceptors.response.use(
+            response => response,
+            error => {
+                if (error.response && error.response.status === 401) {
+                    BaseApi.clearToken()
+                    localStorage.removeItem('riskguard-user')
+                    window.location.href = '/login'
+                }
+                return Promise.reject(error)
+            }
+        )
     }
 
     get http() { return this.#http }

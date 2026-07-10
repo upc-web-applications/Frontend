@@ -8,7 +8,7 @@ export class RiskAssessmentApi extends BaseApi {
     constructor() { super(); this.#ep = new BaseEndpoint(this, '/risk-assessments') }
     getRiskAssessments()             { return this.#ep.getAll() }
     getRiskAssessmentById(id)        { return this.#ep.getById(id) }
-    getByAreaId(aId)                 { return this.#ep.getByParam('areaId', aId) }
+    getByAreaId(aId)                 { return this.#ep.getByParam('sector', aId) }
     createRiskAssessment(r)          { return this.#ep.create(r) }
     updateRiskAssessment(r)          { return this.#ep.update(r.id, r) }
     deleteRiskAssessment(id)         { return this.#ep.delete(id) }

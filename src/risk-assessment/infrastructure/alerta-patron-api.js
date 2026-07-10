@@ -5,7 +5,7 @@ export class AlertaPatronApi extends BaseApi {
     constructor() { super(); this.#ep = new BaseEndpoint(this, '/pattern-alerts') }
     getAlertas()                { return this.#ep.getAll() }
     getAlertaById(id)           { return this.#ep.getById(id) }
-    getBySectorId(sId)          { return this.#ep.getByParam('sectorId', sId) }
+    getBySectorId(sId)          { return this.#ep.getByParam('sector', sId) }
     createAlerta(a)             { return this.#ep.create(a) }
     updateAlerta(a)             { return this.#ep.update(a.id, a) }
     deleteAlerta(id)            { return this.#ep.delete(id) }

@@ -1,16 +1,12 @@
 <script setup>
-import { watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const { locale, availableLocales } = useI18n()
 
 function setLocale(language) {
   locale.value = language
-}
-
-watch(locale, (language) => {
   localStorage.setItem('riskguard-locale', language)
-}, { immediate: true })
+}
 </script>
 
 <template>

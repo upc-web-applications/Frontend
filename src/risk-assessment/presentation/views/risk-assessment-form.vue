@@ -48,7 +48,7 @@ onMounted(async () => {
 const submit = async () => {
     saving.value = true
     try {
-        if (isEdit.value) await store.update({ ...form.value, id: parseInt(route.params.id) })
+        if (isEdit.value) await store.update({ ...form.value, id: route.params.id })
         else await store.add(form.value)
         toast.add({ severity: 'success', summary: t('evaluacionRiesgo.saveSuccess'), life: 3000 })
         router.push('/risk-assessment/list')
