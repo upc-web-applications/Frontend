@@ -32,6 +32,7 @@ onMounted(async () => {
 const getAlertSeverity = (type) => {
   if (type === 'CRITICAL') return 'danger';
   if (type === 'ALERT') return 'warning';
+  if (type === 'SLA') return 'warning';
   return 'info';
 };
 

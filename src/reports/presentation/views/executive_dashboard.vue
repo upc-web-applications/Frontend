@@ -128,10 +128,10 @@ const trendByTypeData = computed(() => {
 });
 
 const obtenerDetalleSector = (kpi) => {
-  const label = t(`kpi.${kpi.name}`) || kpi.name;
-  const kpiVal = kpi.value != null ? ` - ${kpi.value}${kpi.name === 'ohs_plan_compliance' ? '%' : ''}` : '';
+  const label = t(`kpi.${kpi.id}`) || kpi.name;
+  const kpiVal = kpi.value != null ? ` - ${kpi.value}${kpi.id === 'ohs_plan_compliance' ? '%' : ''}` : '';
 
-  if (kpi.name === 'critical_sectors') {
+  if (kpi.id === 'critical_sectors') {
     // Sectores criticos = sectores con alertas activas (unresolved / in_review)
     const alertsBySector = store.criticalAlerts
         .filter(a => a.status === 'unresolved' || a.status === 'in_review')
@@ -150,7 +150,7 @@ const obtenerDetalleSector = (kpi) => {
     }));
     sectorDetailData.value = { title: label + kpiVal, sectors, incidents: [], mode: 'critical' };
 
-  } else if (kpi.name === 'ohs_plan_compliance') {
+  } else if (kpi.id === 'ohs_plan_compliance') {
     const sectors = (store.annualOHSPlan?.details_by_sector || [])
         .map(s => ({
           ...s,
@@ -163,15 +163,15 @@ const obtenerDetalleSector = (kpi) => {
     const hasOperationalTickets = store.operationalTickets.length > 0;
     const filteredInc = hasOperationalTickets
         ? store.operationalTickets.filter(ticket =>
-            kpi.name === 'active_incidents'
+            kpi.id === 'active_incidents'
                 ? !['cerrado', 'resuelto', 'resolved', 'finalizado', 'closed'].includes((ticket.status || '').toString().toLowerCase())
-                : kpi.name === 'resolved_incidents'
+                : kpi.id === 'resolved_incidents'
                     ? ['cerrado', 'resuelto', 'resolved', 'finalizado', 'closed'].includes((ticket.status || '').toString().toLowerCase())
                     : true
         )
         : store.incidents.filter(i =>
-            kpi.name === 'active_incidents'   ? !i.resolved :
-                kpi.name === 'resolved_incidents' ?  i.resolved : true
+            kpi.id === 'active_incidents'   ? !i.resolved :
+                kpi.id === 'resolved_incidents' ?  i.resolved : true
         );
     sectorDetailData.value = { title: label + kpiVal, sectors: [], incidents: filteredInc, mode: 'incidents' };
   }
@@ -212,7 +212,7 @@ const chartOptions = {
 };
 
 const plantaSegura = computed(() => {
-  const kpi = store.kpiDashboard.find(k => k.name === 'active_incidents');
+    const kpi = store.kpiDashboard.find(k => k.id === 'active_incidents');
   return kpi != null && kpi.value === 0;
 });
 
@@ -306,7 +306,7 @@ const exportDashboard = async () => {
         >
           <div class="kpi-header">
             <span class="kpi-name">
-              {{ t(`kpi.${kpi.name}`) || kpi.name }}
+              {{ t(`kpi.${kpi.id}`) || kpi.name }}
             </span>
 
             <pv-tag
@@ -322,12 +322,12 @@ const exportDashboard = async () => {
           </div>
 
           <div class="kpi-value">
-            {{ kpi.value }}{{ kpi.name === 'ohs_plan_compliance' ? '%' : '' }}
+            {{ kpi.value }}{{ kpi.id === 'ohs_plan_compliance' ? '%' : '' }}
           </div>
 
           <div class="kpi-footer">
             <span>
-              {{ t('dashboard.goal') }}: {{ kpi.goal }}{{ kpi.name === 'ohs_plan_compliance' ? '%' : '' }}
+              {{ t('dashboard.goal') }}: {{ kpi.goal }}{{ kpi.id === 'ohs_plan_compliance' ? '%' : '' }}
             </span>
 
             <span class="status-text">
