@@ -2,7 +2,17 @@ import { Technician } from '@/monitoring-dashboard/domain/model/technician-entit
 
 export class TechnicianAssembler {
   static toEntityFromResource(resource) {
-    return new Technician({ ...resource })
+    return new Technician({
+      id: resource.id,
+      code: resource.code,
+      firstName: resource.firstName,
+      lastName: resource.lastName,
+      fullName: resource.fullName,
+      specialty: resource.specialty,
+      email: resource.email,
+      phone: resource.phone,
+      status: resource.status
+    })
   }
 
   static toEntitiesFromResponse(response) {

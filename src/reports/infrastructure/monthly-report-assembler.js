@@ -2,7 +2,15 @@ import { MonthlyReportEntity } from "@/reports/domain/model/monthly-report-entit
 
 export class MonthlyReportAssembler {
     static toEntityFromResource(resource) {
-        return new MonthlyReportEntity({ ...resource });
+        return new MonthlyReportEntity({
+            id: resource.id,
+            evaluated_month: resource.evaluated_month,
+            evaluated_year: resource.evaluated_year,
+            site_area_id: resource.site_area_id,
+            general_status: resource.general_status,
+            creation_date: resource.creation_date,
+            update_date: resource.update_date
+        });
     }
 
     static toEntitiesFromResponse(response) {
