@@ -368,11 +368,13 @@ export const useReportsStore = defineStore('reports', () => {
     function syncOperationalInsights() {
         if (!operationalTickets.value.length) return;
 
-        annualOHSPlan.value = buildOperationalOHSPlan();
-        kpiDashboard.value = buildOperationalKpis();
-        const liveIndicator = buildOperationalPredictiveIndicator();
-        predictiveIndicators.value = [liveIndicator];
-        historicalTrends.value = buildOperationalTrends();
+        if (!kpiDashboard.value.length) {
+            kpiDashboard.value = buildOperationalKpis();
+        }
+        if (!predictiveIndicators.value.length) {
+            const liveIndicator = buildOperationalPredictiveIndicator();
+            predictiveIndicators.value = [liveIndicator];
+        }
         syncKPIs();
     }
 
@@ -577,12 +579,19 @@ export const useReportsStore = defineStore('reports', () => {
             if (!ticketAccionCorrectivaStore.loaded) {
                 await ticketAccionCorrectivaStore.fetchAll();
             }
-            if (operationalTickets.value.length) {
+            // Only use computed data if backend returns no plan
+            if (!annualOHSPlan.value && operationalTickets.value.length) {
+                annualOHSPlan.value = buildOperationalOHSPlan(null);
+            } else if (annualOHSPlan.value && operationalTickets.value.length) {
+                // Merge: enrich backend plan with operational ticket data
                 annualOHSPlan.value = buildOperationalOHSPlan(annualOHSPlan.value);
             }
             syncKPIs();
         } catch (error) {
             errorAnnualOHSPlan.value = error.message;
+            if (operationalTickets.value.length) {
+                annualOHSPlan.value = buildOperationalOHSPlan(null);
+            }
         } finally {
             loadingAnnualOHSPlan.value = false;
         }
@@ -708,11 +717,12 @@ export const useReportsStore = defineStore('reports', () => {
             if (!ticketAccionCorrectivaStore.loaded) {
                 await ticketAccionCorrectivaStore.fetchAll();
             }
-            historicalTrends.value = correctiveTickets.value.length
-                ? buildOperationalTrends()
-                : trends;
+            historicalTrends.value = trends.length > 0
+                ? trends
+                : buildOperationalTrends();
         } catch (error) {
             errorHistoricalTrends.value = error.message;
+            historicalTrends.value = buildOperationalTrends();
         } finally {
             loadingHistoricalTrends.value = false;
         }
