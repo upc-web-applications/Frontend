@@ -2,7 +2,15 @@ import { AccessLog } from '@/identity-access/domain/model/access-log-entity.js'
 
 export class AccessLogAssembler {
   static toEntityFromResource(resource) {
-    return new AccessLog({ ...resource })
+    return new AccessLog({
+      id: resource.id,
+      userId: resource.userId,
+      email: resource.email,
+      attemptAt: resource.attemptAt,
+      wasSuccessful: resource.wasSuccessful,
+      ipAddress: resource.ipAddress,
+      failureReason: resource.failureReason
+    })
   }
 
   static toEntitiesFromResponse(response) {

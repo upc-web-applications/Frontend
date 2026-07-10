@@ -2,7 +2,20 @@ import { Sector } from '@/monitoring-dashboard/domain/model/sector-entity.js'
 
 export class SectorAssembler {
   static toEntityFromResource(resource) {
-    return new Sector({ ...resource })
+    return new Sector({
+      id: resource.id,
+      type: resource.type,
+      sectorId: resource.sectorId,
+      assetId: resource.assetId,
+      code: resource.code,
+      name: resource.name,
+      description: resource.description,
+      heatIndex: resource.heatIndex,
+      riskLevel: resource.riskLevel,
+      status: resource.status,
+      updatedAt: resource.updatedAt,
+      position: resource.position
+    })
   }
 
   static toEntitiesFromResponse(response) {

@@ -2,7 +2,20 @@ import { HeatMapZone } from '@/monitoring-dashboard/domain/model/heat-map-zone-e
 
 export class HeatMapAssembler {
   static toEntityFromResource(resource) {
-    return new HeatMapZone({ ...resource })
+    return new HeatMapZone({
+      id: resource.id,
+      type: resource.type,
+      sectorId: resource.sectorId,
+      assetId: resource.assetId,
+      code: resource.code,
+      name: resource.name,
+      description: resource.description,
+      heatIndex: resource.heatIndex,
+      riskLevel: resource.riskLevel,
+      status: resource.status,
+      updatedAt: resource.updatedAt,
+      position: resource.position
+    })
   }
 
   static toEntitiesFromResponse(response) {

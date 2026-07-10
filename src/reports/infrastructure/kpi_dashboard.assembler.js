@@ -2,7 +2,14 @@ import { KPIDashboard } from "@/reports/domain/model/kpi-dashboard-entity.js";
 
 export class KPIDashboardAssembler {
     static toEntityFromResource(resource) {
-        return new KPIDashboard({ ...resource });
+        return new KPIDashboard({
+            id: resource.id,
+            name: resource.name,
+            value: resource.value,
+            goal: resource.goal,
+            status: resource.status,
+            update_date: resource.update_date
+        });
     }
 
     static toEntitiesFromResponse(response) {

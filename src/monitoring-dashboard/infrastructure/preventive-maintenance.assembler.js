@@ -2,7 +2,17 @@ import { PreventiveMaintenance } from '@/monitoring-dashboard/domain/model/preve
 
 export class PreventiveMaintenanceAssembler {
   static toEntityFromResource(resource) {
-    return new PreventiveMaintenance({ ...resource })
+    return new PreventiveMaintenance({
+      id: resource.id,
+      assetId: resource.assetId,
+      assetName: resource.assetName,
+      technician: resource.technician || resource.assignedTechnician,
+      scheduledDate: resource.scheduledDate,
+      reactivationDate: resource.reactivationDate,
+      description: resource.description,
+      status: resource.status,
+      createdAt: resource.createdAt
+    })
   }
 
   static toEntitiesFromResponse(response) {

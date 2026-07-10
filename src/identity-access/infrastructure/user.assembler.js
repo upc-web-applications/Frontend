@@ -2,7 +2,17 @@ import { User } from '@/identity-access/domain/model/user-entity.js'
 
 export class UserAssembler {
   static toEntityFromResource(resource) {
-    return new User({ ...resource })
+    return new User({
+      id: resource.id,
+      roleId: resource.roleId,
+      sectorId: resource.sectorId,
+      fullName: resource.fullName,
+      email: resource.email,
+      password: resource.password,
+      status: resource.status,
+      failedAttempts: resource.failedAttempts,
+      blockedUntil: resource.blockedUntil
+    })
   }
 
   static toEntitiesFromResponse(response) {

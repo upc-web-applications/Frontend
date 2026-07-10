@@ -2,7 +2,19 @@ import { GeneratedReportEntity } from "@/reports/domain/model/generated-report-e
 
 export class GeneratedReportAssembler {
     static toEntityFromResource(resource) {
-        return new GeneratedReportEntity({ ...resource });
+        return new GeneratedReportEntity({
+            id: resource.id,
+            type: resource.type,
+            month: resource.month,
+            year: resource.year,
+            start_date: resource.start_date,
+            end_date: resource.end_date,
+            sector_filter: resource.sector_filter,
+            generation_date: resource.generation_date,
+            file_name: resource.file_name,
+            status: resource.status,
+            size_kb: resource.size_kb
+        });
     }
 
     static toEntitiesFromResponse(response) {
