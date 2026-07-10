@@ -127,21 +127,30 @@ const getStatusSeverity = (percentage) => {
   return 'danger';
 };
 
-const chartData = computed(() => ({
-  labels: store.annualOHSPlan?.monthly_details?.map(d =>
-      new Date(2024, d.month - 1).toLocaleString(locale.value, { month: 'short' })
-  ) || [],
-  datasets: [
-    {
-      label: t('plan_sst.compliance_percentage'),
-      data: store.annualOHSPlan?.monthly_details?.map(d => d.compliance) || [],
-      borderColor: '#FF5B00',
-      backgroundColor: 'rgba(255, 91, 0, 0.1)',
-      tension: 0.3,
-      fill: true
-    }
-  ]
-}));
+const chartData = computed(() => {
+  const plan = store.annualOHSPlan;
+  const details = plan?.monthly_details || [];
+  
+  const validDetails = details.filter(d => 
+    d && typeof d.month === 'number' && d.month >= 1 && d.month <= 12 && typeof d.compliance === 'number'
+  );
+  
+  return {
+    labels: validDetails.map(d =>
+      new Date(plan?.year || 2024, d.month - 1).toLocaleString(locale.value, { month: 'short' })
+    ),
+    datasets: [
+      {
+        label: t('plan_sst.compliance_percentage'),
+        data: validDetails.map(d => d.compliance),
+        borderColor: '#FF5B00',
+        backgroundColor: 'rgba(255, 91, 0, 0.1)',
+        tension: 0.3,
+        fill: true
+      }
+    ]
+  };
+});
 
 const chartOptions = {
   responsive: true,

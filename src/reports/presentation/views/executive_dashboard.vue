@@ -45,8 +45,12 @@ const kpiColors = computed(() => {
 });
 
 const trendChartData = computed(() => {
-  const labels = store.historicalTrends.map(tr => `${tr.month}/${tr.year}`);
-  const data   = store.historicalTrends.map(tr =>
+  const validTrends = store.historicalTrends.filter(tr => 
+    tr && typeof tr.month === 'number' && typeof tr.year === 'number' && typeof tr.total_incidents === 'number'
+  );
+  
+  const labels = validTrends.map(tr => `${tr.month}/${tr.year}`);
+  const data   = validTrends.map(tr =>
       selectedSector.value
           ? (tr.incidents_by_sector?.[selectedSector.value] ?? 0)
           : tr.total_incidents
@@ -78,7 +82,11 @@ const trendChartData = computed(() => {
 const TYPE_COLORS = ['#FF5B00', '#3B82F6', '#22C55E', '#FBBF24', '#EF4444', '#8B5CF6', '#EC4899'];
 
 const trendByTypeData = computed(() => {
-  const labels = store.historicalTrends.map(tr => `${tr.month}/${tr.year}`);
+  const validTrends = store.historicalTrends.filter(tr => 
+    tr && typeof tr.month === 'number' && typeof tr.year === 'number'
+  );
+  
+  const labels = validTrends.map(tr => `${tr.month}/${tr.year}`);
 
   let typeMap = {};
 
@@ -97,7 +105,7 @@ const trendByTypeData = computed(() => {
         });
   } else {
     // Sin sector: usa incidents_by_type de historical_trends (datos reales agregados)
-    store.historicalTrends.forEach(tr => {
+    validTrends.forEach(tr => {
       const key = `${tr.month}/${tr.year}`;
       Object.entries(tr.incidents_by_type || {}).forEach(([type, count]) => {
         if (!typeMap[type]) typeMap[type] = {};
