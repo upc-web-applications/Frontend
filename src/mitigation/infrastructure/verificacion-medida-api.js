@@ -6,7 +6,7 @@ export class VerificacionMedidaApi extends BaseApi {
     getVerificaciones()             { return this.#ep.getAll() }
     getVerificacionById(id)         { return this.#ep.getById(id) }
     getByTicketId(tId)              { return this.#ep.getByParam('ticketId', tId) }
-    getPendientes()                 { return this.#ep.getByParam('veredicto', '') }
+    getPendientes()                 { return this.#ep.getByParam('verdict', '') }
     createVerificacion(v)           { return this.#ep.create(v) }
     updateVerificacion(v)           { return this.#ep.update(v.id, v) }
     deleteVerificacion(id)          { return this.#ep.delete(id) }

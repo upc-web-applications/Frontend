@@ -8,7 +8,7 @@ const api = new TicketAccionCorrectivaApi()
 export const useTicketAccionCorrectivaStore = defineStore('ticketAccionCorrectiva', () => {
     const tickets = ref([]); const errors = ref([]); const loaded = ref(false)
     function fetchAll() { return api.getTickets().then(r => { tickets.value = TicketAccionCorrectivaAssembler.toEntitiesFromResponse(r); loaded.value = true; return tickets.value }).catch(e => { errors.value.push(e); return Promise.reject(e) }) }
-    function getById(id) { return tickets.value.find(t => t.id === parseInt(id)) }
+    function getById(id) { return tickets.value.find(t => t.id === id) }
     function getBySectorId(sId) { return tickets.value.filter(t => t.sectorId === parseInt(sId)) }
     function getByEstado(est) { return tickets.value.filter(t => t.estado === est) }
     async function add(ticket) {

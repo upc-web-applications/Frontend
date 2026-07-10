@@ -15,7 +15,7 @@ const store = useRiskAssessmentStore()
 const mitigationStore = useMitigationStore()
 
 const assessment = computed(() => store.getById(route.params.id))
-const mitigations = computed(() => mitigationStore.mitigations.filter(m => m.riskAssessmentId === parseInt(route.params.id)))
+const mitigations = computed(() => mitigationStore.mitigations.filter(m => m.riskAssessmentId === route.params.id))
 
 const riskClass = (n) => ({ 'Bajo':'rg-badge rg-badge-green','Medio':'rg-badge rg-badge-amber','Alto':'rg-badge rg-badge-red','Critico':'rg-badge rg-badge-red' }[n] ?? 'rg-badge rg-badge-gray')
 const mitStatusClass = (s) => ({

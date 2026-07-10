@@ -9,7 +9,7 @@ const api = new SiteApi()
 export const useSiteStore = defineStore('site', () => {
     const sites = ref([]); const errors = ref([]); const loaded = ref(false)
     function fetchAll() {
-        api.getSites().then(r => { sites.value = SiteAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => errors.value.push(e))
+        return api.getSites().then(r => { sites.value = SiteAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => errors.value.push(e))
     }
     function getById(id) { return sites.value.find(s => s.id === parseInt(id)) }
     function add(site) { return api.createSite(site).then(r => sites.value.push(SiteAssembler.toEntityFromResource(r.data))).catch(e => errors.value.push(e)) }

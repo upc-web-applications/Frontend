@@ -6,7 +6,7 @@ export class ResumenDiarioApi extends BaseApi {
     getAll()            { return this.#ep.getAll() }
     getById(id)         { return this.#ep.getById(id) }
     getBySectorId(sId)  { return this.#ep.getByParam('sectorId', sId) }
-    getByFecha(f)       { return this.#ep.getByParam('fecha', f) }
+    getByFecha(f)       { return this.#ep.getByParam('date', f) }
     create(r)           { return this.#ep.create(r) }
     update(r)           { return this.#ep.update(r.id, r) }
     delete(id)          { return this.#ep.delete(id) }
