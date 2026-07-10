@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { BaseApi } from '@/shared/infrastructure/base-api.js'
+import { IdentityAccessApi } from '@/identity-access/infrastructure/identity-access-api.js'
 
 const ROLE_MAP = {
   Administrator: 'administrator',
