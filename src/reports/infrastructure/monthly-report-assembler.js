@@ -11,9 +11,7 @@ export class MonthlyReportAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['monthly_reports'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['monthly_reports'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

@@ -10,7 +10,7 @@ export class TechnicianAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    const resources = response.data instanceof Array ? response.data : response.data['technicians']
+    const resources = (response.data instanceof Array ? response.data : (response.data ? response.data['technicians'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

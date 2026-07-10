@@ -3,7 +3,7 @@ export class TecnicoAssembler {
     static toEntityFromResource(r) { return new Tecnico({ ...r }) }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
-        const data = response.data instanceof Array ? response.data : response.data['tecnicos']
+        const data = (response.data instanceof Array ? response.data : (response.data ? response.data['tecnicos'] : null)) ?? []
         return data.map(r => this.toEntityFromResource(r))
     }
 }

@@ -10,7 +10,7 @@ export class HeatMapAssembler {
       console.error(`${response.status} - ${response.statusText}`)
       return []
     }
-    const resources = response.data instanceof Array ? response.data : response.data['heatMapZones']
+    const resources = (response.data instanceof Array ? response.data : (response.data ? response.data['heatMapZones'] : null)) ?? []
     return resources.map(resource => this.toEntityFromResource(resource))
   }
 }

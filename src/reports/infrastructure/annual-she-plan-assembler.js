@@ -11,9 +11,7 @@ export class AnnualOHSPlanAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['annual_ohs_plan'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['annual_ohs_plan'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

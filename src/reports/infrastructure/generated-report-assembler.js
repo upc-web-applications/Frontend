@@ -11,9 +11,7 @@ export class GeneratedReportAssembler {
             return [];
         }
 
-        let resources = response.data instanceof Array
-            ? response.data
-            : response.data['generated_reports'];
+        let resources = (response.data instanceof Array ? response.data : (response.data ? response.data['generated_reports'] : null)) ?? [];
 
         return resources.map(resource => this.toEntityFromResource(resource));
     }

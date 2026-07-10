@@ -3,7 +3,7 @@ export class TicketAccionCorrectivaAssembler {
     static toEntityFromResource(r) { return new TicketAccionCorrectiva({ ...r }) }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
-        const data = response.data instanceof Array ? response.data : response.data['tickets']
+        const data = (response.data instanceof Array ? response.data : (response.data ? response.data['tickets'] : null)) ?? []
         return data.map(r => this.toEntityFromResource(r))
     }
 }
