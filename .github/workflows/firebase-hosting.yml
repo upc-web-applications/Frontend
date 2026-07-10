@@ -2,11 +2,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-<<<<<<< HEAD
-      - develop
-=======
       - main
->>>>>>> develop
 jobs:
   deploy:
     runs-on: ubuntu-latest

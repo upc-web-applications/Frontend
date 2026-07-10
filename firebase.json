@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "riskguard-a146d",
     "public": "dist",
     "ignore": [
       "firebase.json",
