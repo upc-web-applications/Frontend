@@ -5,7 +5,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
  */
 export class RiskAssessmentApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/evaluaciones-riesgo') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/risk-assessments') }
     getRiskAssessments()             { return this.#ep.getAll() }
     getRiskAssessmentById(id)        { return this.#ep.getById(id) }
     getByAreaId(aId)                 { return this.#ep.getByParam('areaId', aId) }

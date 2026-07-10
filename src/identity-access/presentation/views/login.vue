@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js'
@@ -20,16 +20,9 @@ const email = ref('supervisor@riskguard.tech')
 const password = ref('Risk123')
 const remember = ref(false)
 const errorMessage = ref('')
-const attempts = ref(0)
 const loading = ref(false)
 
-onMounted(() => {
-  if (!store.usersLoaded) store.fetchUsers()
-  if (!store.rolesLoaded) store.fetchRoles()
-  const savedEmail = localStorage.getItem('riskguard-email')
-  if (savedEmail) email.value = savedEmail
-  if (route.query.reason === 'expired') errorMessage.value = t('login.expired')
-})
+if (route.query.reason === 'expired') errorMessage.value = t('login.expired')
 
 function isValidEmail(value) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
@@ -50,8 +43,7 @@ function login() {
       router.push(route.query.redirect || homeByRole[store.currentRole?.code] || '/')
       return
     }
-    attempts.value = result.attempts || attempts.value
-    errorMessage.value = result.reason === 'blocked' ? t('login.blocked') : t('login.invalidCredentials')
+    errorMessage.value = result.reason === 'invalid' ? t('login.invalidCredentials') : t('login.error')
     password.value = ''
   })
 }
@@ -89,7 +81,6 @@ function login() {
               <input v-model="remember" type="checkbox" />
               {{ t('login.remember') }}
             </label>
-            <span v-if="attempts > 0" class="risk-muted text-sm">{{ t('login.attempts', { count: attempts }) }}</span>
           </div>
           <p v-if="errorMessage" class="form-error">{{ errorMessage }}</p>
           <pv-button :label="t('login.submit')" icon="pi pi-sign-in" icon-pos="right" class="risk-button w-full mt-3" type="submit" :loading="loading" />

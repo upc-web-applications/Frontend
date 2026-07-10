@@ -49,7 +49,7 @@ const roleCode = computed(() => store.currentRole?.code || '')
 const navItems = computed(() => navigation[roleCode.value] || [])
 const flatNavItems = computed(() => navItems.value.flatMap(item => item.children ? item.children : [item]))
 const currentTitle = computed(() => route.meta.title || flatNavItems.value.find(item => route.path.startsWith(item.to.replace(/\/(list|new|dashboard)$/, '')))?.label || 'RiskGuard')
-const initials = computed(() => (store.currentUser?.fullName || 'RG').split(' ').slice(0, 2).map(part => part[0]).join('').toUpperCase())
+const initials = computed(() => (store.currentUser?.name || 'RG').split(' ').slice(0, 2).map(part => part[0]).join('').toUpperCase())
 const roleName = computed(() => {
   if (roleCode.value === 'administrator') return t('roles.administrator')
   if (roleCode.value === 'supervisor') return t('roles.supervisor')
@@ -120,7 +120,7 @@ function logout() {
           <div class="rg-user-info">
             <div class="rg-avatar">{{ initials }}</div>
             <div class="rg-user-copy">
-              <div class="rg-user-name">{{ store.currentUser?.fullName }}</div>
+              <div class="rg-user-name">{{ store.currentUser?.name || store.currentUser?.username }}</div>
               <div class="rg-user-role">{{ roleName }}</div>
             </div>
             <button class="rg-logout" title="Cerrar sesion" @click="logout"><i class="pi pi-sign-out" /></button>

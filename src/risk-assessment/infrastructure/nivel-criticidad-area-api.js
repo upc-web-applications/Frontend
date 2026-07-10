@@ -2,7 +2,7 @@ import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
 export class NivelCriticidadAreaApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/niveles-criticidad-area') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/area-criticality-levels') }
     getAll()            { return this.#ep.getAll() }
     getById(id)         { return this.#ep.getById(id) }
     getBySectorId(sId)  { return this.#ep.getByParam('sectorId', sId) }

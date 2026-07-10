@@ -5,7 +5,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
  */
 export class HazardApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/peligros') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/hazards') }
     getHazards()              { return this.#ep.getAll() }
     getHazardById(id)         { return this.#ep.getById(id) }
     createHazard(r)           { return this.#ep.create(r) }

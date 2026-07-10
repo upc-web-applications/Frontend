@@ -112,7 +112,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(async (to) => {
+router.beforeEach((to) => {
   const store = useIdentityAccessStore()
   document.title = `RiskGuard - ${to.meta.title || 'Seguridad Industrial'}`
 
@@ -122,7 +122,6 @@ router.beforeEach(async (to) => {
   }
 
   if (!store.currentUser) return { path: '/login', query: { redirect: to.fullPath } }
-  if (!store.rolesLoaded) await store.fetchRoles()
 
   const roleCode = store.currentRole?.code
   if (to.meta.roles && !to.meta.roles.includes(roleCode)) return homeByRole[roleCode] || '/login'

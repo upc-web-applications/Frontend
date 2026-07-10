@@ -730,6 +730,7 @@
     "submit": "Sign in",
     "invalidEmail": "Enter a valid email before continuing.",
     "invalidCredentials": "Email or password is incorrect. Try again.",
+    "error": "Connection error. Please verify the server is available.",
     "blocked": "Too many failed attempts. Please try again in 15 minutes.",
     "expired": "Session expired due to inactivity. Sign in again.",
     "attempts": "Failed attempts: {count}/5",
@@ -744,6 +745,7 @@
     "fullName": "Full name",
     "role": "Validated role",
     "sector": "Assigned sector",
+    "email": "Email address",
     "logout": "Sign out"
   },
   "roles": {

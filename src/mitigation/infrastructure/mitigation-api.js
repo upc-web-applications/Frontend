@@ -5,7 +5,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
  */
 export class MitigationApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/mitigaciones') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/mitigations') }
     getMitigations()                 { return this.#ep.getAll() }
     getMitigationById(id)            { return this.#ep.getById(id) }
     getByAssessmentId(aId)           { return this.#ep.getByParam('riskAssessmentId', aId) }

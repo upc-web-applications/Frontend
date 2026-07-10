@@ -730,6 +730,7 @@
     "submit": "Ingresar",
     "invalidEmail": "Ingrese un correo valido antes de continuar.",
     "invalidCredentials": "Correo o contrasena incorrectos, intentelo nuevamente.",
+    "error": "Error de conexion. Verifique que el servidor este disponible.",
     "blocked": "Demasiados intentos fallidos. Por favor, intente nuevamente en 15 minutos.",
     "expired": "Sesion expirada por inactividad. Ingrese nuevamente.",
     "attempts": "Intentos fallidos: {count}/5",
@@ -744,6 +745,7 @@
     "fullName": "Nombre completo",
     "role": "Rol validado",
     "sector": "Sector asignado",
+    "email": "Correo electronico",
     "logout": "Cerrar sesion"
   },
   "roles": {

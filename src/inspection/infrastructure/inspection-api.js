@@ -5,7 +5,7 @@ import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
  */
 export class InspectionApi extends BaseApi {
     #ep
-    constructor() { super(); this.#ep = new BaseEndpoint(this, '/inspecciones') }
+    constructor() { super(); this.#ep = new BaseEndpoint(this, '/inspections') }
     getInspections()       { return this.#ep.getAll() }
     getById(id)             { return this.#ep.getById(id) }
     create(r)               { return this.#ep.create(r) }

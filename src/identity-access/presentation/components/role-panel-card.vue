@@ -47,7 +47,7 @@ const panelIcon = computed(() => {
       <div class="col-12 md:col-4">
         <div class="info-box">
           <span>{{ t('account.fullName') }}</span>
-          <strong>{{ user.fullName }}</strong>
+          <strong>{{ user.name || user.username }}</strong>
         </div>
       </div>
       <div class="col-12 md:col-4">
@@ -58,8 +58,8 @@ const panelIcon = computed(() => {
       </div>
       <div class="col-12 md:col-4">
         <div class="info-box">
-          <span>{{ t('account.sector') }}</span>
-          <strong>{{ user.sectorId || '-' }}</strong>
+          <span>{{ t('account.email') }}</span>
+          <strong>{{ user.email || '-' }}</strong>
         </div>
       </div>
     </div>
