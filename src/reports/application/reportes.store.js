@@ -175,48 +175,9 @@ export const useReportsStore = defineStore('reports', () => {
     }
 
     async function syncOperationalIncidents() {
-        const generatedIncidents = ticketAccionCorrectivaStore.tickets.map(buildOperationalIncident);
-        const generatedById = new Map(generatedIncidents.map(incident => [incident.id, incident]));
-        const existingById = new Map(incidents.value.map(incident => [incident.id, incident]));
-        const staleOperationalIncidents = incidents.value.filter(incident =>
-            String(incident.id).startsWith('INC-COR-') && !generatedById.has(incident.id)
-        );
-
-        for (const incident of staleOperationalIncidents) {
-            try {
-                await api.deleteIncident(incident.id);
-            } catch (error) {
-            }
-        }
-        if (staleOperationalIncidents.length) {
-            const staleIds = new Set(staleOperationalIncidents.map(incident => incident.id));
-            incidents.value = incidents.value.filter(incident => !staleIds.has(incident.id));
-        }
-
-        const createdIncidents = [];
-        const updatedIncidents = [];
-
-        for (const incident of generatedIncidents) {
-            const existing = existingById.get(incident.id);
-            if (!existing) {
-                try {
-                    createdIncidents.push(await api.createIncident(incident));
-                } catch (error) {
-                    incidents.value.push(incident);
-                }
-            } else if (incidentDataChanged(existing, incident)) {
-                try {
-                    updatedIncidents.push(await api.updateIncident(incident));
-                } catch (error) {
-                }
-            }
-        }
-
-        if (createdIncidents.length) incidents.value.push(...createdIncidents);
-        for (const updated of updatedIncidents) {
-            const index = incidents.value.findIndex(incident => incident.id === updated.id);
-            if (index !== -1) incidents.value[index] = updated;
-        }
+        // Incidents are computed by the backend from corrective tickets (GET /historical_incident_records).
+        // They are read-only here; we must NOT push synthetic INC-COR-* ids to the server.
+        return;
     }
 
     function buildOperationalAlert(ticket) {
@@ -399,41 +360,9 @@ export const useReportsStore = defineStore('reports', () => {
     }
 
     async function syncOperationalAlerts() {
-        const generatedAlerts = operationalTickets.value
-            .map(ticket => buildOperationalAlert(ticket))
-            .filter(Boolean);
-        const generatedIds = new Set(generatedAlerts.map(alert => alert.id));
-        const staleOperationalAlerts = criticalAlerts.value.filter(alert =>
-            String(alert.id).startsWith('OP-') && !generatedIds.has(alert.id)
-        );
-        const existingIds = new Set(criticalAlerts.value.map(alert => alert.id));
-        const createdAlerts = [];
-
-        for (const alert of staleOperationalAlerts) {
-            try {
-                await api.deleteCriticalAlert(alert.id);
-            } catch (error) {
-            }
-        }
-
-        if (staleOperationalAlerts.length) {
-            const staleIds = new Set(staleOperationalAlerts.map(alert => alert.id));
-            criticalAlerts.value = criticalAlerts.value.filter(alert => !staleIds.has(alert.id));
-        }
-
-        for (const alert of generatedAlerts) {
-            if (!existingIds.has(alert.id)) {
-                try {
-                    createdAlerts.push(await api.createCriticalAlert(alert));
-                } catch (error) {
-                    criticalAlerts.value.push(alert);
-                }
-            }
-        }
-
-        if (createdAlerts.length) {
-            criticalAlerts.value.push(...createdAlerts);
-        }
+        // Critical alerts are computed by the backend from corrective tickets (GET /critical_alerts).
+        // They are read-only here; we must NOT push synthetic OP-COR-* ids to the server.
+        return;
     }
 
     function syncOperationalInsights() {
