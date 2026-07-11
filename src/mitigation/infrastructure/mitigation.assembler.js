@@ -3,7 +3,7 @@ import { Mitigation } from '@/mitigation/domain/model/mitigation.entity.js'
  * @author u202418655  Victor Jhosef Laura Acosta
  */
 export class MitigationAssembler {
-    static #statusFromResource(status) { return { Pending: 'Pendiente', InProgress: 'En ejecucion', Completed: 'Cerrado', Closed: 'Cerrado' }[status] ?? status }
+    static #statusFromResource(status) { return { Pending: 'Pendiente', InProgress: 'En ejecucion', Completed: 'Cerrado', Closed: 'Cerrado', MitigationReported: 'Mitigacion reportada', VerificationPending: 'En verificacion', Reopened: 'Reabierto' }[status] ?? status }
     static #statusToResource(status) { return { Pendiente: 'Pending', 'En ejecucion': 'InProgress', 'Mitigacion reportada': 'MitigationReported', 'En verificacion': 'VerificationPending', Cerrado: 'Closed', Reabierto: 'Reopened' }[status] ?? status }
 
     static toEntityFromResource(r) {

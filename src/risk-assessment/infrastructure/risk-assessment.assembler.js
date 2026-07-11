@@ -3,8 +3,8 @@ import { RiskAssessment } from '@/risk-assessment/domain/model/risk-assessment.e
  * @author u202418655  Victor Jhosef Laura Acosta
  */
 export class RiskAssessmentAssembler {
-    static #statusFromResource(status) { return { Pending: 'Pendiente', InProgress: 'En progreso', Completed: 'Completado' }[status] ?? status }
-    static #statusToResource(status) { return { Pendiente: 'Pending', 'En progreso': 'InProgress', Completado: 'Completed' }[status] ?? status }
+    static #statusFromResource(status) { return { Pending: 'Pendiente', InProgress: 'En Evaluacion', Completed: 'Evaluado' }[status] ?? status }
+    static #statusToResource(status) { return { Pendiente: 'Pending', 'En Evaluacion': 'InProgress', Evaluado: 'Completed', Cerrado: 'Completed' }[status] ?? status }
     static #riskFromResource(level) { return { Low: 'Bajo', Medium: 'Medio', High: 'Alto', Critical: 'Critico' }[level] ?? level }
     static #riskToResource(level) { return { Bajo: 'Low', Medio: 'Medium', Alto: 'High', Critico: 'Critical' }[level] ?? level }
 

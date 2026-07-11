@@ -6,7 +6,7 @@ export class ResumenDiarioApi extends BaseApi {
     constructor() { super(); this.#ep = new BaseEndpoint(this, '/daily-summaries') }
     getAll()            { return this.#ep.getAll() }
     getById(id)         { return this.#ep.getById(id) }
-    getBySectorId(sId)  { return this.#ep.getByParam('sectorId', sId) }
+    getBySectorId(sId)  { return this.#ep.getByParam('sector', sId) }
     getByFecha(f)       { return this.#ep.getByParam('date', f) }
     create(r)           { return this.#ep.create(ResumenDiarioAssembler.toResourceFromEntity(r)) }
     update(r)           { return this.#ep.update(r.id, ResumenDiarioAssembler.toResourceFromEntity(r)) }

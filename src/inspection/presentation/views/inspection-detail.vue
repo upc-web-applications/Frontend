@@ -71,17 +71,17 @@ onMounted(() => {
 
       <!-- RIGHT -->
       <div class="rg-card" style="display:flex;flex-direction:column;gap:12px">
-        <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em">Evidencia fotografica</div>
+        <div style="font-size:0.78rem;font-weight:700;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.06em">{{ t('inspeccion.photoEvidence') }}</div>
         <div v-if="inspection.fotoUrl">
           <img :src="inspection.fotoUrl" style="width:100%;border-radius:8px;border:1px solid var(--rg-border);cursor:pointer" @click="showPhoto = true" />
-          <div style="font-size:0.72rem;color:var(--rg-text-muted);margin-top:6px;text-align:center">Click para ampliar</div>
+          <div style="font-size:0.72rem;color:var(--rg-text-muted);margin-top:6px;text-align:center">{{ t('common.clickToExpand') }}</div>
         </div>
         <div v-else style="border:1px dashed var(--rg-border);border-radius:8px;height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px">
           <i class="pi pi-image" style="font-size:32px;color:var(--rg-border)" />
           <span style="font-size:0.78rem;color:var(--rg-text-muted)">{{ t('inspeccion.noPhoto') }}</span>
         </div>
         <div style="padding:12px;background:var(--rg-bg-3);border-radius:8px;border:1px solid var(--rg-border)">
-          <div style="font-size:0.62rem;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Ticket</div>
+          <div style="font-size:0.62rem;color:var(--rg-text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">{{ t('inspeccion.ticket') }}</div>
           <div style="font-size:1.4rem;font-weight:800;color:var(--rg-primary)">{{ inspection.ticket }}</div>
         </div>
       </div>
@@ -92,5 +92,5 @@ onMounted(() => {
       <img :src="inspection.fotoUrl" style="max-width:90vw;max-height:90vh;border-radius:8px" />
     </div>
   </div>
-  <div v-else style="padding:40px;text-align:center;color:var(--rg-text-muted)">Cargando...</div>
+  <div v-else style="padding:40px;text-align:center;color:var(--rg-text-muted)">{{ t('common.loading') }}</div>
 </template>

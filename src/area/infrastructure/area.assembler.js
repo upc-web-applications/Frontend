@@ -5,6 +5,8 @@ import { Area } from '@/area/domain/model/area.entity.js'
 export class AreaAssembler {
     static #statusFromResource(status) { return { Active: 'Activo', Inactive: 'Inactivo' }[status] ?? status }
     static #statusToResource(status) { return { Activo: 'Active', Inactivo: 'Inactive' }[status] ?? status }
+    static #riskFromResource(level) { return { Low: 'Bajo', Medium: 'Medio', High: 'Alto', Critical: 'Critico' }[level] ?? level }
+    static #riskToResource(level) { return { Bajo: 'Low', Medio: 'Medium', Alto: 'High', Critico: 'Critical' }[level] ?? level }
 
     static toEntityFromResource(r) {
         return new Area({
@@ -14,7 +16,7 @@ export class AreaAssembler {
             descripcion: r.description,
             sedeId: r.headquartersId,
             estado: this.#statusFromResource(r.status),
-            nivelRiesgo: r.riskLevel,
+            nivelRiesgo: this.#riskFromResource(r.riskLevel),
             fechaCreacion: r.createdAt
         })
     }
@@ -27,7 +29,7 @@ export class AreaAssembler {
             description: entity.descripcion,
             headquartersId: entity.sedeId,
             status: this.#statusToResource(entity.estado),
-            riskLevel: entity.nivelRiesgo
+            riskLevel: this.#riskToResource(entity.nivelRiesgo)
         }
     }
     static toEntitiesFromResponse(response) {

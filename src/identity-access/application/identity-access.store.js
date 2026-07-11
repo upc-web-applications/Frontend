@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { IdentityAccessApi } from '@/identity-access/infrastructure/identity-access-api.js'
+import { User } from '@/identity-access/domain/model/user-entity.js'
 
 const ROLE_MAP = {
   Administrator: 'administrator',
@@ -29,9 +30,9 @@ const useIdentityAccessStore = defineStore('identity-access', () => {
   const currentRole = computed(() => {
     if (!currentUser.value) return null
     return {
-      id: currentUser.value.role || 'operator',
-      code: ROLE_MAP[currentUser.value.role] || 'plant-operator',
-      name: currentUser.value.role
+      id: currentUser.value.roleId || 'operator',
+      code: ROLE_MAP[currentUser.value.roleId] || 'plant-operator',
+      name: currentUser.value.roleId
     }
   })
 
@@ -39,13 +40,12 @@ const useIdentityAccessStore = defineStore('identity-access', () => {
     return identityAccessApi.signIn(email, password)
       .then(response => {
         const data = response.data
-        const user = {
+        const user = new User({
           id: data.id,
-          username: data.username,
           email: data.email,
-          name: data.name,
-          role: data.role
-        }
+          fullName: data.name,
+          roleId: data.role
+        })
         currentUser.value = user
         BaseApi.setToken(data.token)
         localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(user))

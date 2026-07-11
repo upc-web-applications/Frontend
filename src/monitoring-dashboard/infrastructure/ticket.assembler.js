@@ -5,15 +5,18 @@ export class TicketAssembler {
     return { Pending: 'Pendiente', Open: 'Pendiente', InProgress: 'En ejecucion', Scheduled: 'Asignado', Resolved: 'Cerrado', Closed: 'Cerrado' }[status] ?? status
   }
 
+  static #riskFromResource(priority) {
+    return { Low: 'Bajo', Medium: 'Medio', High: 'Alto', Critical: 'Critico' }[priority] ?? priority
+  }
+
   static toEntityFromResource(resource) {
     return new Ticket({
       id: resource.id,
       code: resource.code || `TKT-${resource.id}`,
       heatMapId: resource.heatMapId || resource.sectorId,
       sector: resource.sector || resource.sectorId,
-      incidentType: resource.incidentType || resource.priority,
-      riskLevel: resource.riskLevel || resource.priority,
-      assignedTechnician: resource.assignedTechnician || resource.assignedTechnicianId,
+      riskLevel: this.#riskFromResource(resource.priority),
+      assignedTechnician: resource.assignedTechnicianId,
       assetName: resource.assetName,
       requiredSpecialty: resource.requiredSpecialty,
       assignmentDetails: resource.assignmentDetails,
@@ -31,7 +34,7 @@ export class TicketAssembler {
       sectorId: entity.heatMapId,
       title: entity.description || entity.code,
       status: { Pendiente: 'Pending', 'En ejecucion': 'InProgress', Asignado: 'Scheduled', Cerrado: 'Resolved' }[entity.status] ?? entity.status,
-      priority: entity.riskLevel || 'Medium',
+      priority: { Bajo: 'Low', Medio: 'Medium', Alto: 'High', Critico: 'Critical' }[entity.riskLevel] ?? entity.riskLevel,
       assignedTechnicianId: entity.assignedTechnician,
       createdAt: entity.generatedAt
     }

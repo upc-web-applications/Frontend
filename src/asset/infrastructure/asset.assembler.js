@@ -31,8 +31,8 @@ export class AssetAssembler {
             areaId: entity.areaId,
             headquartersId: entity.sedeId,
             status: this.#statusToResource(entity.estado),
-            acquisitionDate: entity.fechaAdquisicion,
-            lastMaintenanceDate: entity.ultimoMantenimiento
+            acquisitionDate: entity.fechaAdquisicion || null,
+            lastMaintenanceDate: entity.ultimoMantenimiento || null
         }
     }
     static toEntitiesFromResponse(response) {

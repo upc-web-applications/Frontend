@@ -30,7 +30,10 @@ export class InspectionAssembler {
             Pending: 'Pendiente',
             InProgress: 'En revision',
             Completed: 'Resuelto',
-            Cancelled: 'Cancelada'
+            Cancelled: 'Cancelada',
+            Recibido: 'Recibido',
+            'Convertido a ticket': 'Convertido a ticket',
+            'No procede': 'No procede'
         }[status] ?? status ?? 'Pendiente'
     }
 
