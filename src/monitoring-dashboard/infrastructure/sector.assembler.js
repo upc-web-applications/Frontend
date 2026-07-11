@@ -4,18 +4,29 @@ export class SectorAssembler {
   static toEntityFromResource(resource) {
     return new Sector({
       id: resource.id,
-      type: resource.type,
+      type: resource.type || 'Sector',
       sectorId: resource.sectorId,
       assetId: resource.assetId,
-      code: resource.code,
+      code: resource.code || resource.id,
       name: resource.name,
-      description: resource.description,
+      description: resource.description || '',
       heatIndex: resource.heatIndex,
       riskLevel: resource.riskLevel,
       status: resource.status,
-      updatedAt: resource.updatedAt,
+      updatedAt: resource.updatedAt || resource.lastUpdate,
       position: resource.position
     })
+  }
+
+  static toResourceFromEntity(entity) {
+    return {
+      id: entity.id,
+      name: entity.name,
+      sectorId: entity.sectorId,
+      heatIndex: entity.heatIndex,
+      riskLevel: entity.riskLevel,
+      lastUpdate: entity.updatedAt
+    }
   }
 
   static toEntitiesFromResponse(response) {

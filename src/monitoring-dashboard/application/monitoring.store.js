@@ -28,8 +28,8 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
   const filterStatus = ref(null)
   const loaded = ref(false)
 
-  const reportsToReviewCount = computed(() => tickets.value.filter(ticket => ['Recibido', 'Pendiente'].includes(ticket.status)).length)
-  const ticketsInExecutionCount = computed(() => tickets.value.filter(ticket => ['Asignado', 'En ejecucion'].includes(ticket.status)).length)
+  const reportsToReviewCount = computed(() => tickets.value.filter(ticket => ['Recibido', 'Pendiente', 'Open', 'Pending'].includes(ticket.status)).length)
+  const ticketsInExecutionCount = computed(() => tickets.value.filter(ticket => ['Asignado', 'En ejecucion', 'InProgress', 'Scheduled'].includes(ticket.status)).length)
   const totalAssetsCount = computed(() => assets.value.length)
   const totalSectorsCount = computed(() => sectors.value.length)
   const activeTechnicians = computed(() => technicians.value.filter(technician => technician.status === 'Activo'))

@@ -7,11 +7,21 @@ export class AssetAssembler {
       name: resource.name,
       code: resource.code,
       brand: resource.brand,
-      sector: resource.sector,
+      sector: resource.sector || resource.sectorId,
       riskLevel: resource.riskLevel,
       lastReview: resource.lastReview,
-      status: resource.status
+      status: { Active: 'Operativo', Maintenance: 'Mantenimiento', Inactive: 'Inactivo' }[resource.status] ?? resource.status
     })
+  }
+
+  static toResourceFromEntity(entity) {
+    return {
+      id: entity.id,
+      name: entity.name,
+      code: entity.code,
+      sectorId: entity.sector,
+      status: { Operativo: 'Active', Mantenimiento: 'Maintenance', Inactivo: 'Inactive' }[entity.status] ?? entity.status
+    }
   }
 
   static toEntitiesFromResponse(response) {

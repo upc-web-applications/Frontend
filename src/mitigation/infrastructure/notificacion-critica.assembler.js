@@ -11,6 +11,18 @@ export class NotificacionCriticaAssembler {
             fechaEnvio: r.sentDate
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            ticketId: entity.ticketId,
+            supervisorId: entity.supervisorId,
+            supervisorName: entity.supervisorNombre,
+            message: entity.mensaje,
+            sent: entity.enviada,
+            sentDate: entity.fechaEnvio
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['notificaciones'] : null)) ?? []

@@ -6,10 +6,6 @@ const assetForm = () => import('./views/asset-form.vue')
 const assetMaintenance = () => import('./views/asset-maintenance.vue')
 const assetReactivation = () => import('./views/asset-reactivation.vue')
 const reports = () => import('./views/reports.vue')
-const sectorMap = () => import('./views/sector-map.vue')
-const sectorForm = () => import('./views/sector-form.vue')
-const technicianDirectory = () => import('./views/technician-directory.vue')
-const technicianForm = () => import('./views/technician-form.vue')
 
 const monitoringRoutes = [
   { path: 'dashboard', name: 'monitoring-dashboard', component: dashboard, meta: { title: 'Dashboard' } },
@@ -21,12 +17,12 @@ const monitoringRoutes = [
   { path: 'maintenance/assets/:id/reactivate', name: 'monitoring-assets-reactivate', component: assetReactivation, meta: { title: 'Reactivate Asset' } },
   { path: 'maintenance/assets/:id', name: 'monitoring-assets-detail', component: assetForm, meta: { title: 'Asset Detail' } },
   { path: 'maintenance', name: 'monitoring-maintenance', component: maintenance, meta: { title: 'Maintenance' } },
-  { path: 'sectors/new', name: 'monitoring-sectors-new', component: sectorForm, meta: { title: 'New Sector' } },
-  { path: 'sectors/:id', name: 'monitoring-sectors-detail', component: sectorForm, meta: { title: 'Sector Detail' } },
-  { path: 'sectors', name: 'monitoring-sectors', component: sectorMap, meta: { title: 'Sector Map' } },
-  { path: 'technicians/new', name: 'monitoring-technicians-new', component: technicianForm, meta: { title: 'New Technician' } },
-  { path: 'technicians/:id', name: 'monitoring-technicians-detail', component: technicianForm, meta: { title: 'Technician Detail' } },
-  { path: 'technicians', name: 'monitoring-technicians', component: technicianDirectory, meta: { title: 'Technical Directory' } },
+  { path: 'sectors', name: 'monitoring-sectors-legacy', redirect: '/organization-assets/area/list' },
+  { path: 'sectors/new', name: 'monitoring-sectors-new-legacy', redirect: '/organization-assets/area/new' },
+  { path: 'sectors/:id', name: 'monitoring-sectors-detail-legacy', redirect: to => `/organization-assets/area/${to.params.id}/edit` },
+  { path: 'technicians', name: 'monitoring-technicians-legacy', redirect: '/mitigation/technicians' },
+  { path: 'technicians/new', name: 'monitoring-technicians-new-legacy', redirect: '/mitigation/technicians/new' },
+  { path: 'technicians/:id', name: 'monitoring-technicians-detail-legacy', redirect: to => `/mitigation/technicians/${to.params.id}` },
   { path: 'reports', name: 'monitoring-reports', component: reports, meta: { title: 'Reports' } }
 ]
 

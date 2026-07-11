@@ -16,6 +16,10 @@ const isEdit = computed(() => !!route.params.id)
 const saving = ref(false)
 const form = ref({ nombre:'', codigo:'', descripcion:'', sedeId:null, estado:'Activo', nivelRiesgo:'Medio', fechaCreacion: new Date().toISOString().split('T')[0] })
 const siteOptions = computed(() => siteStore.sites.filter(s => s.estado==='Activo').map(s => ({ label: s.nombre, value: s.id })))
+const active = computed({
+    get: () => form.value.estado === 'Activo',
+    set: value => { form.value.estado = value ? 'Activo' : 'Inactivo' }
+})
 
 onMounted(() => {
     if (!siteStore.loaded) siteStore.fetchAll()
@@ -60,9 +64,12 @@ const submit = async () => {
           <label class="rg-label">{{ t('area.riskLevel') }}</label>
           <pv-select v-model="form.nivelRiesgo" :options="['Bajo','Medio','Alto','Critico']" size="small" style="width:100%" />
         </div>
-        <div class="rg-form-field">
+        <div v-if="isEdit" class="rg-form-field">
           <label class="rg-label">{{ t('area.status') }}</label>
-          <pv-select v-model="form.estado" :options="['Activo','Inactivo']" size="small" style="width:100%" />
+          <div class="area-status-switch">
+            <span>{{ active ? t('common.active') : t('common.inactive') }}</span>
+            <pv-toggle-switch v-model="active" />
+          </div>
         </div>
         <div class="rg-form-field full">
           <label class="rg-label">{{ t('area.description') }}</label>
@@ -72,3 +79,17 @@ const submit = async () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.area-status-switch {
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 0.7rem;
+    border: 1px solid #2a2f38;
+    border-radius: 6px;
+    background: #0a0c0f;
+    color: #d6dbe3;
+}
+</style>

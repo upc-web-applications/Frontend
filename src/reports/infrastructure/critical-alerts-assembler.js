@@ -19,6 +19,18 @@ export class CriticalAlertsAssembler {
         });
     }
 
+    static toResourceFromEntity(entity) {
+        return {
+            type: entity.type,
+            sector: entity.sector,
+            risk_type: entity.risk_type,
+            message: entity.message,
+            elapsed_hours: entity.elapsed_hours,
+            status: entity.status,
+            responsible_supervisor: entity.responsible_supervisor
+        };
+    }
+
     static toEntitiesFromResponse(response) {
 
         if (response.status !== 200) {

@@ -24,7 +24,7 @@ export class BaseApi {
             error => {
                 if (error.response && error.response.status === 401) {
                     BaseApi.clearToken()
-                    localStorage.removeItem('riskguard-user')
+                    localStorage.removeItem('riskguard-current-user')
                     window.location.href = '/login'
                 }
                 return Promise.reject(error)

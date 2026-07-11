@@ -1,5 +1,10 @@
 import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import { HeatMapAssembler } from '@/monitoring-dashboard/infrastructure/heat-map.assembler.js'
+import { TicketAssembler } from '@/monitoring-dashboard/infrastructure/ticket.assembler.js'
+import { TechnicianAssembler } from '@/monitoring-dashboard/infrastructure/technician.assembler.js'
+import { AssetAssembler } from '@/monitoring-dashboard/infrastructure/asset.assembler.js'
+import { PreventiveMaintenanceAssembler } from '@/monitoring-dashboard/infrastructure/preventive-maintenance.assembler.js'
 
 export class MonitoringApi extends BaseApi {
   #heatMapEndpoint
@@ -44,38 +49,38 @@ export class MonitoringApi extends BaseApi {
   }
 
   updateTicket(ticket) {
-    return this.#ticketsEndpoint.update(ticket.id, ticket)
+    return this.#ticketsEndpoint.update(ticket.id, TicketAssembler.toResourceFromEntity(ticket))
   }
 
   createSector(sector) {
-    return this.#heatMapEndpoint.create(sector)
+    return this.#heatMapEndpoint.create(HeatMapAssembler.toResourceFromEntity(sector))
   }
 
   updateSector(sector) {
-    return this.#heatMapEndpoint.update(sector.id, sector)
+    return this.#heatMapEndpoint.update(sector.id, HeatMapAssembler.toResourceFromEntity(sector))
   }
 
   createTechnician(technician) {
-    return this.#techniciansEndpoint.create(technician)
+    return this.#techniciansEndpoint.create(TechnicianAssembler.toResourceFromEntity(technician))
   }
 
   updateTechnician(technician) {
-    return this.#techniciansEndpoint.update(technician.id, technician)
+    return this.#techniciansEndpoint.update(technician.id, TechnicianAssembler.toResourceFromEntity(technician))
   }
 
   createAsset(asset) {
-    return this.#assetsEndpoint.create(asset)
+    return this.#assetsEndpoint.create(AssetAssembler.toResourceFromEntity(asset))
   }
 
   updateAsset(asset) {
-    return this.#assetsEndpoint.update(asset.id, asset)
+    return this.#assetsEndpoint.update(asset.id, AssetAssembler.toResourceFromEntity(asset))
   }
 
   createMaintenance(resource) {
-    return this.#maintenanceEndpoint.create(resource)
+    return this.#maintenanceEndpoint.create(PreventiveMaintenanceAssembler.toResourceFromEntity(resource))
   }
 
   updateMaintenance(resource) {
-    return this.#maintenanceEndpoint.update(resource.id, resource)
+    return this.#maintenanceEndpoint.update(resource.id, PreventiveMaintenanceAssembler.toResourceFromEntity(resource))
   }
 }

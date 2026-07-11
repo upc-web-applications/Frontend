@@ -1,5 +1,6 @@
 import { BaseApi } from '@/shared/infrastructure/base-api.js'
 import { BaseEndpoint } from '@/shared/infrastructure/base-endpoint.js'
+import { MitigationAssembler } from '@/mitigation/infrastructure/mitigation.assembler.js'
 /**
  * @author u202418655  Victor Jhosef Laura Acosta
  */
@@ -10,7 +11,7 @@ export class MitigationApi extends BaseApi {
     getMitigationById(id)            { return this.#ep.getById(id) }
     getByAssessmentId(aId)           { return this.#ep.getByParam('riskAssessmentId', aId) }
     getByTicketId(tId)               { return this.#ep.getByParam('ticketId', tId) }
-    createMitigation(r)              { return this.#ep.create(r) }
-    updateMitigation(r)              { return this.#ep.update(r.id, r) }
+    createMitigation(r)              { return this.#ep.create(MitigationAssembler.toResourceFromEntity(r)) }
+    updateMitigation(r)              { return this.#ep.update(r.id, MitigationAssembler.toResourceFromEntity(r)) }
     deleteMitigation(id)             { return this.#ep.delete(id) }
 }

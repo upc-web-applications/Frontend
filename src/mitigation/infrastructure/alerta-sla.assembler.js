@@ -11,6 +11,18 @@ export class AlertaSLAAssembler {
             notificadoNombre: r.notifiedName
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            ticketId: entity.ticketId,
+            elapsedHours: entity.horasTranscurridas,
+            slaLimitHours: entity.slaLimiteHoras,
+            alertDate: entity.fechaAlerta,
+            notifiedTo: entity.notificadoA,
+            notifiedName: entity.notificadoNombre
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['alertas'] : null)) ?? []

@@ -8,9 +8,20 @@ import { InspectionAssembler } from '@/inspection/infrastructure/inspection.asse
 const api = new InspectionApi()
 export const useInspectionStore = defineStore('inspection', () => {
     const inspections = ref([]); const errors = ref([]); const loaded = ref(false)
-    function fetchAll() { return api.getInspections().then(r => { inspections.value = InspectionAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => { errors.value.push(e); loaded.value = true; return [] }) }
+    function fetchAll(operatorId = null) { return api.getInspections(operatorId).then(r => { inspections.value = InspectionAssembler.toEntitiesFromResponse(r); loaded.value = true }).catch(e => { errors.value.push(e); loaded.value = true; return [] }) }
     function getById(id) { return inspections.value.find(i => i.id === parseInt(id)) }
-    function add(inspection) { return api.create(inspection).then(r => { const entity = InspectionAssembler.toEntityFromResource(r.data); inspections.value.push(entity); return entity }).catch(e => errors.value.push(e)) }
+    function add(inspection) {
+        return api.create(inspection)
+            .then(r => {
+                const entity = InspectionAssembler.toEntityFromResource(r.data)
+                inspections.value.push(entity)
+                return entity
+            })
+            .catch(e => {
+                errors.value.push(e)
+                return Promise.reject(e)
+            })
+    }
     function update(inspection) {
         return api.update(inspection).then(r => {
             const entity = InspectionAssembler.toEntityFromResource(r.data)

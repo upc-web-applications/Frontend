@@ -11,6 +11,18 @@ export class ResumenDiarioAssembler {
             totalResueltos: r.totalResolved
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            date: entity.fecha,
+            sectorId: entity.sectorId,
+            sector: entity.sector,
+            totalNew: entity.totalNuevos,
+            totalInProgress: entity.totalEnProgreso,
+            totalResolved: entity.totalResueltos
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['resumenes'] : null)) ?? []

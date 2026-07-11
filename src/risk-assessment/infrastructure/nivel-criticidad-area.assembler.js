@@ -10,6 +10,17 @@ export class NivelCriticidadAreaAssembler {
             ultimaActualizacion: r.lastUpdated
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            sectorId: entity.sectorId,
+            sector: entity.sector,
+            criticalityLevel: entity.nivelCriticidad,
+            mapIntensity: entity.intensidadMapa,
+            lastUpdated: entity.ultimaActualizacion
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['niveles'] : null)) ?? []
