@@ -17,12 +17,12 @@ const monitoringRoutes = [
   { path: 'maintenance/assets/:id/reactivate', name: 'monitoring-assets-reactivate', component: assetReactivation, meta: { title: 'Reactivate Asset' } },
   { path: 'maintenance/assets/:id', name: 'monitoring-assets-detail', component: assetForm, meta: { title: 'Asset Detail' } },
   { path: 'maintenance', name: 'monitoring-maintenance', component: maintenance, meta: { title: 'Maintenance' } },
-  { path: 'sectors', name: 'monitoring-sectors-legacy', redirect: '/organization-assets/area/list' },
-  { path: 'sectors/new', name: 'monitoring-sectors-new-legacy', redirect: '/organization-assets/area/new' },
-  { path: 'sectors/:id', name: 'monitoring-sectors-detail-legacy', redirect: to => `/organization-assets/area/${to.params.id}/edit` },
-  { path: 'technicians', name: 'monitoring-technicians-legacy', redirect: '/mitigation/technicians' },
-  { path: 'technicians/new', name: 'monitoring-technicians-new-legacy', redirect: '/mitigation/technicians/new' },
-  { path: 'technicians/:id', name: 'monitoring-technicians-detail-legacy', redirect: to => `/mitigation/technicians/${to.params.id}` },
+  { path: 'sectors', name: 'monitoring-sectors-legacy', redirect: '/area/list' },
+  { path: 'sectors/new', name: 'monitoring-sectors-new-legacy', redirect: '/area/new' },
+  { path: 'sectors/:id', name: 'monitoring-sectors-detail-legacy', redirect: to => `/area/${to.params.id}/edit` },
+  { path: 'technicians', name: 'monitoring-technicians-legacy', redirect: '/technicians' },
+  { path: 'technicians/new', name: 'monitoring-technicians-new-legacy', redirect: '/technicians/new' },
+  { path: 'technicians/:id', name: 'monitoring-technicians-detail-legacy', redirect: to => `/technicians/${to.params.id}` },
   { path: 'reports', name: 'monitoring-reports', component: reports, meta: { title: 'Reports' } }
 ]
 

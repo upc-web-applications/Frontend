@@ -2,9 +2,9 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/shared/presentation/components/layout.vue'
 import Login from '@/identity-access/presentation/views/login.vue'
 import identityAccessRoutes from '@/identity-access/presentation/identity-access-routes.js'
-import siteRoutes from '@/organization-assets/site/presentation/site-routes.js'
-import areaRoutes from '@/organization-assets/area/presentation/area-routes.js'
-import assetRoutes from '@/organization-assets/asset/presentation/asset-routes.js'
+import siteRoutes from '@/site/presentation/site-routes.js'
+import areaRoutes from '@/area/presentation/area-routes.js'
+import assetRoutes from '@/asset/presentation/asset-routes.js'
 import inspectionRoutes from '@/inspection/presentation/inspection-routes.js'
 import riskAssessmentRoutes from '@/risk-assessment/presentation/risk-assessment-routes.js'
 import patronRiesgoRoutes from '@/risk-assessment/presentation/patron-riesgo-routes.js'
@@ -17,8 +17,8 @@ import verificacionRoutes from '@/mitigation/presentation/verificacion-medida-ro
 import historialTicketRoutes from '@/mitigation/presentation/historial-ticket-routes.js'
 import alertaSLARoutes from '@/mitigation/presentation/alerta-sla-routes.js'
 import notificacionCriticaRoutes from '@/mitigation/presentation/notificacion-critica-routes.js'
-import hazardRoutes from '@/risk-assessment/hazard/presentation/hazard-routes.js'
-import tecnicoRoutes from '@/mitigation/technician/presentation/tecnico-routes.js'
+import hazardRoutes from '@/hazard/presentation/hazard-routes.js'
+import tecnicoRoutes from '@/technician/presentation/tecnico-routes.js'
 import monitoringRoutes from '@/monitoring-dashboard/presentation/monitoring-routes.js'
 import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js'
 
@@ -61,21 +61,16 @@ const routes = [
       { path: '', name: 'app-home', redirect: '/login' },
       { path: 'identity-access', children: identityAccessRoutes },
       { path: 'inspection', meta: { roles: [OPERATOR, SUPERVISOR] }, children: inspectionRoutes },
-      {
-        path: 'organization-assets',
-        meta: { roles: [SUPERVISOR] },
-        children: [
-          { path: 'site', children: siteRoutes },
-          { path: 'area', children: areaRoutes },
-          { path: 'asset', children: assetRoutes }
-        ]
-      },
+      { path: 'site', meta: { roles: [SUPERVISOR] }, children: siteRoutes },
+      { path: 'area', meta: { roles: [SUPERVISOR] }, children: areaRoutes },
+      { path: 'asset', meta: { roles: [SUPERVISOR] }, children: assetRoutes },
+      { path: 'hazard', meta: { roles: [SUPERVISOR] }, children: hazardRoutes },
+      { path: 'technicians', meta: { roles: [SUPERVISOR] }, children: tecnicoRoutes },
       {
         path: 'risk-assessment',
         meta: { roles: [SUPERVISOR] },
         children: [
           ...riskAssessmentRoutes,
-          { path: 'hazard', children: hazardRoutes },
           ...patronRiesgoRoutes,
           ...nivelCriticidadAreaRoutes,
           ...alertaPatronRoutes,
@@ -88,7 +83,6 @@ const routes = [
         children: [
           ...mitigationRoutes,
           ...ticketRoutes,
-          { path: 'technicians', children: tecnicoRoutes },
           ...verificacionRoutes,
           ...historialTicketRoutes,
           ...alertaSLARoutes,
@@ -97,11 +91,11 @@ const routes = [
       },
       { path: 'monitoring', meta: { roles: [SUPERVISOR] }, children: monitoringRoutes },
       { path: 'reportes', meta: { roles: [ADMINISTRATOR] }, children: reportRoutes },
-      { path: 'site/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/organization-assets/site') },
-      { path: 'area/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/organization-assets/area') },
-      { path: 'asset/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/organization-assets/asset') },
-      { path: 'hazard/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/risk-assessment/hazard') },
-      { path: 'technician/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/mitigation/technicians') },
+      { path: 'site/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/site') },
+      { path: 'area/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/area') },
+      { path: 'asset/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/asset') },
+      { path: 'hazard/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/hazard') },
+      { path: 'technician/:pathMatch(.*)*', meta: { roles: [SUPERVISOR] }, redirect: redirectLegacyTo('/technicians') },
       { path: ':pathMatch(.*)*', name: 'not-found', component: pageNotFound, meta: { title: 'Pagina no encontrada' } }
     ]
   }

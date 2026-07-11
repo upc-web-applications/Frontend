@@ -5,9 +5,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useTicketAccionCorrectivaStore } from '@/mitigation/application/ticket-accion-correctiva.store.js'
 import { useHistorialTicketStore } from '@/mitigation/application/historial-ticket.store.js'
-import { useTecnicoStore } from '@/mitigation/technician/application/tecnico.store.js'
+import { useTecnicoStore } from '@/technician/application/tecnico.store.js'
 import { useInspectionStore } from '@/inspection/application/inspection.store.js'
-import { useAreaStore } from '@/organization-assets/area/application/area.store.js'
+import { useAreaStore } from '@/area/application/area.store.js'
 import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js'
 
 const { t } = useI18n()

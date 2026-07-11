@@ -4,9 +4,9 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { useInspectionStore } from '@/inspection/application/inspection.store.js'
-import { useAreaStore } from '@/organization-assets/area/application/area.store.js'
-import { useAssetStore } from '@/organization-assets/asset/application/asset.store.js'
-import { useSiteStore } from '@/organization-assets/site/application/site.store.js'
+import { useAreaStore } from '@/area/application/area.store.js'
+import { useAssetStore } from '@/asset/application/asset.store.js'
+import { useSiteStore } from '@/site/application/site.store.js'
 import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js'
 
 const { t } = useI18n()

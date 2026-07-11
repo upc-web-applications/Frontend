@@ -35,6 +35,8 @@ function riskClass(level) {
   gap: 1.5rem;
   min-height: 270px;
   align-items: center;
+  width: 100%;
+  overflow: hidden;
 }
 
 .heat-zone {
@@ -46,6 +48,9 @@ function riskClass(level) {
   padding: 1rem;
   text-transform: uppercase;
   letter-spacing: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .heat-zone.wide {
