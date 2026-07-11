@@ -48,7 +48,7 @@ h1,h2,h3,h4,h5 { font-family: 'Inter', 'Geist', system-ui, sans-serif; font-weig
 .rg-sidebar { width: var(--rg-sidebar); min-width: var(--rg-sidebar); background: var(--rg-bg-2); border-right: 1px solid var(--rg-border); display: flex; flex-direction: column; height: 100vh; }
 .rg-sidebar-logo { height: var(--rg-topbar); display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--rg-border); gap: 10px; color: var(--rg-text); text-decoration: none; }
 .rg-sidebar-brand { width: 128px; max-height: 34px; object-fit: contain; object-position: left center; }
-.rg-nav { flex: 1; padding: 8px 0; }
+.rg-nav { flex: 1; min-height: 0; padding: 8px 0; overflow-y: auto; }
 .rg-nav-item { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 16px; color: var(--rg-text-muted); text-decoration: none; font-size: 0.82rem; font-weight: 500; border-left: 3px solid transparent; transition: all 0.15s; cursor: pointer; }
 .rg-nav-item:hover { color: var(--rg-text); background: rgba(255,255,255,0.03); }
 .rg-nav-item.active { color: var(--rg-primary); border-left-color: var(--rg-primary); background: var(--rg-primary-dim); }

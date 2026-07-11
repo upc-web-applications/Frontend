@@ -17,19 +17,8 @@ const sectorOptions = computed(() => [
   ...store.sectors.map(sector => ({ label: sector.name, value: sector.name }))
 ])
 
-const reportsBySector = computed(() => {
-  return store.archivedReports.map(report => {
-    const sector = store.sectors.find(item => item.id === report.heatMapId)
-    return {
-      ...report,
-      sectorName: sector ? sector.name : report.sector,
-      sectorStatus: sector ? sector.status : 'Activo'
-    }
-  })
-})
-
 const filteredReports = computed(() => {
-  return reportsBySector.value.filter(report => {
+  return store.resolvedIncidentReports.filter(report => {
     const sectorMatch = !selectedSector.value || report.sectorName === selectedSector.value
     const startMatch = !startDate.value || report.date >= startDate.value
     const endMatch = !endDate.value || report.date <= endDate.value
