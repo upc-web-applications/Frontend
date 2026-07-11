@@ -1,24 +1,15 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useTicketAccionCorrectivaStore } from '@/mitigation/application/ticket-accion-correctiva.store.js'
-import { buildComputedSlaAlert, withSlaEvaluation } from '@/mitigation/application/sla-policy.js'
+import { useAlertaSLAStore } from '@/mitigation/application/alerta-sla.store.js'
 
 const { t } = useI18n()
 const router = useRouter()
-const ticketStore = useTicketAccionCorrectivaStore()
+const store = useAlertaSLAStore()
 
 onMounted(async () => {
-  if (!ticketStore.loaded) await ticketStore.fetchAll()
-})
-
-const alertas = computed(() => {
-  return ticketStore.tickets
-    .map(ticket => withSlaEvaluation(ticket))
-    .filter(ticket => ticket.slaIncumplido)
-    .map(ticket => buildComputedSlaAlert(ticket))
-    .sort((a, b) => Number(b.horasTranscurridas || 0) - Number(a.horasTranscurridas || 0))
+  if (!store.loaded) await store.fetchAll()
 })
 
 function goToAlert(alerta) {
@@ -40,7 +31,7 @@ function formatElapsedHours(hours) {
       <span class="rg-page-title">{{ t('alertaSLA.title') }}</span>
     </div>
     <div class="rg-table-wrap">
-      <pv-data-table :value="alertas" :loading="!ticketStore.loaded" striped-rows size="small" :rows="10" paginator>
+      <pv-data-table :value="store.alertas" :loading="!store.loaded" striped-rows size="small" :rows="10" paginator>
         <pv-column field="id" header="#" style="width:50px" />
         <pv-column field="ticketId" :header="t('alertaSLA.ticket')" style="width:80px" sortable />
         <pv-column field="horasTranscurridas" :header="t('alertaSLA.hoursElapsed')" style="width:110px">

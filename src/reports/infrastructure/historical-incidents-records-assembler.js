@@ -21,13 +21,14 @@ export class HistoricalIncidentRecordsAssembler {
         return {
             id: entity.id,
             sector: entity.section || entity.sector,
-            incidentType: entity.incident_type,
+            incident_type: entity.incident_type,
             criticality: entity.criticality,
+            date: entity.date,
             description: entity.description,
             resolved: entity.resolved,
-            closingDate: entity.closing_date,
-            resolutionTimeHours: entity.resolution_time_hours,
-            operatorId: entity.operator_id
+            closing_date: entity.closing_date,
+            resolution_time_hours: entity.resolution_time_hours,
+            operator_id: entity.operator_id
         };
     }
 

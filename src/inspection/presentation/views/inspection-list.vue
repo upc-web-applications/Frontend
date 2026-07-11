@@ -127,7 +127,7 @@ function confirmCancel(inspection) {
     <div v-if="isSupervisor" class="rg-card" style="margin-bottom:12px">
       <div class="supervisor-filters">
         <div class="rg-form-field">
-          <label class="rg-label">Buscar</label>
+          <label class="rg-label">{{ t('common.search') }}</label>
           <pv-input-text v-model="searchText" size="small" placeholder="Ticket, tipo, area o descripcion" />
         </div>
         <div class="rg-form-field">

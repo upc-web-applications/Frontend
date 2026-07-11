@@ -25,7 +25,7 @@ export class BaseApi {
                 if (error.response && error.response.status === 401) {
                     BaseApi.clearToken()
                     localStorage.removeItem('riskguard-current-user')
-                    window.location.href = '/login'
+                    window.location.href = '/login?reason=expired'
                 }
                 return Promise.reject(error)
             }

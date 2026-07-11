@@ -1,17 +1,19 @@
 export class CumulativeSTIndicators {
     constructor({
                     id = null,
-                    monthly_report_id = null,
-                    accident_rate_index = null,
-                    administrative_errors_count = null,
-                    processed_by = null,
-                    calculation_date = null
+                    name = '',
+                    description = '',
+                    total_incidents = 0,
+                    resolved_incidents = 0,
+                    compliance_rate = 0,
+                    period = ''
                 }) {
         this.id = id;
-        this.monthly_report_id = monthly_report_id;
-        this.accident_rate_index = accident_rate_index;
-        this.administrative_errors_count = administrative_errors_count;
-        this.processed_by = processed_by;
-        this.calculation_date = calculation_date;
+        this.name = name;
+        this.description = description;
+        this.total_incidents = total_incidents;
+        this.resolved_incidents = resolved_incidents;
+        this.compliance_rate = compliance_rate;
+        this.period = period;
     }
 }

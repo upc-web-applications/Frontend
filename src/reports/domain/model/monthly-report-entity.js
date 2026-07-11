@@ -1,19 +1,21 @@
 export class MonthlyReportEntity {
     constructor({
                     id = null,
-                    evaluated_month = null,
-                    evaluated_year = null,
-                    site_area_id = null,
-                    general_status = null,
-                    creation_date = null,
-                    update_date = null
+                    month = null,
+                    year = null,
+                    total_incidents = 0,
+                    resolved_incidents = 0,
+                    compliance_percentage = 0,
+                    status = 'draft',
+                    generated_at = null
                 }) {
         this.id = id;
-        this.evaluated_month = evaluated_month;
-        this.evaluated_year = evaluated_year;
-        this.site_area_id = site_area_id;
-        this.general_status = general_status;
-        this.creation_date = creation_date;
-        this.update_date = update_date;
+        this.month = month;
+        this.year = year;
+        this.total_incidents = total_incidents;
+        this.resolved_incidents = resolved_incidents;
+        this.compliance_percentage = compliance_percentage;
+        this.status = status;
+        this.generated_at = generated_at;
     }
 }
