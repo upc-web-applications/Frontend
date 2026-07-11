@@ -20,6 +20,13 @@
     "receivedReports": "Received reports",
     "correctiveTickets": "Corrective tickets",
     "operationalManagement": "Operational management",
+    "riskManagement": "Risk Management",
+    "monitoring": "Monitoring",
+    "maintenance": "Maintenance",
+    "sectors": "Sectors",
+    "technicianDirectory": "Technical Directory",
+    "archivedReports": "Archived Reports",
+    "identityPanel": "Access Panel",
     "dashboard": "Dashboard"
   },
   "common": {
