@@ -25,7 +25,7 @@ const navigation = {
       icon: 'pi pi-shield',
       children: [
         { to: '/risk-assessment/list', label: 'nav.evaluaciones', icon: 'pi pi-exclamation-triangle' },
-        { to: '/risk-assessment/hazard/list', label: 'nav.peligros', icon: 'pi pi-ban' },
+        { to: '/hazard/list', label: 'nav.peligros', icon: 'pi pi-ban' },
         { to: '/risk-assessment/patrones', label: 'nav.patrones', icon: 'pi pi-chart-bar' },
         { to: '/risk-assessment/alertas-patron', label: 'nav.alertasPatron', icon: 'pi pi-bell' },
         { to: '/risk-assessment/resumen-diario', label: 'nav.resumenDiario', icon: 'pi pi-calendar' }
@@ -41,10 +41,10 @@ const navigation = {
       label: 'nav.operationalManagement',
       icon: 'pi pi-briefcase',
       children: [
-        { to: '/organization-assets/site/list', label: 'nav.sedes', icon: 'pi pi-building' },
-        { to: '/organization-assets/area/list', label: 'nav.areas', icon: 'pi pi-map-marker' },
-        { to: '/organization-assets/asset/list', label: 'nav.activos', icon: 'pi pi-cog' },
-        { to: '/mitigation/technicians', label: 'nav.tecnicos', icon: 'pi pi-users' }
+        { to: '/site/list', label: 'nav.sedes', icon: 'pi pi-building' },
+        { to: '/area/list', label: 'nav.areas', icon: 'pi pi-map-marker' },
+        { to: '/asset/list', label: 'nav.activos', icon: 'pi pi-cog' },
+        { to: '/technicians', label: 'nav.tecnicos', icon: 'pi pi-users' }
       ]
     },
     {

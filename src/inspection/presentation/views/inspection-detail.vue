@@ -6,9 +6,9 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import { useInspectionStore } from '@/inspection/application/inspection.store.js'
-import { useAreaStore } from '@/organization-assets/area/application/area.store.js'
-import { useAssetStore } from '@/organization-assets/asset/application/asset.store.js'
-import { useSiteStore } from '@/organization-assets/site/application/site.store.js'
+import { useAreaStore } from '@/area/application/area.store.js'
+import { useAssetStore } from '@/asset/application/asset.store.js'
+import { useSiteStore } from '@/site/application/site.store.js'
 
 const { t } = useI18n(); const route = useRoute(); const router = useRouter()
 const store = useInspectionStore(); const areaStore = useAreaStore()

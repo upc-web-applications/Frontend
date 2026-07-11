@@ -9,7 +9,7 @@ import { useHistorialTicketStore } from '@/mitigation/application/historial-tick
 import { useMitigationStore } from '@/mitigation/application/mitigation.store.js'
 import { useNotificacionCriticaStore } from '@/mitigation/application/notificacion-critica.store.js'
 import { useInspectionStore } from '@/inspection/application/inspection.store.js'
-import { useAssetStore } from '@/organization-assets/asset/application/asset.store.js'
+import { useAssetStore } from '@/asset/application/asset.store.js'
 
 const { t } = useI18n()
 const route = useRoute()
