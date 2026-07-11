@@ -23,7 +23,7 @@ const urgencyFilter = ref(null)
 const areaFilter = ref(null)
 
 onMounted(() => {
-  if (!store.loaded) store.fetchAll()
+  if (!store.loaded) store.fetchAll(identityStore.currentRole?.code === 'plant-operator' ? identityStore.currentUser?.id : null)
   if (!areaStore.loaded) areaStore.fetchAll()
   if (!siteStore.loaded) siteStore.fetchAll()
 })
