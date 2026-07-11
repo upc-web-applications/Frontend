@@ -15,13 +15,11 @@ const sidebarOpen = ref(false)
 const navigation = {
   'plant-operator': [
     { to: '/inspection/list', label: 'nav.inspecciones', icon: 'pi pi-clipboard' },
-    { to: '/inspection/new', label: 'inspeccion.newTitle', icon: 'pi pi-plus-circle' },
-    { to: '/identity-access/panel', label: 'nav.identityPanel', icon: 'pi pi-user' }
+    { to: '/inspection/new', label: 'inspeccion.newTitle', icon: 'pi pi-plus-circle' }
   ],
   supervisor: [
     { to: '/monitoring/dashboard', label: 'nav.dashboard', icon: 'pi pi-th-large' },
     { to: '/inspection/list', label: 'nav.receivedReports', icon: 'pi pi-inbox' },
-    { to: '/inspection/new', label: 'inspeccion.new', icon: 'pi pi-plus-circle' },
     {
       label: 'nav.riskManagement',
       icon: 'pi pi-shield',
@@ -30,7 +28,6 @@ const navigation = {
         { to: '/risk-assessment/hazard/list', label: 'nav.peligros', icon: 'pi pi-ban' },
         { to: '/risk-assessment/patrones', label: 'nav.patrones', icon: 'pi pi-chart-bar' },
         { to: '/risk-assessment/alertas-patron', label: 'nav.alertasPatron', icon: 'pi pi-bell' },
-        { to: '/risk-assessment/mapa-calor', label: 'nav.mapaCalor', icon: 'pi pi-fire' },
         { to: '/risk-assessment/resumen-diario', label: 'nav.resumenDiario', icon: 'pi pi-calendar' }
       ]
     },
@@ -55,12 +52,9 @@ const navigation = {
       icon: 'pi pi-desktop',
       children: [
         { to: '/monitoring/maintenance', label: 'nav.maintenance', icon: 'pi pi-wrench' },
-        { to: '/monitoring/sectors', label: 'nav.sectors', icon: 'pi pi-map' },
-        { to: '/monitoring/technicians', label: 'nav.technicianDirectory', icon: 'pi pi-users' },
         { to: '/monitoring/reports', label: 'nav.archivedReports', icon: 'pi pi-file' }
       ]
-    },
-    { to: '/identity-access/panel', label: 'nav.identityPanel', icon: 'pi pi-user' }
+    }
   ],
   administrator: [
     { to: '/reportes/dashboard', label: 'sidebar.inicio', icon: 'pi pi-home' },
@@ -69,8 +63,7 @@ const navigation = {
     { to: '/reportes/history', label: 'sidebar.historial', icon: 'pi pi-history' },
     { to: '/reportes/alerts', label: 'sidebar.notificaciones', icon: 'pi pi-bell' },
     { to: '/reportes/predictive-indicators', label: 'sidebar.indicadores', icon: 'pi pi-chart-line' },
-    { to: '/reportes/sst-plan', label: 'sidebar.plan_sst', icon: 'pi pi-shield' },
-    { to: '/identity-access/panel', label: 'nav.identityPanel', icon: 'pi pi-user' }
+    { to: '/reportes/sst-plan', label: 'sidebar.plan_sst', icon: 'pi pi-shield' }
   ]
 }
 
