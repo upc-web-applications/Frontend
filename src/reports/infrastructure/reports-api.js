@@ -71,7 +71,7 @@ export class ReportsApi extends BaseApi {
 
     async createMonthlyReport(report) {
         try {
-            const response = await this.#monthlyReportsEndpoint.create(report);
+            const response = await this.#monthlyReportsEndpoint.create(MonthlyReportAssembler.toResourceFromEntity(report));
             return MonthlyReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -80,7 +80,7 @@ export class ReportsApi extends BaseApi {
 
     async updateMonthlyReport(report) {
         try {
-            const response = await this.#monthlyReportsEndpoint.update(report.id, report);
+            const response = await this.#monthlyReportsEndpoint.update(report.id, MonthlyReportAssembler.toResourceFromEntity(report));
             return MonthlyReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -116,7 +116,7 @@ export class ReportsApi extends BaseApi {
 
     async createGeneratedReport(report) {
         try {
-            const response = await this.#generatedReportsEndpoint.create(report);
+            const response = await this.#generatedReportsEndpoint.create(GeneratedReportAssembler.toResourceFromEntity(report));
             return GeneratedReportAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -171,7 +171,7 @@ export class ReportsApi extends BaseApi {
 
     async createIncident(incident) {
         try {
-            const response = await this.#incidentsEndpoint.create(incident);
+            const response = await this.#incidentsEndpoint.create(HistoricalIncidentRecordsAssembler.toResourceFromEntity(incident));
             return HistoricalIncidentRecordsAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -180,7 +180,7 @@ export class ReportsApi extends BaseApi {
 
     async updateIncident(incident) {
         try {
-            const response = await this.#incidentsEndpoint.update(incident.id, incident);
+            const response = await this.#incidentsEndpoint.update(incident.id, HistoricalIncidentRecordsAssembler.toResourceFromEntity(incident));
             return HistoricalIncidentRecordsAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -216,7 +216,7 @@ export class ReportsApi extends BaseApi {
 
     async updateAnnualOHSPlan(plan) {
         try {
-            const response = await this.#annualOHSPlanEndpoint.update(plan.id, plan);
+            const response = await this.#annualOHSPlanEndpoint.update(plan.id, AnnualOHSPlanAssembler.toResourceFromEntity(plan));
             return AnnualOHSPlanAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -263,7 +263,7 @@ export class ReportsApi extends BaseApi {
 
     async updateCriticalAlert(alert) {
         try {
-            const response = await this.#criticalAlertsEndpoint.update(alert.id, alert);
+            const response = await this.#criticalAlertsEndpoint.update(alert.id, CriticalAlertsAssembler.toResourceFromEntity(alert));
             return CriticalAlertsAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;
@@ -272,7 +272,7 @@ export class ReportsApi extends BaseApi {
 
     async createCriticalAlert(alert) {
         try {
-            const response = await this.#criticalAlertsEndpoint.create(alert);
+            const response = await this.#criticalAlertsEndpoint.create(CriticalAlertsAssembler.toResourceFromEntity(alert));
             return CriticalAlertsAssembler.toEntityFromResource(response.data);
         } catch (error) {
             throw error;

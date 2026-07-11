@@ -17,6 +17,20 @@ export class GeneratedReportAssembler {
         });
     }
 
+    static toResourceFromEntity(entity) {
+        return {
+            type: entity.type,
+            month: entity.month,
+            year: entity.year,
+            format: entity.format || 'pdf',
+            file_name: entity.file_name,
+            start_date: entity.start_date,
+            end_date: entity.end_date,
+            sector_filter: entity.sector_filter,
+            size_kb: entity.size_kb
+        };
+    }
+
     static toEntitiesFromResponse(response) {
 
         if (response.status !== 200) {

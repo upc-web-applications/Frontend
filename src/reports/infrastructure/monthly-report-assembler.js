@@ -13,6 +13,15 @@ export class MonthlyReportAssembler {
         });
     }
 
+    static toResourceFromEntity(entity) {
+        return {
+            month: entity.evaluated_month,
+            year: entity.evaluated_year,
+            status: entity.general_status,
+            generatedAt: entity.creation_date
+        };
+    }
+
     static toEntitiesFromResponse(response) {
 
         if (response.status !== 200) {

@@ -10,9 +10,19 @@ export class PreventiveMaintenanceAssembler {
       scheduledDate: resource.scheduledDate,
       reactivationDate: resource.reactivationDate,
       description: resource.description,
-      status: resource.status,
+      status: { Scheduled: 'Programado', InProgress: 'En mantenimiento', Completed: 'Finalizado' }[resource.status] ?? resource.status,
       createdAt: resource.createdAt
     })
+  }
+
+  static toResourceFromEntity(entity) {
+    return {
+      id: entity.id,
+      assetId: entity.assetId,
+      description: entity.description,
+      status: { Programado: 'Scheduled', 'En mantenimiento': 'InProgress', Finalizado: 'Completed' }[entity.status] ?? entity.status,
+      scheduledDate: entity.scheduledDate
+    }
   }
 
   static toEntitiesFromResponse(response) {

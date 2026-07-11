@@ -17,6 +17,16 @@ export class AnnualOHSPlanAssembler {
         });
     }
 
+    static toResourceFromEntity(entity) {
+        return {
+            year: entity.year,
+            globalCompliance: entity.global_compliance,
+            goal: entity.goal,
+            completedActivities: entity.completed_activities,
+            totalActivities: entity.total_activities
+        };
+    }
+
     static toEntitiesFromResponse(response) {
 
         if (response.status !== 200) {

@@ -6,7 +6,7 @@ export class HistoricalIncidentRecordsAssembler {
             id: resource.id,
             monthly_report_id: resource.monthly_report_id,
             date: resource.date,
-            section: resource.section,
+            section: resource.section ?? resource.sector,
             incident_type: resource.incident_type,
             description: resource.description,
             resolved: resource.resolved,
@@ -15,6 +15,20 @@ export class HistoricalIncidentRecordsAssembler {
             criticality: resource.criticality,
             operator_id: resource.operator_id
         });
+    }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            sector: entity.section || entity.sector,
+            incidentType: entity.incident_type,
+            criticality: entity.criticality,
+            description: entity.description,
+            resolved: entity.resolved,
+            closingDate: entity.closing_date,
+            resolutionTimeHours: entity.resolution_time_hours,
+            operatorId: entity.operator_id
+        };
     }
 
     static toEntitiesFromResponse(response) {

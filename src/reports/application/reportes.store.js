@@ -2,10 +2,12 @@ import { defineStore } from 'pinia';
 import { ref, computed, watch } from 'vue';
 import { ReportsApi } from '@/reports/infrastructure/reports-api.js';
 import { useTicketAccionCorrectivaStore } from '@/mitigation/application/ticket-accion-correctiva.store.js';
+import useIdentityAccessStore from '@/identity-access/application/identity-access.store.js';
 
 export const useReportsStore = defineStore('reports', () => {
     const api = new ReportsApi();
     const ticketAccionCorrectivaStore = useTicketAccionCorrectivaStore();
+    const identityAccessStore = useIdentityAccessStore();
     const monthlyReports = ref([]);
     const currentMonthlyReport = ref(null);
     const loadingMonthlyReports = ref(false);
@@ -741,11 +743,20 @@ export const useReportsStore = defineStore('reports', () => {
         errorOperationalData.value = null;
 
         try {
-            const [supervisor] = await Promise.all([
-                api.getSupervisorTickets(),
-                ticketAccionCorrectivaStore.fetchAll()
-            ]);
-            supervisorTickets.value = supervisor;
+            const isSupervisor = identityAccessStore.currentRole?.code === 'supervisor';
+            if (isSupervisor) {
+                const [supervisor] = await Promise.all([
+                    api.getSupervisorTickets(),
+                    ticketAccionCorrectivaStore.loaded
+                        ? Promise.resolve(ticketAccionCorrectivaStore.tickets)
+                        : ticketAccionCorrectivaStore.fetchAll()
+                ]);
+                supervisorTickets.value = supervisor;
+            } else {
+                // El dashboard del Administrador usa reportes e indicadores propios.
+                // No debe consultar endpoints exclusivos del flujo del Supervisor.
+                supervisorTickets.value = [];
+            }
 
             if (!criticalAlerts.value.length) {
                 try {

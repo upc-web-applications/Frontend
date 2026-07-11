@@ -7,12 +7,21 @@ export class TechnicianAssembler {
       code: resource.code,
       firstName: resource.firstName,
       lastName: resource.lastName,
-      fullName: resource.fullName,
+      fullName: resource.fullName || resource.name,
       specialty: resource.specialty,
       email: resource.email,
       phone: resource.phone,
-      status: resource.status
+      status: { Active: 'Activo', Inactive: 'Inactivo' }[resource.status] ?? resource.status
     })
+  }
+
+  static toResourceFromEntity(entity) {
+    return {
+      id: entity.id,
+      name: entity.fullName,
+      specialty: entity.specialty,
+      status: { Activo: 'Active', Inactivo: 'Inactive' }[entity.status] ?? entity.status
+    }
   }
 
   static toEntitiesFromResponse(response) {

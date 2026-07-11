@@ -24,7 +24,6 @@ onMounted(async () => {
     if (!store.loaded) store.fetchDashboard()
     if (!inspectionStore.loaded) inspectionStore.fetchAll()
     if (!ticketStore.loaded) await ticketStore.fetchAll()
-    await ticketStore.refreshSlaStatus()
     if (!verificationStore.loaded) verificationStore.fetchAll()
     if (!slaStore.loaded) slaStore.fetchAll()
   } catch (e) {
