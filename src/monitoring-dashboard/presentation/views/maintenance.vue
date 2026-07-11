@@ -1,19 +1,32 @@
 <script setup>
-import { onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import useMonitoringStore from '@/monitoring-dashboard/application/monitoring.store.js'
+import { useAssetStore } from '@/asset/application/asset.store.js'
+import { useAreaStore } from '@/area/application/area.store.js'
 
 const router = useRouter()
 const { t } = useI18n()
 const store = useMonitoringStore()
+const assetStore = useAssetStore()
+const areaStore = useAreaStore()
+
+const assetsWithSector = computed(() =>
+  assetStore.assets.map(asset => ({
+    ...asset,
+    sectorName: areaStore.getById(asset.areaId)?.nombre ?? asset.areaId ?? ''
+  }))
+)
 
 onMounted(() => {
   if (!store.loaded) store.fetchDashboard()
+  if (!assetStore.loaded) assetStore.fetchAll()
+  if (!areaStore.loaded) areaStore.fetchAll()
 })
 
 function navigateToAction(asset) {
-  if (asset.status === 'Mantenimiento') {
+  if (asset.estado === 'Mantenimiento') {
     router.push({ name: 'monitoring-assets-reactivate', params: { id: asset.id } })
     return
   }
@@ -31,20 +44,20 @@ function navigateToAction(asset) {
       <section>
         <div class="ticket-summary panel p-3 mb-4">
           <span>{{ t('assets.totalAssets') }}</span>
-          <strong>{{ store.assets.length }}</strong>
+          <strong>{{ assetStore.assets.length }}</strong>
         </div>
 
         <section class="panel p-4">
           <h1 class="section-title">{{ t('assets.title') }}</h1>
-          <pv-data-table class="table-dark" :value="store.assets" :loading="!store.loaded" paginator :rows="6">
-            <pv-column field="name" :header="t('assets.asset')" />
-            <pv-column field="sector" :header="t('assets.sector')" />
-            <pv-column field="status" :header="t('assets.operationalStatus')" />
-            <pv-column field="lastReview" :header="t('assets.lastReview')" />
+          <pv-data-table class="table-dark" :value="assetsWithSector" :loading="!assetStore.loaded" paginator :rows="6">
+            <pv-column field="nombre" :header="t('assets.asset')" />
+            <pv-column field="sectorName" :header="t('assets.sector')" />
+            <pv-column field="estado" :header="t('assets.operationalStatus')" />
+            <pv-column field="ultimoMantenimiento" :header="t('assets.lastReview')" />
             <pv-column :header="t('tickets.actions')">
               <template #body="slotProps">
                 <pv-button
-                  v-if="slotProps.data.status !== 'Mantenimiento'"
+                  v-if="slotProps.data.estado !== 'Mantenimiento'"
                   icon="pi pi-plus"
                   rounded
                   text
@@ -64,7 +77,6 @@ function navigateToAction(asset) {
       </section>
 
       <aside class="asset-actions">
-        <pv-button :label="t('assets.newAsset')" icon="pi pi-plus" class="orange-button action-button" @click="router.push('/monitoring/maintenance/assets/new')" />
         <pv-button :label="t('assets.newMaintenance')" icon="pi pi-plus" class="orange-button action-button" @click="router.push('/monitoring/maintenance/assets/1/maintenance')" />
       </aside>
     </div>

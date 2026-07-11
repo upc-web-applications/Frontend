@@ -95,6 +95,10 @@ const submit = async () => {
         }
         toast.add({ severity: 'success', summary: t('ticketCorrectivo.saveSuccess'), life: 3000 })
         router.push('/mitigation/tickets')
+    } catch (e) {
+        const msg = e?.response?.data?.message || e?.message || 'Error al guardar el ticket'
+        errorMsg.value = msg
+        toast.add({ severity: 'error', summary: 'Error', detail: msg, life: 5000 })
     } finally { saving.value = false }
 }
 </script>

@@ -34,6 +34,19 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
   const totalSectorsCount = computed(() => sectors.value.length)
   const activeTechnicians = computed(() => technicians.value.filter(technician => technician.status === 'Activo'))
 
+  const resolvedIncidentReports = computed(() => {
+    if (!tickets.value.length) return []
+    const closedTickets = tickets.value.filter(t => ['Cerrado', 'cerrado', 'Closed', 'closed', 'Resuelto', 'resuelto', 'Resolved', 'resolved'].includes(t.status))
+    return closedTickets.map(t => ({
+      code: t.ticketNumber ? `TKT-${t.ticketNumber}` : `ID-${t.id}`,
+      date: t.fechaCreacion || t.createdAt || '',
+      sectorName: t.sector || '',
+      sectorStatus: 'Resuelto',
+      heatMapId: t.heatMapId,
+      id: t.id
+    }))
+  })
+
   const filteredTickets = computed(() => {
     return tickets.value.filter(ticket => {
       const sectorMatch = !selectedSector.value || ticket.heatMapId === selectedSector.value.id
@@ -274,6 +287,7 @@ const useMonitoringStore = defineStore('monitoring-dashboard', () => {
     totalSectorsCount,
     activeTechnicians,
     filteredTickets,
+    resolvedIncidentReports,
     fetchDashboard,
     selectSector,
     clearFilters,
