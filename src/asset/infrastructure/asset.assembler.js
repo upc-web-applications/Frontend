@@ -31,7 +31,10 @@ export class AssetAssembler {
             areaId: entity.areaId,
             headquartersId: entity.sedeId,
             status: this.#statusToResource(entity.estado),
-            acquisitionDate: entity.fechaAdquisicion || null,
+            // acquisitionDate NO es nullable en el backend (default DateTime.UtcNow),
+            // así que si el usuario no la especifica, mandamos la fecha actual en vez de null para evitar 400.
+            acquisitionDate: entity.fechaAdquisicion || new Date().toISOString(),
+            // lastMaintenanceDate SÍ es nullable en el backend, null es válido aquí.
             lastMaintenanceDate: entity.ultimoMantenimiento || null
         }
     }
