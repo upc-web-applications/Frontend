@@ -20,7 +20,6 @@ const slaFilter = ref(null)
 
 onMounted(async () => {
     if (!store.loaded) await store.fetchAll()
-    await store.refreshSlaStatus()
 })
 
 function normalizeStatus(status) {

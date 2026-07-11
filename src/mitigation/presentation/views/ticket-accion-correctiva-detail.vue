@@ -43,7 +43,6 @@ const estadoClass = (s) => ({
 
 onMounted(async () => {
     if (!store.loaded) await store.fetchAll()
-    await store.refreshSlaStatus()
     if (!verifStore.loaded) verifStore.fetchAll()
     histStore.fetchAll()
 })

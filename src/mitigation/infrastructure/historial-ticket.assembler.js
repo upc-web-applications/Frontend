@@ -11,6 +11,18 @@ export class HistorialTicketAssembler {
             fecha: r.date
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            ticketId: entity.ticketId,
+            event: entity.evento,
+            userId: entity.usuarioId,
+            userName: entity.usuarioNombre,
+            details: entity.detalles,
+            date: entity.fecha
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['historiales'] : null)) ?? []

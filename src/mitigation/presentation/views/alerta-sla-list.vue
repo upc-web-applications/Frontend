@@ -11,7 +11,6 @@ const ticketStore = useTicketAccionCorrectivaStore()
 
 onMounted(async () => {
   if (!ticketStore.loaded) await ticketStore.fetchAll()
-  await ticketStore.refreshSlaStatus()
 })
 
 const alertas = computed(() => {

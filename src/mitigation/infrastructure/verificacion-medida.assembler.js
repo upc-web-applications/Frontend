@@ -11,6 +11,18 @@ export class VerificacionMedidaAssembler {
             fechaVerificacion: r.verificationDate
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            ticketId: entity.ticketId,
+            supervisorId: entity.supervisorId,
+            supervisorName: entity.supervisorNombre,
+            verdict: entity.veredicto,
+            justificationComment: entity.comentarioJustificacion,
+            verificationDate: entity.fechaVerificacion
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['verificaciones'] : null)) ?? []

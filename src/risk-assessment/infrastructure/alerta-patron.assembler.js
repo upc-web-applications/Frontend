@@ -13,6 +13,20 @@ export class AlertaPatronAssembler {
             fechaGeneracion: r.generationDate
         })
     }
+
+    static toResourceFromEntity(entity) {
+        return {
+            id: entity.id,
+            patternId: entity.patronId,
+            sectorId: entity.sectorId,
+            sector: entity.sector,
+            riskType: entity.tipoRiesgo,
+            occurrenceCount: entity.numeroOcurrencias,
+            firstReportDate: entity.fechaPrimerReporte,
+            status: entity.estado,
+            generationDate: entity.fechaGeneracion
+        }
+    }
     static toEntitiesFromResponse(response) {
         if (response.status !== 200) return []
         const data = (response.data instanceof Array ? response.data : (response.data ? response.data['alertas'] : null)) ?? []

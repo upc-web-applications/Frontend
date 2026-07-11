@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { TicketAccionCorrectivaApi } from '@/mitigation/infrastructure/ticket-accion-correctiva-api.js'
 import { TicketAccionCorrectivaAssembler } from '@/mitigation/infrastructure/ticket-accion-correctiva.assembler.js'
-import { needsSlaSync, withSlaEvaluation } from '@/mitigation/application/sla-policy.js'
+import { withSlaEvaluation } from '@/mitigation/application/sla-policy.js'
 
 const api = new TicketAccionCorrectivaApi()
 export const useTicketAccionCorrectivaStore = defineStore('ticketAccionCorrectiva', () => {
@@ -18,16 +18,10 @@ export const useTicketAccionCorrectivaStore = defineStore('ticketAccionCorrectiv
     }
     function update(ticket) { return api.updateTicket(ticket).then(r => { const u = TicketAccionCorrectivaAssembler.toEntityFromResource(r.data); const i = tickets.value.findIndex(t => t.id === u.id); if (i !== -1) tickets.value[i] = u; return u }).catch(e => { errors.value.push(e); return Promise.reject(e) }) }
     function remove(id) { return api.deleteTicket(id).then(() => { const i = tickets.value.findIndex(t => t.id === id); if (i !== -1) tickets.value.splice(i, 1) }).catch(e => { errors.value.push(e); return Promise.reject(e) }) }
-    async function refreshSlaStatus() {
+    function refreshSlaStatus() {
         const now = new Date()
-        const updatedTickets = []
-        for (const ticket of tickets.value) {
-            const evaluatedTicket = withSlaEvaluation(ticket, now)
-            if (needsSlaSync(ticket, evaluatedTicket)) {
-                updatedTickets.push(await update(evaluatedTicket))
-            }
-        }
-        return updatedTickets
+        tickets.value = tickets.value.map(ticket => withSlaEvaluation(ticket, now))
+        return tickets.value
     }
     return { tickets, errors, loaded, fetchAll, getById, getBySectorId, getByEstado, add, update, remove, refreshSlaStatus }
 })
